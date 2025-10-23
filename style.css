@@ -1,14 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-
-
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
-html,
+
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:"Arial", sans-serif;
   background-color: #f7f9fa;
 
 }
@@ -19,8 +16,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  top:0;
-  z-index:100;
+  top: 0;
+  z-index: 100;
   width: 100%;
   height: 60px;
   background: #fff;
@@ -28,33 +25,38 @@ body {
 }
 
 .topbar_inner {
-  display:flex;
+  display: flex;
   padding: 15px;
   align-items: center;
-  font-size: clamp(0.9rem, 2vw, 1rem);
-  gap:.3rem;
-  font-weight: bold;
+  font-size: .8rem;
+  gap: .3rem;
+}
+
+.logo-name {
+  font-size: 1.1rem;
 }
 
 .logo {
   margin-top: 2px;
   border-radius: 8px;
-  margin-left:28px;
+  margin-left: 28px;
   background-color: #7661ed;
   color: #fff;
 }
 
 /* links */
-.nav_link{
+.nav_link {
   position: relative;
 }
+
 .links {
   display: flex;
   list-style: none;
   gap: 2rem;
 }
-.links li{
-  margin:0 10px;
+
+.links li {
+  margin: 0 10px;
 }
 
 .links li a {
@@ -69,7 +71,8 @@ body {
   background-color: #f2f3f5;
   border-radius: .6rem;
 }
-/* ---------- HAMBURGER MENU ---------- */
+
+/*  Menu Icon  */
 .menu-icon {
   display: none;
   margin-right: 1rem;
@@ -79,12 +82,10 @@ body {
   background-color: #f2f3f5;
   border-radius: 6px;
 }
-
 .menu-toggle {
   display: none;
 }
 
-/* ---------- RESPONSIVE ---------- */
 @media (max-width: 768px) {
   .menu-icon {
     display: block;
@@ -93,8 +94,8 @@ body {
   .links {
     display: none;
     position: absolute;
-    right: 0;
-    top: 60px;
+    right: 0px;
+    top: 50px;
     flex-direction: column;
     align-items: center;
     background: #fff;
@@ -105,27 +106,25 @@ body {
   }
 
   .links li {
-    text-align: right;
     padding: 1rem 1rem;
   }
-
-  /* Toggle effect */
-  .menu-toggle:checked ~ .links {
+  .menu-toggle:checked~.links {
     display: flex;
   }
 }
 
-/* main  */
+/* main section */
 .main {
-  margin-bottom: 6rem;
+  margin-bottom: 3rem;
 }
 
 .title {
   display: inline-flex;
   position: relative;
-  top:30px;
-  bottom:10px;
-  left:38px;
+  align-items: center;
+  top: 30px;
+  bottom: 10px;
+  left: 38px;
 }
 
 .title-logo {
@@ -150,7 +149,7 @@ body {
   gap: 1rem;
 }
 
-.sub-section{
+.sub-section1 {
   margin: 50px 6px 10px 50px;
   background-color: white;
   padding: 20px;
@@ -158,7 +157,7 @@ body {
   box-shadow: 0px 0px 10px rgb(0, 0, 0, 0.1);
 }
 
-.Active-task-section {
+.sub-section2 {
   background-color: white;
   margin: 50px 25px 10px 6px;
   padding: 20px;
@@ -167,15 +166,18 @@ body {
 }
 
 /* Sub Section 1 */
-.sub-section .Heading{
-  padding:1rem;
-  margin-left: -20px;
+.sub-section1 .Heading {
+  padding: 1rem;
+  margin-left: clamp(-17px, 2vw, -19px);
 }
-.sub-section .container{
-  margin-top:6px;
+
+.sub-section1 .container {
+  margin-top: 2px;
 }
-.sub-section input,
-select,textarea {
+
+.sub-section1 input,
+select,
+textarea {
   margin: 10px 0;
   padding: 10px;
   width: 100%;
@@ -185,13 +187,13 @@ select,textarea {
   border: 2px solid rgba(0, 0, 0, 0.158);
 }
 
-.sub-section .input-text input {
+.sub-section1 .input-text input {
   border-radius: 5px;
   border: 2px solid #f54245;
 }
 
 /* Floating Label */
-.sub-section .labelline {
+.sub-section1 .labelline {
   position: absolute;
   left: 82px;
   color: #757575;
@@ -201,11 +203,11 @@ select,textarea {
   transition: 0.2s ease all;
 }
 
-.sub-section .Number {
+.sub-section1 .Number {
   position: relative;
 }
 
-.sub-section .labelline {
+.sub-section1 .labelline {
   margin-top: 4px;
   padding-inline: 3px;
   font-size: 10px;
@@ -215,66 +217,73 @@ select,textarea {
 
 
 /* Selection */
-.sub-section select {
+.sub-section1 select {
   padding: 10px 10px 10px 10px;
   border-radius: 5px;
 }
 
 /* Textarea */
-.sub-section textarea {
+.sub-section1 textarea {
   height: 100px;
 }
-.sub-section .tasklabel{
+
+.sub-section1 .tasklabel {
   position: absolute;
   margin-top: 50px;
   left: 82px;
-  color:#757575;
+  color: #757575;
   font-size: 12.5px
 }
 
 /* color-range */
-.sub-section .color-range,.task-progress,.task-color {
-  padding:0;
+.sub-section1 .color-range,
+.task-progress,
+.task-color {
+  padding: 0;
   margin-top: 10px;
   font-size: 15px;
-  color:#757575;
+  color: #757575;
   cursor: pointer;
   accent-color: #5768eb;
 }
 
-.sub-section .task-progress h5{
-  color:#5768eb;
+.sub-section1 .task-progress h5 {
+  color: #5768eb;
   text-align: center;
 }
 
 /* Color-picker */
-.sub-section .color-pick{
+.sub-section1 .color-pick {
   height: 35px;
   padding: 2px;
 }
 
 /* Checkbox */
-.sub-section .check {
+.sub-section1 .check {
   vertical-align: middle;
   width: 19px;
   height: 19px;
   accent-color: #5768eb;
 }
-.task-type, .task-status{
-  margin-top:20px;
-  font-size: 15px;
 
+.task-type,
+.task-status {
+  white-space: nowrap;
+  font-size: 15px;
+  margin-top: 20px;
 }
 
 /* Radio-btn */
-.sub-section .radio {
+.sub-section1 .radio {
   vertical-align: middle;
   width: 19px;
   height: 19px;
   accent-color: #5768eb;
 }
-.sub-section .task-type label, .task-status label{
-  margin-right:20%;
+
+.sub-section1 .task-type label,
+.task-status label {
+  margin-right: 20%;
 }
 
 /*upload-attachments*/
@@ -303,14 +312,14 @@ select,textarea {
 }
 
 /* Button */
-.sub-section .Buttons {
+.sub-section1 .Buttons {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   gap: 1rem;
 }
 
-.sub-section button {
+.sub-section1 button {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 500;
   background-color: rgb(70, 81, 227);
@@ -320,36 +329,37 @@ select,textarea {
   border-radius: 5px;
 }
 
-.sub-section button span {
+.sub-section1 button span {
   font-size: 0.625rem;
 }
 
-.sub-section .Reset-button {
+.sub-section1 .Reset-button {
   background-color: rgb(242, 243, 245);
   color: black;
   margin-left: 0.625rem;
   padding: 14px 1.875rem;
 }
 
-.sub-section button:hover {
+.sub-section1 button:hover {
   cursor: pointer;
 }
 
-/* ACTIVE TASKS SECTION */
+/* Sub Section 2 */
 
-.Active-task-section .Task-card-heading {
+.sub-section2 .sub-section2-navbar {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 }
 
-.Task-card-heading {
-  padding: clamp(0.5rem,2vw,1rem);
+.sub-section2-navbar {
+  padding: clamp(0.5rem, 2vw, 1rem);
 }
 
 .task-filters input {
   display: none;
 }
+
 .task-filters {
   display: flex;
 }
@@ -357,27 +367,28 @@ select,textarea {
 .task-filters label {
   text-decoration: none;
   margin-left: 1rem;
-  padding: clamp(0.25rem,2vw,0.35rem) clamp(0.9rem,2vw, 0.9rem);
+  padding: clamp(0.25rem, 2vw, 0.35rem) clamp(0.9rem, 2vw, 0.9rem);
   color: black;
   border: 2px solid rgb(232, 234, 237);
   border-radius: 0.9rem;
   font-size: 0.9rem;
   cursor: pointer;
 }
-.task-filters input:checked + label {
+
+.task-filters input:checked+label {
   background-color: #5768eb;
   color: white;
-  border-color:#5768eb;
+  border-color: #5768eb;
 }
 
-/* TASK-CARD */
+/* Task Card */
 
-.task-card-container {
+.taskcard-container {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   grid-template-rows: 1fr 1fr;
-  gap: clamp(1rem,2vw,1.5em);
-  margin:1rem;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  margin: 0.313rem;
 
 }
 
@@ -385,53 +396,68 @@ select,textarea {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
+  line-height: 1.3rem;
   border: 2px solid rgb(232, 234, 237);
   border-radius: 0.7rem;
-  padding:1.5em;
+  padding: 1.5em;
   padding-bottom: 0.5em;
+  transition: transform 0.2s;
 }
 
 .task-card h4 {
   font-size: 16px;
-  margin-bottom: 0.5rem;
 }
-.task-card p{
+
+.task-card p {
   font-size: 14px;
   margin-bottom: 0.5rem;
-  color:#757575;
+  color: #757575;
 }
-.priority-container {
+.task-card .calender-img,.contact-img{
+  vertical-align:middle;
+  width: 17px;
+}
+.task-card:hover{
+  transform: translatey(-5px);
+}
+
+.level-container {
   display: inline-flex;
   justify-content: space-between;
-  padding: clamp(1rem, 2vw, 1rem) clamp(0rem,2vw,0rem);
+  margin-top: -6px;
+  padding: clamp(1rem, 2vw, 1rem) clamp(0rem, 2vw, 0rem);
   border-top: 2px solid #e6e6e6;
   font-size: 12px;
 }
-.priority-container .priority-progress small{
+
+.level-container .progress small {
   position: relative;
-  top:1.5px;
+  top: 1.5px;
   font-size: 20px;
-  color:#1185f2;
+  color: #1185f2;
 }
-.priority-container .priority-pending small{
+
+.level-container .pending small {
   position: relative;
-  top:1.5px;
+  top: 1.5px;
   font-size: 20px;
-  color:#fa9e2d;
+  color: #fa9e2d;
 }
-.priority-container .priority-completed small{
+
+.level-container .completed small {
   position: relative;
-  top:1.5px;
+  top: 1.5px;
   font-size: 20px;
-  color:#00ba85;
+  color: #00ba85;
 }
-.priority-container span{
-  font-size:19px;
+
+.level-container span {
+  font-size: 19px;
   position: relative;
   bottom: 1.7px;
 }
 
-.Priority-high {
+.high {
   color: rgb(245, 66, 69);
   text-transform: uppercase;
   background-color: rgb(255, 237, 237);
@@ -442,8 +468,8 @@ select,textarea {
   align-items: center;
 }
 
-.Priority-medium {
-  color:#fa9e2d;
+.medium {
+  color: #fa9e2d;
   text-transform: uppercase;
   background-color: rgb(255, 245, 235);
   border-radius: .9rem;
@@ -452,10 +478,11 @@ select,textarea {
   display: flex;
   align-items: center;
 }
-.Priority-low {
-  color:#00ba85;
+
+.low {
+  color: #00ba85;
   text-transform: uppercase;
-  background-color:rgb(228, 247, 242);
+  background-color: rgb(228, 247, 242);
   border-radius: .9rem;
   padding: 4px 20px;
   font-weight: 700;
@@ -463,10 +490,7 @@ select,textarea {
   align-items: center;
 }
 
-
-
-
-/* FOOTER */
+/* Footer */
 .footer {
   background: #fafbfc;
   background-color: #fff;
@@ -475,7 +499,6 @@ select,textarea {
   color: #1a1a1a;
 
 }
-
 /* Grid Layout*/
 .footer-container {
   display: grid;
@@ -483,7 +506,6 @@ select,textarea {
   gap: clamp(1.5rem, 3vw, 3rem);
   margin-bottom: clamp(2rem, 4vw, 3rem);
 }
-
 /* Column Titles */
 .footer-column h3,
 .footer-column h4 {
@@ -491,7 +513,6 @@ select,textarea {
   font-weight: 600;
   margin-bottom: clamp(0.6rem, 1.2vw, 1rem);
 }
-
 /* Text and Links */
 .footer-column p {
   color: #555;
@@ -529,24 +550,34 @@ select,textarea {
   margin: 0;
 }
 
+/*  TABLET VIEW */
+@media (min-width:601px) and (max-width: 992px) {
 
-/* ---------- TABLET VIEW ---------- */
-@media (max-width: 992px) {
-  /* Main layout stacks */
+  /* title */
+  .title {
+    left: 23px;
+  }
+
+  /* Main Section */
   .main-section {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+    padding: 3rem 1rem;
   }
 
-  /* Side sections */
-  .sub-section,
-  .Active-task-section {
+/* Sub sections */
+.sub-section1,
+.sub-section2 {
     margin: 0 1rem;
   }
 
-  /* Header adjustments */
+/* Header and Nav */
   .topbar_inner {
     padding: 10px 15px;
+  }
+
+  .logo {
+    margin-left: 15px;
   }
 
   .logo-name {
@@ -554,17 +585,18 @@ select,textarea {
   }
 
   /* floating label */
-  .sub-section .labelline, .sub-section .tasklabel {
-    left:45px;
+  .sub-section1 .labelline,
+  .sub-section1 .tasklabel {
+    left: 65px;
   }
 
-  /* Task cards grid */
-  .task-card-container {
+  /* Task cards  */
+  .taskcard-container {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 1rem;
   }
 
-  /* Footer grid */
+  /* Footer */
   .footer-container {
     grid-template-columns: repeat(2, 1fr);
     text-align: center;
@@ -575,32 +607,46 @@ select,textarea {
   }
 }
 
-/* ---------- MOBILE VIEW ---------- */
+/*  MOBILE VIEW  */
 @media (max-width: 600px) {
-  /* Stack layout */
-  .main-section {
-    grid-template-columns: 1fr;
-    padding:3rem 1rem;
+
+  /* title */
+  .title {
+    left: 7px;
   }
 
-  .sub-section,
-  .Active-task-section {
+  /* Main Section */
+  .main-section {
+    grid-template-columns: 1fr;
+    padding: 3rem 1rem;
+  }
+
+  /* Sub Sections */
+  .sub-section1,
+  .sub-section2 {
     padding: 1rem;
     margin: 0;
   }
 
   /* floating label */
-  .sub-section .labelline, .sub-section .tasklabel {
-    left:45px;
+  .sub-section1 .labelline,
+  .sub-section1 .tasklabel {
+    left: 45px;
   }
 
-  /* Header / Nav */
+  /* Header and Nav */
   .topbar_inner {
     padding: 10px;
+    font-size: 1rem;
+  }
+
+  .logo {
+    margin-left: 3px;
+    font-size: 1.5rem;
   }
 
   .logo-name {
-    font-size: 1rem;
+    font-size: 1.3rem;
   }
 
   .links {
@@ -609,7 +655,7 @@ select,textarea {
     gap: .5rem;
   }
 
-  /* Buttons stacked vertically */
+  /* Buttons */
   .Buttons {
     flex-direction: column;
     gap: .5rem;
@@ -618,13 +664,14 @@ select,textarea {
   .Buttons button {
     width: 100%;
   }
+
   /* Task Filters */
-  .task-filters{
+  .task-filters {
     margin-top: 1.5rem;
   }
 
   /* Task cards */
-  .task-card-container {
+  .taskcard-container {
     grid-template-columns: 1fr;
   }
 
@@ -636,7 +683,7 @@ select,textarea {
     font-size: .9rem;
   }
 
-  /* Footer single column */
+  /* Footer */
   .footer-container {
     grid-template-columns: 1fr;
     text-align: center;
@@ -655,5 +702,3 @@ select,textarea {
     font-size: .85rem;
   }
 }
-
-
