@@ -3,11 +3,9 @@
   margin: 0;
   box-sizing: border-box;
 }
-
 body {
   font-family: "Arial", sans-serif;
   background-color: #f7f9fa;
-
 }
 
 /* Logo */
@@ -214,7 +212,6 @@ textarea {
   padding-inline: 3px;
   font-size: 10px;
   color: #7b89ed;
-
 }
 
 
@@ -394,7 +391,6 @@ textarea {
   grid-template-rows: 1fr 1fr;
   gap: clamp(1rem, 2vw, 1.5rem);
   margin: 0.313rem;
-
 }
 
 .task-card {
@@ -659,7 +655,6 @@ textarea {
     margin-left: 3px;
     font-size: 1.5rem;
   }
-
   .logo-name {
     font-size: 1.3rem;
   }
@@ -675,7 +670,6 @@ textarea {
     flex-direction: column;
     gap: .5rem;
   }
-
   .Buttons button {
     width: 100%;
   }
@@ -685,7 +679,6 @@ textarea {
     width: 100%;
     margin-top: 1.5em;
   }
-
   .task-filters label {
     margin: 0;
   }
@@ -694,11 +687,9 @@ textarea {
   .taskcard-container {
     grid-template-columns: 1fr;
   }
-
   .task-card h4 {
     font-size: 1rem;
   }
-
   .task-card p {
     font-size: .9rem;
   }
@@ -707,21 +698,17 @@ textarea {
   .footer {
     padding: 2rem 0;
   }
-
   .footer-container {
     grid-template-columns: 1fr;
     text-align: center;
     gap: 1rem;
   }
-
   .footer-column {
     margin-bottom: 1rem;
   }
-
   .footer-column h4 {
     font-size: 1rem;
   }
-
   .footer-bottom p {
     font-size: .85rem;
   }
