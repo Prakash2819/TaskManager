@@ -367,7 +367,6 @@ textarea {
 
 .task-filters label {
   text-decoration: none;
-  margin-left: 1rem;
   padding: clamp(0.25rem, 2vw, 0.35rem) clamp(0.9rem, 2vw, 0.9rem);
   color: black;
   border: 2px solid rgb(232, 234, 237);
