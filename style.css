@@ -350,6 +350,7 @@ textarea {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+  margin: 0 -10px;
 }
 
 .sub-section2-navbar {
