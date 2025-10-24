@@ -617,7 +617,10 @@ textarea {
 
   /* Main Section */
   .main-section {
-    grid-template-columns: 1fr;
+    display: flex;               
+    flex-direction: column;
+    align-items: stretch;             
+    overflow: hidden;
     padding: 3rem 1rem;
   }
 
