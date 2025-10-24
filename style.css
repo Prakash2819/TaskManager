@@ -672,6 +672,9 @@ textarea {
   .task-filters {
     margin-top: 1.5rem;
   }
+  .task-filters label {
+    margin: 0;                      
+  }
 
   /* Task cards */
   .taskcard-container {
