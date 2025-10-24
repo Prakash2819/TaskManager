@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family:"Arial", sans-serif;
+  font-family: "Arial", sans-serif;
   background-color: #f7f9fa;
 
 }
@@ -82,6 +82,7 @@ body {
   background-color: #f2f3f5;
   border-radius: 6px;
 }
+
 .menu-toggle {
   display: none;
 }
@@ -108,6 +109,7 @@ body {
   .links li {
     padding: 1rem 1rem;
   }
+
   .menu-toggle:checked~.links {
     display: flex;
   }
@@ -350,6 +352,7 @@ textarea {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
+
 }
 
 .sub-section2-navbar {
@@ -362,12 +365,12 @@ textarea {
 
 .task-filters {
   display: flex;
-  gap:1rem;
+  gap: 1rem;
 }
 
 .task-filters label {
-  flex:1;
-  text-align:center;
+  flex: 1;
+  text-align: center;
   text-decoration: none;
   padding: clamp(0.25rem, 2vw, 0.35rem) clamp(0.9rem, 2vw, 0.9rem);
   color: black;
@@ -415,11 +418,14 @@ textarea {
   margin-bottom: 0.5rem;
   color: #757575;
 }
-.task-card .calender-img,.contact-img{
-  vertical-align:middle;
+
+.task-card .calender-img,
+.contact-img {
+  vertical-align: middle;
   width: 17px;
 }
-.task-card:hover{
+
+.task-card:hover {
   transform: translatey(-5px);
 }
 
@@ -499,15 +505,17 @@ textarea {
   border-top: 1px solid #e6e6e6;
   padding: clamp(1.5rem, 4vw, 2rem) clamp(10rem, 10vw, 12rem);
   color: #1a1a1a;
-
 }
+
 /* Grid Layout*/
 .footer-container {
   display: grid;
+  text-align: center;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: clamp(1.5rem, 3vw, 3rem);
-  margin-bottom: clamp(2rem, 4vw, 3rem);
+  margin-bottom: clamp(1rem, 3vw, 2rem);
 }
+
 /* Column Titles */
 .footer-column h3,
 .footer-column h4 {
@@ -515,6 +523,7 @@ textarea {
   font-weight: 600;
   margin-bottom: clamp(0.6rem, 1.2vw, 1rem);
 }
+
 /* Text and Links */
 .footer-column p {
   white-space: nowrap;
@@ -568,13 +577,13 @@ textarea {
     padding: 3rem 1rem;
   }
 
-/* Sub sections */
-.sub-section1,
-.sub-section2 {
+  /* Sub sections */
+  .sub-section1,
+  .sub-section2 {
     margin: 0 1rem;
   }
 
-/* Header and Nav */
+  /* Header and Nav */
   .topbar_inner {
     padding: 10px 15px;
   }
@@ -600,9 +609,6 @@ textarea {
   }
 
   /* Footer */
-  .footer{
-    padding: 2rem 0;
-  }
   .footer-container {
     grid-template-columns: repeat(2, 1fr);
     text-align: center;
@@ -623,9 +629,9 @@ textarea {
 
   /* Main Section */
   .main-section {
-    display: flex;               
+    display: flex;
     flex-direction: column;
-    align-items: stretch;             
+    align-items: stretch;
     overflow: hidden;
     padding: 3rem 1rem;
   }
@@ -676,11 +682,12 @@ textarea {
 
   /* Task Filters */
   .task-filters {
-    width:100%;
-    margin-top: 1.5rem;
+    width: 100%;
+    margin-top: 1.5em;
   }
+
   .task-filters label {
-    margin: 0;                      
+    margin: 0;
   }
 
   /* Task cards */
@@ -697,9 +704,10 @@ textarea {
   }
 
   /* Footer */
-  .footer{
+  .footer {
     padding: 2rem 0;
   }
+
   .footer-container {
     grid-template-columns: 1fr;
     text-align: center;
