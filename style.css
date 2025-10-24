@@ -362,6 +362,7 @@ textarea {
 
 .task-filters {
   display: flex;
+  gap:1rem;
 }
 
 .task-filters label {
