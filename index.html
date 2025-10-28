@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
+
 <body>
     <!--Top Navigation-->
     <header class="topbar">
@@ -20,9 +22,9 @@
             <input type="checkbox" id="menu-toggle" class="menu-toggle">
             <label for="menu-toggle" class="menu-icon">☰</label>
             <ul class="links">
-                <li><a href="#" class="active">Dashboard</a></li>
-                <li><a href="#">Tasks</a></li>
-                <li><a href="#">Profile</a></li>
+                <li><a href="" class="active">Dashboard</a></li>
+                <li><a href="task.html">Tasks</a></li>
+                <li><a href="profile.html">Profile</a></li>
             </ul>
         </nav>
     </header>
@@ -34,118 +36,123 @@
         <section class="main-section">
             <section class="sub-section1">
                 <h3 class="Heading"> 📝 Create New Task</h3>
-                <div class="container">
-                    <div class="input-text">
-                        <input type="text" placeholder="Task name *" />
-                        <input type="email" placeholder="Assigne email *" />
-                        <input type="date" class="Number" name="Date" />
-                        <label class="labelline">Due Date *</label>
-                    </div>
+                <form>
+                    <div class="container">
+                        <div class="input-text">
+                            <input type="text" placeholder="Task name *" required />
+                            <input type="email" placeholder="Assigne email *" required />
+                            <input type="date" class="Number" id="Number" name="Date" required />
+                            <label class="labelline">Due Date *</label>
+                        </div>
 
-                    <div class="input-time">
-                        <input type="time" class="Number" name="Time" />
-                        <label class="labelline">Due Time</label>
-                    </div>
-                    <!--Task level-->
-                    <div>
-                        <select name="" class="Number">
-                            <option value="1">Low Priority</option>
-                            <option value="2">High Priority</option>
-                            <option value="3">Medium Priority</option>
-                        </select>
-                        <label class="labelline">Priority Level *</label>
-                    </div>
-                    <!--Floating Label-->
-                    <div class="Duration">
-                        <input type="number" name="Number" class="Number" min="1" max="100">
-                        <label class="labelline">Estimated Hours</label>
+                        <div class="input-time">
+                            <input type="time" class="Number" id="Number" name="Time" />
+                            <label class="labelline">Due Time</label>
+                        </div>
+                        <!--Task level-->
+                        <div class="Priority-field">
+                            <select name="" class="Number" id="Number" required>
+                                <!-- <option value="" disabled selected hidden></option> -->
+                                <option value="1">Low Priority</option>
+                                <option value="2">High Priority</option>
+                                <option value="3">Medium Priority</option>
+                            </select>
+                            <label class="labelline">Priority Level *</label>
+                        </div>
+                        <!--Floating Label-->
+                        <div class="Duration">
+                            <input type="number" name="Number" class="Number" min="1" max="100"
+                                onkeydown="return event.key !== 'e' && event.key !== 'E' && event.key !== '+' && event.key !== '-'">
+                            <label class="labelline">Estimated Hours</label>
+                        </div>
 
-                    </div>
+                        <div class="project-url">
+                            <input type="url" placeholder="Project URL">
+                        </div>
 
-                    <div class="project-url">
-                        <input type="url" placeholder="Project URL">
-                    </div>
+                        <div class="task-Description">
+                            <textarea placeholder="Task-Description"></textarea>
+                        </div>
+                        <!--Task progress bar-->
+                        <div class="task-progress">
+                            <label for="range">Task Progress</label> <br>
+                            <input type="range" name="range" min="0" max="100" value="0" class="color-range"><br>
+                            <h5>0%</h5>
+                        </div>
+                        <!--Task color bar-->
+                        <div class="task-color">
+                            <label for="color">Task Color</label> <br>
+                            <input type="color" name="color" class="color-pick">
+                        </div>
+                        <!--Task type-->
+                        <div class="task-type">
+                            <label for="" class="task-type-label">Task Type</label> <br>
+                            <div class="checks">
+                                <input type="checkbox" class="check" id="check1">
+                                <label class="check" for="check1">Bug Fix</label>
 
-                    <div class="task-Description">
-                        <textarea></textarea>
-                        <label class="tasklabel">Task-Description</label>
-                    </div>
-                    <!--Task progress bar-->
-                    <div class="task-progress">
-                        <label for="range">Task Progress</label> <br>
-                        <input type="range" name="range" min="0" max="100" value="0" class="color-range"><br>
-                        <h5>0%</h5>
-                    </div>
-                    <!--Task color bar-->
-                    <div class="task-color">
-                        <label for="color">Task Color</label> <br>
-                        <input type="color" name="color" class="color-pick">
-                    </div>
-                    <!--Task type-->
-                    <div class="task-type">
-                        <label for="">Task Type</label> <br>
-                        <input type="checkbox" class="check">
-                        <label for="c1">Bug Fix</label>
+                                <input type="checkbox" class="check" id="check2">
+                                <label class="check" for="check2">Feature</label> <br>
 
-                        <input type="checkbox" class="check">
-                        <label for="c2">Feature</label> <br>
+                                <input type="checkbox" class="check" id="check3">
+                                <label class="check" for="check3">Enhancement</label>
+                            </div>
+                        </div>
+                        <!--Task status-->
+                        <div class="task-status">
+                            <label for="" class="task-status-label">Status</label> <br>
+                            <div class="radios">
+                                <input type="radio" name="Status" class="radio" id="radio1">
+                                <label class="radio" for="radio1">Pending</label>
 
-                        <input type="checkbox" class="check">
-                        <label for="c3">Enhancement</label>
-                    </div>
-                    <!--Task status-->
-                    <div class="task-status">
-                        <label for="">Status</label> <br>
-                        <input type="radio" name="Status" class="radio">
-                        <label for="">Pending</label>
+                                <input type="radio" name="Status" class="radio" id="radio2">
+                                <label class="radio" for="radio2">In Progress</label> <br>
 
-                        <input type="radio" name="Status" class="radio">
-                        <label for="">In Progress</label> <br>
-
-                        <input type="radio" name="Status" class="radio">
-                        <label for="">Completed</label>
+                                <input type="radio" name="Status" class="radio" id="radio3">
+                                <label class="radio" for="radio3">Completed</label>
+                            </div>
+                        </div>
+                        <!--Upload section-->
+                        <div class="upload-attachments">
+                            <form action="#" method="post" enctype="multipart/form-data">
+                                <label class="label">
+                                    <input type="file" name="attachments" multiple
+                                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                                    <p><i class="fa-solid fa-paperclip"></i> Click to upload attachments</p>
+                                    <small>Supported: PDF, DOC, Images</small>
+                                </label>
+                            </form>
+                        </div>
+                        <!--Buttons-->
+                        <div class="Buttons">
+                            <button type="submit"><span>&#10003</span> Create Task</button>
+                            <button type="reset" class="Reset-button"><span>&#10006</span> <br> Reset</button>
+                        </div>
                     </div>
-                    <!--Upload section-->
-                    <div class="upload-attachments">
-                        <form action="#" method="post" enctype="multipart/form-data">
-                            <label class="label">
-                                <input type="file" name="attachments" multiple accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
-                                <p><i class="fa-solid fa-paperclip"></i> Click to upload attachments</p>
-                                <small>Supported: PDF, DOC, Images</small>
-                            </label>
-                        </form>
-                    </div>
-                    <!--Buttons-->
-                    <div class="Buttons">
-                        <button><span>&#10003</span> Create Task</button>
-                        <button class="Reset-button"><span>&#10006</span> <br> Reset</button>
-                    </div>
-                </div>
+                </form>
             </section>
             <!-- Sub Section 2 -->
             <section class="sub-section2">
+                <input type="radio" name="priority" id="All" checked>
+                <input type="radio" name="priority" id="High">
+                <input type="radio" name="priority" id="Medium">
+                <input type="radio" name="priority" id="Low">
                 <div class="sub-section2-navbar">
                     <h3>&#9989 Active Tasks</h3>
                     <div class="task-filters">
-                        <input type="radio" name="priority" id="all" checked>
-                        <label for="all">All</label>
-
-                        <input type="radio" name="priority" id="high">
-                        <label for="high">High</label>
-
-                        <input type="radio" name="priority" id="medium">
-                        <label for="medium">Medium</label>
-
-                        <input type="radio" name="priority" id="low">
-                        <label for="low">Low</label>
+                        <label for="All">All</label>
+                        <label for="High">High</label>
+                        <label for="Medium">Medium</label>
+                        <label for="Low">Low</label>
                     </div>
                 </div>
                 <div class="taskcard-container">
                     <!--Task Card 1-->
-                    <div class="task-card">
+                    <div class="task-card High">
                         <h4>Designing Homepage Mockup</h4><br>
                         <p>Create wireframes and high-fidelity mockups for the new homepage redesign project with modern
                             Ul elements.</p>
+                        <p></p>
                         <p><img class="calender-img" src="calender.png"> Due: Oct 20, 2025</p>
                         <p><img class="contact-img" src="contact.jpg"> Sarah Johnson</p><br>
                         <div class="level-container">
@@ -154,20 +161,22 @@
                         </div>
                     </div>
                     <!--Task Card 2-->
-                    <div class="task-card">
+                    <div class="task-card High">
                         <h4>Fix Login Authentication Bug</h4><br>
                         <p>Resolve the issue where users are logged out unexpectedly after 5 minutes of inactivity.</p>
+                        <p></p>
                         <p><img class="calender-img" src="calender.png"> Due: Oct 15, 2025</p>
                         <p><img class="contact-img" src="contact.jpg"> Michael Chen</p><br>
                         <div class="level-container">
                             <label class="high"><span>&#9679</span> High</label>
                             <label class="pending"><small>&#9679</small> Pending</label>
                         </div>
-                    <!--Task Card 3-->
+                        <!--Task Card 3-->
                     </div>
-                    <div class="task-card">
+                    <div class="task-card Medium">
                         <h4>Update Documentation</h4><br>
                         <p>Review and update the API documentation with the latest endpoint changes and examples.</p>
+                        <p></p>
                         <p><img class="calender-img" src="calender.png"> Due: Oct 25, 2025</p>
                         <p><img class="contact-img" src="contact.jpg"> Emily Rodriguez</p><br>
                         <div class="level-container">
@@ -176,9 +185,10 @@
                         </div>
                     </div>
                     <!--Task Card 4-->
-                    <div class="task-card">
+                    <div class="task-card Medium">
                         <h4>Database Performance<br>Optimization</h4><br>
                         <p>Analyze and optimize slow-running queries to improve overall database performance by 30%.</p>
+                        <p></p>
                         <p><img class="calender-img" src="calender.png"> Due: Oct 30, 2025</p>
                         <p><img class="contact-img" src="contact.jpg"> David Kim</p><br>
                         <div class="level-container">
@@ -187,9 +197,10 @@
                         </div>
                     </div>
                     <!--Task Card 5-->
-                    <div class="task-card">
+                    <div class="task-card Low">
                         <h4>Implement Dark Mode</h4><br>
                         <p>Add dark mode theme support across the application with user preference persistence</p>
+                        <p></p>
                         <p><img class="calender-img" src="calender.png"> Due: Oct 05, 2025</p>
                         <p><img class="contact-img" src="contact.jpg"> Alex Thompson</p><br>
                         <div class="level-container">
@@ -198,10 +209,11 @@
                         </div>
                     </div>
                     <!--Task Card 6-->
-                    <div class="task-card">
+                    <div class="task-card High">
                         <h4>User Testing Session</h4><br>
                         <p>Conduct user testing sessions with 10 participants to gather feedback on the new interface.
                         </p>
+                        <p></p>
                         <p><img class="calender-img" src="calender.png"> Due: Oct 28, 2025</p>
                         <p><img class="contact-img" src="contact.jpg"> Lisa Anderson</p><br>
                         <div class="level-container">
@@ -212,7 +224,7 @@
                 </div>
             </section>
         </section>
-</main>
+    </main>
 
     <!--Footer-->
     <footer class="footer">
