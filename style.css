@@ -310,15 +310,21 @@ select:focus {
 
 /*upload-attachments*/
 .upload-attachments {
+  color: #666;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.upload-attachments .upload-label {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  cursor: pointer;
   border: 2px dashed #ccc;
   border-radius: 8px;
   padding: 1rem;
   margin-top: 1rem;
   margin-bottom: 2rem;
-  text-align: center;
-  color: #666;
-  font-size: 0.9rem;
-  cursor: pointer;
 }
 
 .upload-attachments p {
@@ -331,11 +337,16 @@ select:focus {
   display: none;
 }
 
+.upload-attachments .upload-label:hover {
+  border-color: #7661ed;
+}
+
 /* Button */
 .sub-section1 .Buttons {
   display: flex;
   flex-direction: row;
   white-space: nowrap;
+  vertical-align: middle;
   justify-content: space-around;
   gap: 1rem;
 }
@@ -489,37 +500,30 @@ select:focus {
   bottom: 1.7px;
 }
 
-.high {
-  color: rgb(245, 66, 69);
+.high,
+.medium,
+.low {
   text-transform: uppercase;
-  background-color: rgb(255, 237, 237);
   border-radius: .9rem;
   padding: 4px 20px;
   font-weight: 700;
   display: flex;
   align-items: center;
+}
+
+.high {
+  color: rgb(245, 66, 69);
+  background-color: rgb(255, 237, 237);
 }
 
 .medium {
   color: #fa9e2d;
-  text-transform: uppercase;
   background-color: rgb(255, 245, 235);
-  border-radius: .9rem;
-  padding: 4px 20px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
 }
 
 .low {
   color: #00ba85;
-  text-transform: uppercase;
   background-color: rgb(228, 247, 242);
-  border-radius: .9rem;
-  padding: 4px 20px;
-  font-weight: 700;
-  display: flex;
-  align-items: center;
 }
 
 /* Footer */
@@ -593,7 +597,7 @@ a:hover {
 }
 
 /*  TABLET VIEW */
-@media (min-width:601px) and (max-width: 992px) {
+@media (min-width:601px) and (max-width: 1024px) {
   .main {
     margin-bottom: 1rem;
   }
@@ -690,7 +694,9 @@ a:hover {
     padding: 0;
   }
 }
-@media (min-width:1024px) {
+
+@media (min-width: 992px) {
+
   /* Task cards  */
   .taskcard-container {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -819,5 +825,45 @@ a:hover {
 
   .footer-bottom p {
     font-size: .85rem;
+  }
+}
+
+@media (max-width:340px) {
+  .taskcard-container {
+    width: 100%;
+    margin: 0;
+  }
+
+  .task-card {
+    padding: 1em;
+  }
+
+  .task-filters {
+    width: 100%;
+  }
+
+  .task-filters label {
+    text-align: center;
+    padding: clamp(0.25rem, 2vw, 0.35rem);
+
+  }
+
+  /* Button */
+  .sub-section1 .Buttons {
+    width: 100%;
+    gap: 0.8rem;
+  }
+
+  .sub-section1 button {
+    padding: clamp(8px, 2vw, 10px) clamp(20px, 3vw, 25px);
+    width: 100%;
+  }
+
+  .sub-section1 .Reset-button {
+    padding: clamp(5px, 2vw, 7px) clamp(0.938rem, 3vw, 1.25rem);
+  }
+
+  .level-container {
+    gap: 1rem;
   }
 }
