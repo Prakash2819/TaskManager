@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     <title>Task Manager</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
@@ -22,9 +20,9 @@
             <input type="checkbox" id="menu-toggle" class="menu-toggle">
             <label for="menu-toggle" class="menu-icon">☰</label>
             <ul class="links">
-                <li><a href="" class="active">Dashboard</a></li>
-                <li><a href="task.html">Tasks</a></li>
-                <li><a href="profile.html">Profile</a></li>
+                <li><a href="#" class="active">Dashboard</a></li>
+                <li><a href="#">Tasks</a></li>
+                <li><a href="#">Profile</a></li>
             </ul>
         </nav>
     </header>
@@ -61,9 +59,8 @@
                         </div>
                         <!--Floating Label-->
                         <div class="Duration">
-                            <input type="number" name="Number" class="Number" min="1" max="100"
-                                onkeydown="return event.key !== 'e' && event.key !== 'E' && event.key !== '+' && event.key !== '-'">
-                            <label class="labelline">Estimated Hours</label>
+                            <input type="number" name="EstimatedHours" class="Number">
+                            <label for="estimatedHours" class="labelline">Estimated Hours</label>
                         </div>
 
                         <div class="project-url">
@@ -114,14 +111,12 @@
                         </div>
                         <!--Upload section-->
                         <div class="upload-attachments">
-                            <form action="#" method="post" enctype="multipart/form-data">
-                                <label class="label">
-                                    <input type="file" name="attachments" multiple
-                                        accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
-                                    <p><i class="fa-solid fa-paperclip"></i> Click to upload attachments</p>
-                                    <small>Supported: PDF, DOC, Images</small>
-                                </label>
-                            </form>
+                            <input type="file" id="attachments" name="attachments" multiple
+                                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
+                            <label for="attachments" class="upload-label">
+                                <p><i class="fa-solid fa-paperclip"></i> Click to upload attachments</p>
+                                <small>Supported: PDF, DOC, Images</small>
+                            </label>
                         </div>
                         <!--Buttons-->
                         <div class="Buttons">
@@ -186,7 +181,7 @@
                     </div>
                     <!--Task Card 4-->
                     <div class="task-card Medium">
-                        <h4>Database Performance<br>Optimization</h4><br>
+                        <h4>Database Performance Optimization</h4><br>
                         <p>Analyze and optimize slow-running queries to improve overall database performance by 30%.</p>
                         <p></p>
                         <p><img class="calender-img" src="calender.png"> Due: Oct 30, 2025</p>
@@ -225,7 +220,6 @@
             </section>
         </section>
     </main>
-
     <!--Footer-->
     <footer class="footer">
         <div class="footer-container">
