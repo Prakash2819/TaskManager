@@ -556,7 +556,6 @@ select:focus {
 .footer-column p {
   white-space: nowrap;
   color: #555;
-  cursor: pointer;
   font-size: clamp(0.8rem, 1.4vw, 0.95rem);
   line-height: 1.6;
 }
@@ -578,8 +577,7 @@ select:focus {
   transition: color 0.2s ease;
 }
 
-.footer-column p:hover,
-a:hover {
+.footer-column a:hover {
   color: #7661ed;
 }
 
