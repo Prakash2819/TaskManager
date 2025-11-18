@@ -363,7 +363,7 @@ select:focus {
 }
 
 .sub-section1 button span {
-  font-size: 0.625rem;
+  font-size: 0.800rem;
 }
 
 .sub-section1 .Reset-button {
@@ -415,8 +415,8 @@ select:focus {
 /* Task Card */
 .taskcard-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows:repeat(2,1fr);
   gap: clamp(1rem, 2vw, 1.5rem);
   margin: 0.313rem;
 }
@@ -678,7 +678,7 @@ select:focus {
 
   /* Task cards  */
   .taskcard-container {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
 
@@ -697,7 +697,7 @@ select:focus {
 
   /* Task cards  */
   .taskcard-container {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
 }
