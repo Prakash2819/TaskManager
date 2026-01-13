@@ -34,12 +34,12 @@
         <section class="main-section">
             <section class="sub-section1">
                 <h3 class="Heading"> &#128221 Create New Task</h3>
-                <form>
+                <form id="form">
                     <div class="container">
                         <div class="input-text">
-                            <input type="text" placeholder="Task name *" required />
-                            <input type="email" placeholder="Assigne email *" required />
-                            <input type="date" class="float-label" id="cursor" name="Date" required />
+                            <input class="task-name" type="text" placeholder="Task name *"  />
+                            <input type="email" placeholder="Assigne email *"  />
+                            <input class="date" type="date" class="float-label" id="cursor" name="Date" />
                             <label class="labelline">Due Date *</label>
                         </div>
 
@@ -49,11 +49,11 @@
                         </div>
                         <!--Task level-->
                         <div class="Priority-field">
-                            <select name="" class="float-label" id="cursor" required>
+                            <select name="" class="float-label" id="cursor">
                                 <option value="" hidden>Select option</option>
-                                <option value="1">Low Priority</option>
-                                <option value="2">High Priority</option>
-                                <option value="3">Medium Priority</option>
+                                <option value="Low">Low Priority</option>
+                                <option value="High">High Priority</option>
+                                <option value="Medium">Medium Priority</option>
                             </select>
                             <label class="labelline">Priority Level *</label>
                         </div>
@@ -99,13 +99,13 @@
                         <div class="task-status">
                             <label for="" class="task-status-label">Status</label> <br>
                             <div class="radios">
-                                <input type="radio" name="Status" class="radio" id="radio1">
+                                <input type="radio" name="Status" value="Pending" class="radio" id="radio1">
                                 <label class="radio" for="radio1">Pending</label>
 
-                                <input type="radio" name="Status" class="radio" id="radio2">
+                                <input type="radio" name="Status" value="In Progress" class="radio" id="radio2">
                                 <label class="radio" for="radio2">In Progress</label> <br>
 
-                                <input type="radio" name="Status" class="radio" id="radio3">
+                                <input type="radio" name="Status" value="Completed" class="radio" id="radio3">
                                 <label class="radio" for="radio3">Completed</label>
                             </div>
                         </div>
@@ -126,6 +126,16 @@
                     </div>
                 </form>
             </section>
+
+            <!--PopUp Box-->
+            <div class="popup-box">
+            <div class="popup">
+                <div class="closebox-title">
+                <h4>Edit Task</h4>
+                <span class="close">&times;</span></div>
+                <iframe src="form.html" title="Iframe Example"></iframe>   
+            </div>
+            </div>
             <!-- Sub Section 2 -->
             <section class="sub-section2">
                 <input type="radio" name="priority" id="All" checked>
@@ -144,7 +154,7 @@
                 <div class="taskcard-container">
                     <!--Task Card 1-->
                     <div class="task-card High">
-                        <h4>Designing Homepage Mockup</h4><br>
+                        <h4>Designing Homepage Mockup <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></h4><br>
                         <p>Create wireframes and high-fidelity mockups for the new homepage redesign project with modern
                             Ul elements.</p>
                         <p></p>
@@ -157,7 +167,7 @@
                     </div>
                     <!--Task Card 2-->
                     <div class="task-card High">
-                        <h4>Fix Login Authentication Bug</h4><br>
+                        <h4>Fix Login Authentication Bug <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></h4><br>
                         <p>Resolve the issue where users are logged out unexpectedly after 5 minutes of inactivity.</p>
                         <p></p>
                         <p><img class="calender-img" src="calender.png"> Due: Oct 15, 2025</p>
@@ -169,7 +179,7 @@
                         <!--Task Card 3-->
                     </div>
                     <div class="task-card Medium">
-                        <h4>Update Documentation</h4><br>
+                        <h4>Update Documentation <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></h4><br>
                         <p>Review and update the API documentation with the latest endpoint changes and examples.</p>
                         <p></p>
                         <p><img class="calender-img" src="calender.png"> Due: Oct 25, 2025</p>
@@ -181,7 +191,7 @@
                     </div>
                     <!--Task Card 4-->
                     <div class="task-card Medium">
-                        <h4>Database Performance Optimization</h4><br>
+                        <h4>Database Performance Optimization <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></h4><br>
                         <p>Analyze and optimize slow-running queries to improve overall database performance by 30%.</p>
                         <p></p>
                         <p><img class="calender-img" src="calender.png"> Due: Oct 30, 2025</p>
@@ -193,7 +203,7 @@
                     </div>
                     <!--Task Card 5-->
                     <div class="task-card Low">
-                        <h4>Implement Dark Mode</h4><br>
+                        <h4>Implement Dark Mode <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></h4><br>
                         <p>Add dark mode theme support across the application with user preference persistence</p>
                         <p></p>
                         <p><img class="calender-img" src="calender.png"> Due: Oct 05, 2025</p>
@@ -205,7 +215,7 @@
                     </div>
                     <!--Task Card 6-->
                     <div class="task-card High">
-                        <h4>User Testing Session</h4><br>
+                        <h4>User Testing Session <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></h4><br>
                         <p>Conduct user testing sessions with 10 participants to gather feedback on the new interface.
                         </p>
                         <p></p>
@@ -259,5 +269,7 @@
             <p>© 2025 TaskManager. All rights reserved. Built with ❤️ for productivity.</p>
         </div>
     </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>
