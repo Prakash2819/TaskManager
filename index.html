@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,6 +27,8 @@
             </ul>
         </nav>
     </header>
+    <div class="notify-box">
+    </div>
     <main class="main">
         <div class="title">
             <div class="title-logo"></div>
@@ -37,14 +40,15 @@
                 <form id="form">
                     <div class="container">
                         <div class="input-text">
-                            <input class="task-name" type="text" placeholder="Task name *"  />
-                            <input type="email" placeholder="Assigne email *"  />
-                            <input class="date" type="date" class="float-label" id="cursor" name="Date" />
+                            <input class="user-name" type="text" placeholder="User name *">
+                            <input class="task-name" type="text" placeholder="Task name *" >
+                            <input class="email" type="email" placeholder="Assignee email *" >
+                            <input class="date" type="date" class="float-label" id="cursor" name="Date" >
                             <label class="labelline">Due Date *</label>
                         </div>
 
                         <div class="input-time">
-                            <input type="time" class="float-label" id="cursor" name="Time" />
+                            <input type="time" class="float-label time" id="cursor">
                             <label class="labelline">Due Time</label>
                         </div>
                         <!--Task level-->
@@ -59,12 +63,12 @@
                         </div>
                         <!--Floating Label-->
                         <div class="Duration">
-                            <input type="number" name="EstimatedHours" class="float-label">
+                            <input type="number" name="EstimatedHours" class="float-label hour">
                             <label for="estimatedHours" class="labelline">Estimated Hours</label>
                         </div>
 
                         <div class="project-url">
-                            <input type="url" placeholder="Project URL">
+                            <input class="url" type="url" placeholder="Project URL">
                         </div>
 
                         <div class="task-Description">
@@ -74,13 +78,13 @@
                         <div class="task-progress">
                             <label for="range">Task Progress</label> <br>
                             <input type="range" name="range" min="0" max="100" value="0" class="color-range"><br>
-                            <h5>0%</h5>
+                            <h5 class="percentage">0%</h5>
                         </div>
                         <!--Task color bar-->
-                        <div class="task-color">
+                        <!-- <div class="task-color">
                             <label for="color">Task Color</label> <br>
                             <input type="color" name="color" class="color-pick">
-                        </div>
+                        </div> -->
                         <!--Task type-->
                         <div class="task-type">
                             <label for="" class="task-type-label">Task Type</label> <br>
@@ -110,14 +114,14 @@
                             </div>
                         </div>
                         <!--Upload section-->
-                        <div class="upload-attachments">
+                        <!-- <div class="upload-attachments">
                             <input type="file" id="attachments" name="attachments" multiple
                                 accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
                             <label for="attachments" class="upload-label">
                                 <p><i class="fa-solid fa-paperclip"></i> Click to upload attachments</p>
                                 <small>Supported: PDF, DOC, Images</small>
                             </label>
-                        </div>
+                        </div> -->
                         <!--Buttons-->
                         <div class="Buttons">
                             <button type="submit"><span>&#10003</span> Create Task</button>
@@ -129,12 +133,77 @@
 
             <!--PopUp Box-->
             <div class="popup-box">
-            <div class="popup">
-                <div class="closebox-title">
-                <h4>Edit Task</h4>
-                <span class="close">&times;</span></div>
-                <iframe src="form.html" title="Iframe Example"></iframe>   
-            </div>
+                <div class="popup">
+                    <div class="closebox-title">
+                        <h4>Edit Task</h4>
+                        <span class="close">&times;</span>
+                    </div>
+                    <form class="edit-form">
+                        <label for="edit-userName">User Name</label>
+                        <input type="text" id="edit-userName">
+                        <label for="edit-taskName">Task Name</label>
+                        <input type="text" id="edit-taskName">
+
+                        <label for="edit-email">Email</label>
+                        <input type="email" id="edit-email">
+
+                        <label for="edit-date">Due Date</label>
+                        <input type="date" id="edit-date">
+
+                        <label for="edit-time">Due Time</label>
+                        <input type="time" id="edit-time">
+
+                        <label>Priority Level</label>
+                        <select class="edit-priority">
+                            <option value="Low">Low Priority</option>
+                            <option value="High">High Priority</option>
+                            <option value="Medium">Medium Priority</option>
+                        </select>
+
+                        <label for="edit-estimatedHours">Estimated Hours</label>
+                        <input type="number" id="edit-estimatedHours">
+
+                        <label for="edit-url">Project URL</label>
+                        <input type="url" id="edit-url">
+
+                        <label>Description</label>
+                        <textarea id="edit-description"></textarea>
+
+                        <label for="range">Task Progress</label>
+                        <div class="edit-progress">
+                        <input type="range" name="range" min="0" max="100" value="0" id="edit-range">
+                        <h5 class="edit-percent">0%</h5></div>
+
+                        <div class="edit-taskType">
+                        <label>Task Type</label>
+                        <div class="edit-checks">
+                        <input type="checkbox" class="edit-check" id="edit-check1">
+                        <label  for="edit-check1">Bug Fix</label>
+
+                        <input type="checkbox" class="edit-check" id="edit-check2">
+                        <label  for="edit-check2">Feature</label>
+
+                        <input type="checkbox" class="edit-check" id="edit-check3">
+                        <label  for="edit-check3">Enhancement</label>
+                        </div>
+                        </div>
+                        <div class="edit-status">  
+                        <label>Status</label>
+                        <div class="edit-radios">
+                        <input type="radio" name="status" value="Pending" class="edit-radio" id="edit-radio1">
+                        <label  for="edit-radio1">Pending</label>
+
+                        <input type="radio" name="status" value="In Progress" class="edit-radio" id="edit-radio2">
+                        <label for="edit-radio2">In Progress</label> <br>
+
+                        <input type="radio" name="status" value="Completed" class="edit-radio" id="edit-radio3">
+                        <label for="edit-radio3">Completed</label></div></div>
+
+                        <div class="edit-buttons">
+                        <button class="cancel-btn">Cancel</button>
+                        <button class="save-btn">Save Changes</button></div>
+                    </form>
+                </div>
             </div>
             <!-- Sub Section 2 -->
             <section class="sub-section2">
@@ -145,16 +214,17 @@
                 <div class="sub-section2-navbar">
                     <h3>&#9989 Active Tasks</h3>
                     <div class="task-filters">
-                        <label for="All">All</label>
-                        <label for="High">High</label>
-                        <label for="Medium">Medium</label>
-                        <label for="Low">Low</label>
+                        <label for="All">All (<span id="all-count">0</span>)</label>
+                        <label for="High">High (<span id="high-count">0</span>)</label>
+                        <label for="Medium">Medium (<span id="medium-count">0</span>)</label>
+                        <label for="Low">Low (<span id="low-count">0</span>)</label>
                     </div>
                 </div>
                 <div class="taskcard-container">
                     <!--Task Card 1-->
                     <div class="task-card High">
-                        <h4>Designing Homepage Mockup <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></h4><br>
+                        <h4>Designing Homepage Mockup <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></h4>
+                        <br>
                         <p>Create wireframes and high-fidelity mockups for the new homepage redesign project with modern
                             Ul elements.</p>
                         <p></p>
@@ -167,7 +237,8 @@
                     </div>
                     <!--Task Card 2-->
                     <div class="task-card High">
-                        <h4>Fix Login Authentication Bug <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></h4><br>
+                        <h4>Fix Login Authentication Bug <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i>
+                        </h4><br>
                         <p>Resolve the issue where users are logged out unexpectedly after 5 minutes of inactivity.</p>
                         <p></p>
                         <p><img class="calender-img" src="calender.png"> Due: Oct 15, 2025</p>
@@ -191,7 +262,8 @@
                     </div>
                     <!--Task Card 4-->
                     <div class="task-card Medium">
-                        <h4>Database Performance Optimization <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></h4><br>
+                        <h4>Database Performance Optimization <i class='far fa-trash-alt'></i> <i
+                                class='far fa-edit'></i></h4><br>
                         <p>Analyze and optimize slow-running queries to improve overall database performance by 30%.</p>
                         <p></p>
                         <p><img class="calender-img" src="calender.png"> Due: Oct 30, 2025</p>
@@ -214,7 +286,7 @@
                         </div>
                     </div>
                     <!--Task Card 6-->
-                    <div class="task-card High">
+                    <!-- <div class="task-card High">
                         <h4>User Testing Session <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></h4><br>
                         <p>Conduct user testing sessions with 10 participants to gather feedback on the new interface.
                         </p>
@@ -225,7 +297,7 @@
                             <label class="high"><span>&#9679</span>High</label>
                             <label class="completed"><small>&#9679</small> Completed</label>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </section>
         </section>
@@ -272,4 +344,5 @@
 
     <script src="script.js"></script>
 </body>
+
 </html>

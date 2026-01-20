@@ -128,6 +128,39 @@ body {
   }
 }
 
+.notify-box{
+  position:fixed;
+  right: 30px;
+  display: flex;
+  flex-direction: column;
+  z-index: 1;
+  overflow: hidden;
+  padding: 10px;
+}
+@keyframes animate {
+  from{transform: translateX(150%) }
+  to{transform: translateX(0%);}
+}
+.toast{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding:10px;
+  width: 250px;
+  gap:0.5rem;
+  background: #fff;
+  color:rgb(16, 140, 16);
+  font-weight: 500;
+  font-size:13px;
+  box-shadow: 0 0 10px rgb(0, 0, 0, 0.2);
+  border-radius:7px;
+  margin:10px 10px;
+  animation-name: animate;
+  animation-duration: 1s;
+}
+.fa-trash-arrow-up,.trash{
+  color:red;
+}
 
 /* main section */
 .main {
@@ -255,6 +288,7 @@ select:focus {
 .sub-section1 .color-range,
 .task-progress,
 .task-color {
+  border: 0px;
   padding: 0;
   font-size: 15px;
   margin-top: 10px;
@@ -291,7 +325,7 @@ select:focus {
 .task-status {
   white-space: nowrap;
   font-size: 15px;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
 /* Radio-btn */
@@ -349,6 +383,7 @@ select:focus {
   vertical-align: middle;
   justify-content: space-around;
   gap: 1rem;
+  margin-top: 10px;
 }
 
 .sub-section1 button {
@@ -388,21 +423,106 @@ select:focus {
   border-radius: 0.7rem;
   width:60%;
   height:80%;
-  padding:15px 25px;
+  scrollbar-width: none;
+  overflow-y: auto;
 }
 .closebox-title{
   display:flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid #eee;
+  padding:7px 20px;
 }
 .close{
   font-size: 25px;
   cursor: pointer;
 }
-iframe{
+.edit-form{
+  display:flex;
+  flex-direction: column;
+  gap:0.8rem;
+  font-size: small;
+  margin:10px 0px;
+  padding:10px 20px;
+}
+.edit-form input,textarea{
   width: 100%;
-  height: calc(100% - 40px);
-  border: none;
+  max-width: 100%;
+  border-radius: 6px;
+  padding:10px;
+  outline: none;
+  border:2px solid rgba(0, 0, 0, 0.158);
+}
+.edit-priority,textarea{
+  margin:0px;
+}
+.edit-form label {
+  color:#1e40af;
+}
+#edit-description{
+  height: 100px;
+}
+
+.edit-progress{
+  text-align: center;
+  color:#5768eb;
+}
+.edit-progress #edit-range{
+  border: 0px;
+  padding: 0;
+  accent-color: #5768eb;
+}
+#edit-color{
+  height:30px;
+  padding:2px;
+}
+
+.edit-taskType,.edit-status{
+  display: flex;
+  flex-direction: row;
+  accent-color: #5768eb;
+  white-space:nowrap;
+  margin: 5px 0px;
+}
+.edit-checks,.edit-radios{
+  display: flex;
+  gap:0.5rem;
+  align-items: center;
+}
+.edit-checks input,.edit-radios input{
+  margin-left:4rem;
+  height:15px;
+  width: 15px;
+  cursor: pointer;
+}
+.edit-status{
+  gap:1.35rem;
+}
+.edit-checks label,.edit-radios label{
+  cursor: pointer;
+  color:black;
+}
+.edit-buttons{
+  display: flex;
+  flex-direction: row;
+  white-space: nowrap;
+  justify-content: space-around;
+  gap: 1rem;
+  margin-top: 10px;
+}
+.edit-buttons button{
+    padding:20px 35px;
+    border:none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.cancel-btn{
+  background-color: rgb(242, 243, 245);
+  color:black;
+}
+.save-btn{
+  color: white;
+  background-color: #5768eb;
 }
 
 
@@ -435,6 +555,7 @@ iframe{
   border-radius: 0.9rem;
   font-size: clamp(0.8rem, 1vw, 0.9rem);
   cursor: pointer;
+  white-space: nowrap;
 }
 
 #All:checked~.sub-section2-navbar .task-filters label[for="All"],
