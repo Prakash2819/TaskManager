@@ -39,17 +39,32 @@
                 <h3 class="Heading"> &#128221 Create New Task</h3>
                 <form id="form">
                     <div class="container">
-                        <div class="input-text">
+                        <div>
                             <input class="user-name" type="text" placeholder="User name *">
+                            <span class="error username-error">
+                            </span>
+                        </div>
+                        <div>
                             <input class="task-name" type="text" placeholder="Task name *" >
-                            <input class="email" type="email" placeholder="Assignee email *" >
+                            <span class="error taskname-error">
+                            </span>
+                        </div>
+                        <div>
+                            <input class="email" type="text" placeholder="Assignee email *" >
+                            <span class="error email-error">
+                            </span>
+                        </div>
+                        <div>
                             <input class="date" type="date" class="float-label" id="cursor" name="Date" >
                             <label class="labelline">Due Date *</label>
+                            <span class="error date-error">
+                            </span>
                         </div>
-
                         <div class="input-time">
                             <input type="time" class="float-label time" id="cursor">
-                            <label class="labelline">Due Time</label>
+                            <label class="labelline">Due Time *</label>
+                            <span class="error time-error">
+                            </span>
                         </div>
                         <!--Task level-->
                         <div class="Priority-field">
@@ -60,19 +75,27 @@
                                 <option value="Medium">Medium Priority</option>
                             </select>
                             <label class="labelline">Priority Level *</label>
+                            <span class="error select-error">
+                            </span>
                         </div>
                         <!--Floating Label-->
                         <div class="Duration">
                             <input type="number" name="EstimatedHours" class="float-label hour">
-                            <label for="estimatedHours" class="labelline">Estimated Hours</label>
+                            <label for="estimatedHours" class="labelline">Estimated Hours *</label>
+                            <span class="error duration-error">
+                            </span>
                         </div>
 
                         <div class="project-url">
-                            <input class="url" type="url" placeholder="Project URL">
-                        </div>
+                            <input class="url" type="text" placeholder="Project URL *">
+                            <span class="error url-error">
+                            </span>
 
+                        </div>
                         <div class="task-Description">
-                            <textarea placeholder="Task-Description"></textarea>
+                            <textarea placeholder="Task-Description *"></textarea>
+                            <span class="error description-error">
+                            </span>
                         </div>
                         <!--Task progress bar-->
                         <div class="task-progress">
@@ -87,7 +110,7 @@
                         </div> -->
                         <!--Task type-->
                         <div class="task-type">
-                            <label for="" class="task-type-label">Task Type</label> <br>
+                            <label for="" class="task-type-label">Task Type *</label> <br>
                             <div class="checks">
                                 <input type="checkbox" class="check" id="check1">
                                 <label class="check" for="check1">Bug Fix</label>
@@ -98,10 +121,12 @@
                                 <input type="checkbox" class="check" id="check3">
                                 <label class="check" for="check3">Enhancement</label>
                             </div>
+                            <span class="error type-error">
+                            </span>
                         </div>
                         <!--Task status-->
                         <div class="task-status">
-                            <label for="" class="task-status-label">Status</label> <br>
+                            <label for="" class="task-status-label">Status *</label> <br>
                             <div class="radios">
                                 <input type="radio" name="Status" value="Pending" class="radio" id="radio1">
                                 <label class="radio" for="radio1">Pending</label>
@@ -112,6 +137,8 @@
                                 <input type="radio" name="Status" value="Completed" class="radio" id="radio3">
                                 <label class="radio" for="radio3">Completed</label>
                             </div>
+                            <span class="error status-error">
+                            </span>
                         </div>
                         <!--Upload section-->
                         <!-- <div class="upload-attachments">
@@ -161,7 +188,7 @@
                         </select>
 
                         <label for="edit-estimatedHours">Estimated Hours</label>
-                        <input type="number" id="edit-estimatedHours">
+                        <input type="number" id="edit-estimatedHours" min="0" max="100">
 
                         <label for="edit-url">Project URL</label>
                         <input type="url" id="edit-url">

@@ -127,7 +127,21 @@ body {
     display: flex;
   }
 }
+.error{
+  position: relative;
+  bottom:4px;
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  flex-direction:row;
+  color:red;
+  height: 6px;
+  gap:0.2rem;
+}
+.fa-circle-exclamation{
+  color:red;
 
+}
 .notify-box{
   position:fixed;
   right: 30px;
@@ -219,26 +233,16 @@ body {
   padding: 1rem;
   margin-left: clamp(-17px, 2vw, -19px);
 }
-
-.sub-section1 .container {
-  margin-top: 2px;
-}
-
 .sub-section1 input,
 select,
 textarea {
-  margin: 10px 0;
+  margin:10px 0px;
   padding: 10px;
   width: 100%;
   max-width: 100%;
   border-radius: 6px;
   outline: none;
   border: 2px solid rgba(0, 0, 0, 0.158);
-}
-
-.sub-section1 .input-text input {
-  border-radius: 5px;
-  border: 2px solid #f54245;
 }
 
 .sub-section1 input:focus,
@@ -268,7 +272,7 @@ select:focus {
 }
 
 .sub-section1 .labelline {
-  margin-top: 4px;
+  margin-top: 5.5px;
   padding-inline: 3px;
   font-size: 10px;
   color: #7b89ed;
@@ -277,6 +281,7 @@ select:focus {
 /* Textarea */
 .sub-section1 textarea {
   height: 100px;
+  margin:10px 0px;
 }
 
 .sub-section1 .task-Description textarea::placeholder {
@@ -292,7 +297,6 @@ select:focus {
   padding: 0;
   font-size: 15px;
   margin-top: 10px;
-  color: #757575;
   accent-color: #5768eb;
 }
 
@@ -383,7 +387,7 @@ select:focus {
   vertical-align: middle;
   justify-content: space-around;
   gap: 1rem;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .sub-section1 button {
@@ -397,7 +401,7 @@ select:focus {
   cursor: pointer;
 }
 
-.sub-section1 button span {
+.sub-section1 button span{
   font-size: 0.800rem;
 }
 

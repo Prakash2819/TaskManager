@@ -20,57 +20,219 @@ document.addEventListener("DOMContentLoaded", () => {
     showItem()
     count()
 })
-editForm.addEventListener("submit",(e)=>{e.preventDefault()})
+editForm.addEventListener("submit", (e) => { e.preventDefault() })
 form.addEventListener("submit", (event) => {
-    let msg =`<i class="fa-solid fa-circle-check"></i><p>Task added successfully</p>`
+    let msg = `<i class="fa-solid fa-circle-check"></i><p>Task added successfully</p>`
     event.preventDefault();
-    setItem();
-    count()
-    Notify(msg)
+    if (validate()) {
+        setItem()
+        count()
+        Notify(msg)
+        form.reset()
+    }
 })
-form.addEventListener("reset",()=>percent.textContent="0%")
+form.addEventListener("reset", () => {
+    percent.textContent = "0%"
+    resetError()})
 
-function Notify(msg){
+function Notify(msg) {
     let toast = document.createElement("div")
     toast.classList.add("toast")
     toast.innerHTML = msg
     notify.appendChild(toast);
-    setTimeout(()=>toast.remove(),2000)
+    setTimeout(() => toast.remove(), 2000)
 }
 
 
 
-function count(){
-const highCount = document.querySelectorAll(".High").length
-const mediumCount = document.querySelectorAll(".Medium").length
-const lowCount = document.querySelectorAll(".Low").length
-document.querySelector("#high-count").textContent = highCount
-document.querySelector("#medium-count").textContent = mediumCount
-document.querySelector("#low-count").textContent = lowCount
-document.querySelector("#all-count").textContent = highCount + mediumCount + lowCount
+function count() {
+    const highCount = document.querySelectorAll(".High").length
+    const mediumCount = document.querySelectorAll(".Medium").length
+    const lowCount = document.querySelectorAll(".Low").length
+    document.querySelector("#high-count").textContent = highCount
+    document.querySelector("#medium-count").textContent = mediumCount
+    document.querySelector("#low-count").textContent = lowCount
+    document.querySelector("#all-count").textContent = highCount + mediumCount + lowCount
+}
+
+//    
+const userName = document.querySelector(".user-name")
+const taskName = document.querySelector(".task-name")
+var taskDescription = document.querySelector("textarea")
+const dueDate = document.querySelector(".date")
+const dueTime = document.querySelector(".time")
+const email = document.querySelector(".email")
+const priority = document.querySelector("select")
+const hours = document.querySelector(".hour")
+const url = document.querySelector(".url")
+const userNameError = document.querySelector(".username-error")
+const taskNameError = document.querySelector(".taskname-error")
+const emailError = document.querySelector(".email-error")
+const dateError = document.querySelector(".date-error")
+const timeError = document.querySelector(".time-error")
+const urlError = document.querySelector(".url-error")
+const desError = document.querySelector(".description-error")
+const durError = document.querySelector(".duration-error")
+const selectError = document.querySelector(".select-error")
+const statusError = document.querySelector(".status-error")
+const typeError = document.querySelector(".type-error")
+
+// const userPattern =/^(?:[A-Za-z.]{3,}|[A-Za-z]\s(?:[A-Za-z.]{3,}*)|[A-Za-z]{3,}(?:[A-Za-z]{3,})*)$/
+const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
+const URLPattern = /^(https?:\/\/)[\w.-]+(\.[\w.-]+)+[/#?]?.*$/
+const hourPattern = /^[0-9]$/
+
+
+// Validation
+function validate() {
+    let isValid = true;
+    let focusError = null
+    const logo =`<i class="fa-solid fa-circle-exclamation"></i>`
+    if (!userName.value.trim()) {
+        userNameError.innerHTML = `${logo}<p>User name is required</p>`
+        focusError ??= userName
+        isValid = false
+    }else if(/\d/.test(userName.value.trim())){
+        userNameError.innerHTML = `${logo}<p>Characters a-z only</p>`
+        focusError ??= userName
+        isValid = false   
+    }
+    else if(!userPattern.test(userName.value)){
+        userNameError.innerHTML = `${logo}<p>Invalid user name</p>`
+        focusError ??= userName
+        isValid = false 
+    }
+    if (!taskName.value.trim()) {
+        taskNameError.innerHTML = `${logo}<p>Task name is required</p>`
+        focusError ??= taskName
+        isValid = false
+    }
+    else if(taskName.value.trim()){
+        let name = taskName.value.trim()
+        for(let i=0;i<localStorage.length;i++){
+            const key = localStorage.key(i)
+            const value = JSON.parse(localStorage.getItem(key))
+            if(name==value.name){
+            taskNameError.innerHTML =`${logo}<p>Name already exists</p>`
+            focusError ??= taskName
+            isValid = false    
+            }
+            break
+        }
+    }
+    if (!email.value.trim()) {
+        emailError.innerHTML = `${logo}<p>Assignee email is required</p>`
+        focusError ??= email
+        isValid = false
+    }
+    else if(!emailPattern.test(email.value.trim())){
+        emailError.innerHTML = `${logo}<p>Invalid email</p>`
+        focusError ??= email
+        isValid = false
+    }
+    if (!dueDate.value) {
+        dateError.innerHTML = `${logo}<p>Due date is required</p>`
+        focusError ??= dueDate
+        isValid = false
+    }else{
+        let today=new Date()
+        let date =new Date(dueDate.value)
+        if(date < today){
+        dateError.innerHTML = `${logo}<p>Due date cannot be in the past</p>`;
+        focusError ??= dueDate;
+        isValid = false;
+        }
+    }
+    if (!dueTime.value) {
+        timeError.innerHTML = `${logo}<p>Due time is required</p>`
+        focusError ??= dueTime
+        isValid = false
+    }
+    if (!url.value.trim()) {
+        urlError.innerHTML = `${logo}<p>Project URL is required</p>`
+        focusError ??= url
+        isValid = false
+    }else if(!URLPattern.test(url.value.trim())){
+        urlError.innerHTML = `${logo}<p>Invalid URL</p>`
+        focusError ??= url
+        isValid = false  
+    }
+    if (!priority.value) {
+        selectError.innerHTML = `${logo}<p>Please select a priority level</p>`
+        focusError ??= priority
+        isValid = false
+    }
+    if (!hours.value) {
+        durError.innerHTML = `${logo}<p>Estimated hour is required</p>`
+        focusError ??= hours
+        isValid = false
+    }
+    else if(hours.value == 0) {
+        durError.innerHTML = `${logo}<p>Estimated hour must be greater than 0</p>`
+        focusError ??= hours
+        isValid = false
+    }
+    if (!taskDescription.value.trim()) {
+        desError.innerHTML = `${logo}<p>Task description is required</p>`
+        focusError ??= taskDescription
+        isValid = false
+    }
+    const radio = document.querySelector(".radio:checked")
+    if(!radio){
+        statusError.innerHTML = `${logo}<p>Please select task status</p>`
+        focusError ??= document.querySelector(".radio")
+        isValid = false
+    }
+    const checkbox = document.querySelectorAll(".check:checked").length
+    if(checkbox===0){
+        typeError.innerHTML = `${logo}<p>Select at least one task type</p>`
+        focusError ??= document.querySelector(".check")
+        isValid = false
+    }
+    if (focusError) {
+        focusError.focus();
+        focusError.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    return isValid;
+}
+url.addEventListener("input",()=>urlError.innerText="")
+userName.addEventListener("input",()=>userNameError.innerText="")
+taskName.addEventListener("input",()=>taskNameError.innerText="")
+email.addEventListener("input",()=>emailError.innerText="")
+priority.addEventListener("change",()=>{selectError.innerText=""})
+dueDate.addEventListener("change",()=>{dateError.innerText=""})
+dueTime.addEventListener("change",()=>{timeError.innerText=""})
+hours.addEventListener("input",()=>{
+    durError.innerText=""
+    if(hours.value==="") return
+    if(hours.value < 0) hours.value = 0
+    if(hours.value > 100){
+        hours.value =100
+        durError.innerHTML=`<i class="fa-solid fa-circle-exclamation"></i><p>Maximum hours reached</p>`
+        setTimeout(()=>durError.innerText="",1000)
+    }
+})
+hours.addEventListener("keydown", (e) => {
+    if (["e", "E", "+", "-", "."].includes(e.key)) {
+        e.preventDefault();
+    }})
+taskDescription.addEventListener("input",()=>{desError.innerText=""})
+document.querySelectorAll('.check').forEach(e=>{e.addEventListener("change",()=>typeError.innerText="")})
+document.querySelectorAll('.radio').forEach(e=>{e.addEventListener("change",()=>statusError.innerText="")})
+
+function resetError(){
+    const err = document.querySelectorAll(".error")
+    err.forEach(e => e.innerText="")
 }
 
 // Local Storage
 function setItem() {
-    const userName = document.querySelector(".user-name").value.trim()
-    const taskName = document.querySelector(".task-name").value.trim()
-    var taskDescription = document.querySelector("textarea").value.trim()
-    const dueDate = document.querySelector(".date").value
-    const dueTime = document.querySelector(".time").value
-    const email = document.querySelector(".email").value
-    const formattedDate = new Date(dueDate).toLocaleDateString("en-US", {
+    const formattedDate = new Date(dueDate.value).toLocaleDateString("en-US", {
         month: "short",
         day: "numeric",
         year: "numeric"
     });
-
-    const priority = document.querySelector("select").value
-    const hours = document.querySelector(".hour").value
-    const url = document.querySelector(".url").value
     const status = document.querySelector(".radio:checked")?.value
-    if (taskDescription == "") {
-        taskDescription = "No Description"
-    }
     const type = {
         bugFix: document.getElementById("check1").checked,
         feature: document.getElementById("check2").checked,
@@ -78,17 +240,17 @@ function setItem() {
     }
     const task = {
         id: Date.now(),
-        user: userName,
-        name: taskName,
-        email: email,
-        dueDate: dueDate,
+        user: userName.value.trim(),
+        name: taskName.value.trim(),
+        email: email.value,
+        dueDate: dueDate.value,
         date: formattedDate,
-        time: dueTime,
-        priority: priority,
-        duration: hours,
-        url: url,
+        time: dueTime.value,
+        priority: priority.value,
+        duration: hours.value,
+        url: url.value,
         percent: slider.value,
-        description: taskDescription,
+        description: taskDescription.value.trim(),
         status: status,
         type: type
     }
