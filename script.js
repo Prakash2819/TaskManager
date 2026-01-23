@@ -77,22 +77,27 @@ const selectError = document.querySelector(".select-error")
 const statusError = document.querySelector(".status-error")
 const typeError = document.querySelector(".type-error")
 
-// const userPattern =/^(?:[A-Za-z.]{3,}|[A-Za-z]\s(?:[A-Za-z.]{3,}*)|[A-Za-z]{3,}(?:[A-Za-z]{3,})*)$/
+const userPattern =/^(?:[A-Za-z.]{3,}|[A-Za-z](?:[A-Za-z.\s]{3,})*)$/
 const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
 const URLPattern = /^(https?:\/\/)[\w.-]+(\.[\w.-]+)+[/#?]?.*$/
 const hourPattern = /^[0-9]$/
-
+const logo =`<i class="fa-solid fa-circle-exclamation"></i>`
 
 // Validation
 function validate() {
     let isValid = true;
     let focusError = null
-    const logo =`<i class="fa-solid fa-circle-exclamation"></i>`
     if (!userName.value.trim()) {
         userNameError.innerHTML = `${logo}<p>User name is required</p>`
         focusError ??= userName
         isValid = false
-    }else if(/\d/.test(userName.value.trim())){
+    }else if(!/^[A-Za-z0-9\s.]+$/.test(userName.value.trim())){
+        userNameError.innerHTML = `${logo}<p>Name should not contain special characters</p>`
+        focusError ??= userName
+        isValid = false   
+    }
+    
+    else if(/\d/.test(userName.value.trim())){
         userNameError.innerHTML = `${logo}<p>Characters a-z only</p>`
         focusError ??= userName
         isValid = false   
@@ -306,6 +311,23 @@ function updateTaskCard(id) {
     `;
 }
 
+document.querySelector(".close-btn").addEventListener("click",()=>{
+    document.querySelector(".task-modal").style.display="none"
+    document.querySelector(".task-overlay").style.display="none"
+})
+document.addEventListener("click",(event)=>{
+    const taskCard = event.target.closest(".task-card");
+    if (event.target.closest(".fa-edit, .fa-trash-alt")) {
+    return;
+    }
+    if (!taskCard) return;
+    const id = taskCard.dataset.id;
+    document.querySelector(".task-modal").style.display="block"
+    document.querySelector(".task-overlay").style.display="block"
+    })
+
+
+
 //Delete Option
 document.addEventListener("click", (event) => {
     let msg = `<i class="fa-solid fa-trash-arrow-up"></i>
@@ -343,10 +365,12 @@ document.querySelector(".cancel-btn").addEventListener("click", closePopup)
 function closePopup() {
     const popupBox = document.querySelector(".popup-box")
     popupBox.style.visibility = "hidden"
+    document.querySelector(".task-overlay").style.display="none"
 }
 function openPopup() {
     const popupBox = document.querySelector(".popup-box")
     popupBox.style.visibility = "visible"
+    document.querySelector(".task-overlay").style.display="block"
 }
 // Popup Box Inputs 
 const editUser = document.querySelector("#edit-userName")
@@ -359,6 +383,8 @@ const editHour = document.querySelector("#edit-estimatedHours")
 const editUrl = document.querySelector("#edit-url")
 const editDescription = document.querySelector("#edit-description")
 const editStatus = document.querySelectorAll(".edit-radio")
+const editTaskError = document.querySelector(".editTask-error")
+
 
 function updateItem(taskKey) {
     const TextDate = new Date(editDate.value).toLocaleDateString("en-US", {
@@ -390,6 +416,33 @@ function updateItem(taskKey) {
     }
     localStorage.setItem(`${taskKey}`, JSON.stringify(task))
 }
+function editValidate(currentId){
+    let isValid = true
+    let focusError = null
+    if (!editName.value.trim()) {
+        editTaskError.innerHTML = `${logo}<p>Task name is required</p>`
+        focusError ??= editName
+        isValid = false
+    }
+    else if(editName.value.trim()){
+        let name = editName.value.trim()
+        for(let i=0;i<localStorage.length;i++){
+            const key = localStorage.key(i)
+            const value = JSON.parse(localStorage.getItem(key))
+            if(name==value.name && value.id !== currentId){
+            editTaskError.innerHTML =`${logo}<p>Name already exists</p>`
+            focusError ??= editName
+            isValid = false    
+            }
+        }
+    }
+    if (focusError) {
+        focusError.focus();
+        focusError.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    clearError(editName)
+    return isValid
+}
 
 function EditItem(id) {
     for (let i = 0; i < localStorage.length; i++) {
@@ -411,15 +464,20 @@ function EditItem(id) {
             editStatus.forEach(el => el.checked = el.value === value.status)
             check(value.type)
             saveBtn.onclick = () => {
+                if(editValidate(value.id)){
                 let msg = `<i class="fa-solid fa-circle-check"></i>
                 <p>Your changes have been saved</p>`
                 updateItem(value.id)
                 updateTaskCard(value.id)
                 closePopup()
-                Notify(msg)
+                Notify(msg)}
             }
         }
     }
+}
+function clearError(e){
+    const error = e.nextElementSibling
+    e.addEventListener("input",()=>{error.innerText=""})
 }
 function check(obj) {
     document.getElementById("edit-check1").checked = obj.bugFix

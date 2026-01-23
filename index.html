@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <title>Task Manager</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
@@ -45,17 +47,17 @@
                             </span>
                         </div>
                         <div>
-                            <input class="task-name" type="text" placeholder="Task name *" >
+                            <input class="task-name" type="text" placeholder="Task name *">
                             <span class="error taskname-error">
                             </span>
                         </div>
                         <div>
-                            <input class="email" type="text" placeholder="Assignee email *" >
+                            <input class="email" type="text" placeholder="Assignee email *">
                             <span class="error email-error">
                             </span>
                         </div>
                         <div>
-                            <input class="date" type="date" class="float-label" id="cursor" name="Date" >
+                            <input class="date" type="date" class="float-label" id="cursor" name="Date">
                             <label class="labelline">Due Date *</label>
                             <span class="error date-error">
                             </span>
@@ -170,6 +172,8 @@
                         <input type="text" id="edit-userName">
                         <label for="edit-taskName">Task Name</label>
                         <input type="text" id="edit-taskName">
+                        <span class="error editTask-error">
+                        </span>
 
                         <label for="edit-email">Email</label>
                         <input type="email" id="edit-email">
@@ -198,38 +202,121 @@
 
                         <label for="range">Task Progress</label>
                         <div class="edit-progress">
-                        <input type="range" name="range" min="0" max="100" value="0" id="edit-range">
-                        <h5 class="edit-percent">0%</h5></div>
+                            <input type="range" name="range" min="0" max="100" value="0" id="edit-range">
+                            <h5 class="edit-percent">0%</h5>
+                        </div>
 
                         <div class="edit-taskType">
-                        <label>Task Type</label>
-                        <div class="edit-checks">
-                        <input type="checkbox" class="edit-check" id="edit-check1">
-                        <label  for="edit-check1">Bug Fix</label>
+                            <label>Task Type</label>
+                            <div class="edit-checks">
+                                <input type="checkbox" class="edit-check" id="edit-check1">
+                                <label for="edit-check1">Bug Fix</label>
 
-                        <input type="checkbox" class="edit-check" id="edit-check2">
-                        <label  for="edit-check2">Feature</label>
+                                <input type="checkbox" class="edit-check" id="edit-check2">
+                                <label for="edit-check2">Feature</label>
 
-                        <input type="checkbox" class="edit-check" id="edit-check3">
-                        <label  for="edit-check3">Enhancement</label>
+                                <input type="checkbox" class="edit-check" id="edit-check3">
+                                <label for="edit-check3">Enhancement</label>
+                            </div>
                         </div>
+                        <div class="edit-status">
+                            <label>Status</label>
+                            <div class="edit-radios">
+                                <input type="radio" name="status" value="Pending" class="edit-radio" id="edit-radio1">
+                                <label for="edit-radio1">Pending</label>
+
+                                <input type="radio" name="status" value="In Progress" class="edit-radio"
+                                    id="edit-radio2">
+                                <label for="edit-radio2">In Progress</label> <br>
+
+                                <input type="radio" name="status" value="Completed" class="edit-radio" id="edit-radio3">
+                                <label for="edit-radio3">Completed</label>
+                            </div>
                         </div>
-                        <div class="edit-status">  
-                        <label>Status</label>
-                        <div class="edit-radios">
-                        <input type="radio" name="status" value="Pending" class="edit-radio" id="edit-radio1">
-                        <label  for="edit-radio1">Pending</label>
-
-                        <input type="radio" name="status" value="In Progress" class="edit-radio" id="edit-radio2">
-                        <label for="edit-radio2">In Progress</label> <br>
-
-                        <input type="radio" name="status" value="Completed" class="edit-radio" id="edit-radio3">
-                        <label for="edit-radio3">Completed</label></div></div>
 
                         <div class="edit-buttons">
-                        <button class="cancel-btn">Cancel</button>
-                        <button class="save-btn">Save Changes</button></div>
+                            <button class="cancel-btn">Cancel</button>
+                            <button class="save-btn">Save Changes</button>
+                        </div>
                     </form>
+                </div>
+            </div>
+            <!-- Overlay -->
+            <div class="task-overlay"></div>
+            <!-- Task Detail Modal -->
+
+            <div id="taskModal" class="task-modal">
+                <div class="modal-header">
+                    <h4>Designing Homepage Mockup</h4>
+                    <button class="close-btn">&times;</button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="row">
+                        <div>
+                            <p class="red badge"><span>&#9679</span> High</p>
+                        </div>
+                        <div>
+                            <p class="blue badge"><span>&#9679</span> In Progress</p>
+                        </div>
+                    </div>
+
+                    <div class="info-grid">
+                        <section class="left">
+                            <div>
+                                <label>Due Date</label>
+                                <p>📆 Oct 15, 2025</p>
+                            </div>
+                            <div class="Assigner">
+                                <label>Assigned To</label>
+                                <div class="profile">
+                                    <i class="fa-regular fa-circle-user"></i>
+                                    <div>
+                                        <p>Sarah Johnson<br><span>Sara@gmail.com</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-types">
+                                <label>Task Type</label>
+                                <div>
+                                    <p><i class="fa-solid fa-circle-check"></i> bug fix</p>
+                                    <p><i class="fa-solid fa-circle-check"></i> Enhancement</p>
+                                </div>
+                            </div>
+
+                        </section>
+                        <section class="right">
+                            <div>
+                                <label>Task Progress</label>
+                                <div class="progress-bar">
+                                    <progress value="100" max="100"></progress>
+                                    <p>55%</p>
+                                </div>
+                            </div>
+                            <div class="dueTime">
+                                <div>
+                                    <label>Due Time</label>
+                                    <p>10:00 AM</p>
+                                </div>
+                                <div><i class="fa-regular fa-clock"></i>
+                                    <p>Duration</p>
+                                    <p>5 hours</p>
+                                </div>
+                            </div>
+                            <div>
+                                <label>Project URL</label>
+                                <div class="project-link"><a href=""><i class="fa-solid fa-link"></i> View Project</a>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                    <div>
+                        <label>Description</label>
+                        <p>
+                            Create wireframes and high-fidelity mockups for the new homepage
+                            redesign project with modern UI elements
+                        </p>
+                    </div>
                 </div>
             </div>
             <!-- Sub Section 2 -->
@@ -290,7 +377,8 @@
                     <!--Task Card 4-->
                     <div class="task-card Medium">
                         <h4>Database Performance Optimization <i class='far fa-trash-alt'></i> <i
-                                class='far fa-edit'></i></h4><br>
+                                class='far fa-edit'></i>
+                        </h4><br>
                         <p>Analyze and optimize slow-running queries to improve overall database performance by 30%.</p>
                         <p></p>
                         <p><img class="calender-img" src="calender.png"> Due: Oct 30, 2025</p>
