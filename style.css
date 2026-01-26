@@ -798,13 +798,19 @@ select:focus {
 }
 
 /* Filtering */
+#High:checked ~ .taskcard-container .task-card,
+#Medium:checked ~ .taskcard-container .task-card,
+#Low:checked ~ .taskcard-container .task-card {
+  display: none;
+}
+
+
 #All:checked~.taskcard-container .task-card,
 #High:checked~.taskcard-container .High,
 #Medium:checked~.taskcard-container .Medium,
 #Low:checked~.taskcard-container .Low {
   display: flex;
 }
-
 
 .task-card h4 {
   font-size: 16px;
