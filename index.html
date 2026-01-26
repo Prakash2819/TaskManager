@@ -170,19 +170,30 @@
                     <form class="edit-form">
                         <label for="edit-userName">User Name</label>
                         <input type="text" id="edit-userName">
+                        <span class="error editUser-error">
+                            <!-- <i class="fa-solid fa-circle-exclamation"></i>
+                            <p>User name is required</p> -->
+                        </span>
                         <label for="edit-taskName">Task Name</label>
                         <input type="text" id="edit-taskName">
                         <span class="error editTask-error">
                         </span>
 
                         <label for="edit-email">Email</label>
-                        <input type="email" id="edit-email">
+                        <input type="text" id="edit-email">
+                        <span class="error editEmail-error">
+                        </span>
+
 
                         <label for="edit-date">Due Date</label>
                         <input type="date" id="edit-date">
+                        <span class="error editDate-error">
+                        </span>
 
                         <label for="edit-time">Due Time</label>
                         <input type="time" id="edit-time">
+                        <span class="error editTime-error">
+                        </span>
 
                         <label>Priority Level</label>
                         <select class="edit-priority">
@@ -193,12 +204,18 @@
 
                         <label for="edit-estimatedHours">Estimated Hours</label>
                         <input type="number" id="edit-estimatedHours" min="0" max="100">
+                        <span class="error editHour-error">
+                        </span>
 
                         <label for="edit-url">Project URL</label>
-                        <input type="url" id="edit-url">
+                        <input type="text" id="edit-url">
+                        <span class="error editURL-error">
+                        </span>
 
                         <label>Description</label>
                         <textarea id="edit-description"></textarea>
+                        <span class="error editDesc-error">
+                        </span>
 
                         <label for="range">Task Progress</label>
                         <div class="edit-progress">
@@ -219,6 +236,8 @@
                                 <label for="edit-check3">Enhancement</label>
                             </div>
                         </div>
+                        <span class="error editType-error">
+                        </span>
                         <div class="edit-status">
                             <label>Status</label>
                             <div class="edit-radios">
@@ -233,7 +252,6 @@
                                 <label for="edit-radio3">Completed</label>
                             </div>
                         </div>
-
                         <div class="edit-buttons">
                             <button class="cancel-btn">Cancel</button>
                             <button class="save-btn">Save Changes</button>
@@ -247,17 +265,17 @@
 
             <div id="taskModal" class="task-modal">
                 <div class="modal-header">
-                    <h4>Designing Homepage Mockup</h4>
+                    <h4 class="modal-taskName">Designing Homepage Mockup</h4>
                     <button class="close-btn">&times;</button>
                 </div>
 
                 <div class="modal-body">
                     <div class="row">
                         <div>
-                            <p class="red badge"><span>&#9679</span> High</p>
+                            <p class="modal-level"><span>&#9679</span> High</p>
                         </div>
                         <div>
-                            <p class="blue badge"><span>&#9679</span> In Progress</p>
+                            <p class="modal-status"></p>
                         </div>
                     </div>
 
@@ -265,22 +283,19 @@
                         <section class="left">
                             <div>
                                 <label>Due Date</label>
-                                <p>📆 Oct 15, 2025</p>
+                                <p class="modal-date"></p>
                             </div>
                             <div class="Assigner">
                                 <label>Assigned To</label>
                                 <div class="profile">
                                     <i class="fa-regular fa-circle-user"></i>
-                                    <div>
-                                        <p>Sarah Johnson<br><span>Sara@gmail.com</span></p>
+                                    <div class="modal-userEmail">
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-types">
                                 <label>Task Type</label>
-                                <div>
-                                    <p><i class="fa-solid fa-circle-check"></i> bug fix</p>
-                                    <p><i class="fa-solid fa-circle-check"></i> Enhancement</p>
+                                <div class="modal-taskTypes">
                                 </div>
                             </div>
 
@@ -289,32 +304,31 @@
                             <div>
                                 <label>Task Progress</label>
                                 <div class="progress-bar">
-                                    <progress value="100" max="100"></progress>
-                                    <p>55%</p>
+                                    <progress class="modal-progress" value="100" max="100"></progress>
+                                    <p class="modal-percent">55%</p>
                                 </div>
                             </div>
                             <div class="dueTime">
                                 <div>
                                     <label>Due Time</label>
-                                    <p>10:00 AM</p>
+                                    <p class="modal-time"></p>
                                 </div>
                                 <div><i class="fa-regular fa-clock"></i>
                                     <p>Duration</p>
-                                    <p>5 hours</p>
+                                    <p class="modal-hours"></p>
                                 </div>
                             </div>
                             <div>
                                 <label>Project URL</label>
-                                <div class="project-link"><a href=""><i class="fa-solid fa-link"></i> View Project</a>
+                                <div class="project-link"><a class="modal-url" href="" target="_blank"><i
+                                            class="fa-solid fa-link"></i> View Project</a>
                                 </div>
                             </div>
                         </section>
                     </div>
                     <div>
                         <label>Description</label>
-                        <p>
-                            Create wireframes and high-fidelity mockups for the new homepage
-                            redesign project with modern UI elements
+                        <p class="modal-description">
                         </p>
                     </div>
                 </div>
@@ -327,6 +341,7 @@
                 <input type="radio" name="priority" id="Low">
                 <div class="sub-section2-navbar">
                     <h3>&#9989 Active Tasks</h3>
+                    <button style="display: none;" class="viewMore-btn">View More</button>
                     <div class="task-filters">
                         <label for="All">All (<span id="all-count">0</span>)</label>
                         <label for="High">High (<span id="high-count">0</span>)</label>
@@ -334,7 +349,7 @@
                         <label for="Low">Low (<span id="low-count">0</span>)</label>
                     </div>
                 </div>
-                <div class="taskcard-container">
+                <div class="taskcard-container limit">
                     <!--Task Card 1-->
                     <div class="task-card High">
                         <h4>Designing Homepage Mockup <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></h4>
@@ -401,7 +416,7 @@
                         </div>
                     </div>
                     <!--Task Card 6-->
-                    <!-- <div class="task-card High">
+                    <div class="task-card High">
                         <h4>User Testing Session <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></h4><br>
                         <p>Conduct user testing sessions with 10 participants to gather feedback on the new interface.
                         </p>
@@ -412,7 +427,7 @@
                             <label class="high"><span>&#9679</span>High</label>
                             <label class="completed"><small>&#9679</small> Completed</label>
                         </div>
-                    </div> -->
+                    </div>
                 </div>
             </section>
         </section>

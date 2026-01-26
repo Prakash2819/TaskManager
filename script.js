@@ -3,6 +3,26 @@ const form = document.querySelector("#form")
 const editForm = document.querySelector(".edit-form")
 const notify = document.querySelector(".notify-box")
 
+
+const viewMoreBtn = document.querySelector('.viewMore-btn');
+console.log(taskcardContainer.scrollHeight)
+const height = document.querySelector(".sub-section2")
+console.log(height.scrollHeight)
+
+function checkOverflow() {
+  if (taskcardContainer.scrollHeight > height.scrollHeight) {
+    viewMoreBtn.style.display = 'block'; // show button if overflow
+  } else {
+    viewMoreBtn.style.display = 'none';  // hide button if no overflow
+  }
+}
+
+// On page load
+window.addEventListener('load', checkOverflow);
+setInterval(()=>{checkOverflow(); console.log("Checking Overflow")},1000)
+// On window resize (responsive)
+window.addEventListener('resize', checkOverflow);
+
 const editRange = document.querySelector("#edit-range");
 const slider = document.querySelector(".color-range");
 const percent = document.querySelector(".percentage");
@@ -14,7 +34,6 @@ editRange.addEventListener("input", () => Slider(editRange, editPercent));
 function Slider(rangeEl, textEl) {
     textEl.textContent = rangeEl.value + "%";
 }
-
 
 document.addEventListener("DOMContentLoaded", () => {
     showItem()
@@ -33,7 +52,8 @@ form.addEventListener("submit", (event) => {
 })
 form.addEventListener("reset", () => {
     percent.textContent = "0%"
-    resetError()})
+    resetError()
+})
 
 function Notify(msg) {
     let toast = document.createElement("div")
@@ -77,11 +97,11 @@ const selectError = document.querySelector(".select-error")
 const statusError = document.querySelector(".status-error")
 const typeError = document.querySelector(".type-error")
 
-const userPattern =/^(?:[A-Za-z.]{3,}|[A-Za-z](?:[A-Za-z.\s]{3,})*)$/
+const userPattern = /^(?:[A-Za-z.]{3,}|[A-Za-z](?:[A-Za-z.\s]{3,})*)$/
 const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
 const URLPattern = /^(https?:\/\/)[\w.-]+(\.[\w.-]+)+[/#?]?.*$/
 const hourPattern = /^[0-9]$/
-const logo =`<i class="fa-solid fa-circle-exclamation"></i>`
+const logo = `<i class="fa-solid fa-circle-exclamation"></i>`
 
 // Validation
 function validate() {
@@ -91,36 +111,36 @@ function validate() {
         userNameError.innerHTML = `${logo}<p>User name is required</p>`
         focusError ??= userName
         isValid = false
-    }else if(!/^[A-Za-z0-9\s.]+$/.test(userName.value.trim())){
+    } else if (!/^[A-Za-z0-9\s.]+$/.test(userName.value.trim())) {
         userNameError.innerHTML = `${logo}<p>Name should not contain special characters</p>`
         focusError ??= userName
-        isValid = false   
+        isValid = false
     }
-    
-    else if(/\d/.test(userName.value.trim())){
+
+    else if (/\d/.test(userName.value.trim())) {
         userNameError.innerHTML = `${logo}<p>Characters a-z only</p>`
         focusError ??= userName
-        isValid = false   
+        isValid = false
     }
-    else if(!userPattern.test(userName.value)){
+    else if (!userPattern.test(userName.value)) {
         userNameError.innerHTML = `${logo}<p>Invalid user name</p>`
         focusError ??= userName
-        isValid = false 
+        isValid = false
     }
     if (!taskName.value.trim()) {
         taskNameError.innerHTML = `${logo}<p>Task name is required</p>`
         focusError ??= taskName
         isValid = false
     }
-    else if(taskName.value.trim()){
+    else if (taskName.value.trim()) {
         let name = taskName.value.trim()
-        for(let i=0;i<localStorage.length;i++){
+        for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i)
             const value = JSON.parse(localStorage.getItem(key))
-            if(name==value.name){
-            taskNameError.innerHTML =`${logo}<p>Name already exists</p>`
-            focusError ??= taskName
-            isValid = false    
+            if (name == value.name) {
+                taskNameError.innerHTML = `${logo}<p>Name already exists</p>`
+                focusError ??= taskName
+                isValid = false
             }
             break
         }
@@ -130,7 +150,7 @@ function validate() {
         focusError ??= email
         isValid = false
     }
-    else if(!emailPattern.test(email.value.trim())){
+    else if (!emailPattern.test(email.value.trim())) {
         emailError.innerHTML = `${logo}<p>Invalid email</p>`
         focusError ??= email
         isValid = false
@@ -139,13 +159,13 @@ function validate() {
         dateError.innerHTML = `${logo}<p>Due date is required</p>`
         focusError ??= dueDate
         isValid = false
-    }else{
-        let today=new Date()
-        let date =new Date(dueDate.value)
-        if(date < today){
-        dateError.innerHTML = `${logo}<p>Due date cannot be in the past</p>`;
-        focusError ??= dueDate;
-        isValid = false;
+    } else {
+        let today = new Date()
+        let date = new Date(dueDate.value)
+        if (date < today) {
+            dateError.innerHTML = `${logo}<p>Due date cannot be in the past</p>`;
+            focusError ??= dueDate;
+            isValid = false;
         }
     }
     if (!dueTime.value) {
@@ -157,10 +177,10 @@ function validate() {
         urlError.innerHTML = `${logo}<p>Project URL is required</p>`
         focusError ??= url
         isValid = false
-    }else if(!URLPattern.test(url.value.trim())){
+    } else if (!URLPattern.test(url.value.trim())) {
         urlError.innerHTML = `${logo}<p>Invalid URL</p>`
         focusError ??= url
-        isValid = false  
+        isValid = false
     }
     if (!priority.value) {
         selectError.innerHTML = `${logo}<p>Please select a priority level</p>`
@@ -172,7 +192,7 @@ function validate() {
         focusError ??= hours
         isValid = false
     }
-    else if(hours.value == 0) {
+    else if (hours.value == 0) {
         durError.innerHTML = `${logo}<p>Estimated hour must be greater than 0</p>`
         focusError ??= hours
         isValid = false
@@ -183,13 +203,13 @@ function validate() {
         isValid = false
     }
     const radio = document.querySelector(".radio:checked")
-    if(!radio){
+    if (!radio) {
         statusError.innerHTML = `${logo}<p>Please select task status</p>`
         focusError ??= document.querySelector(".radio")
         isValid = false
     }
     const checkbox = document.querySelectorAll(".check:checked").length
-    if(checkbox===0){
+    if (checkbox === 0) {
         typeError.innerHTML = `${logo}<p>Select at least one task type</p>`
         focusError ??= document.querySelector(".check")
         isValid = false
@@ -200,34 +220,35 @@ function validate() {
     }
     return isValid;
 }
-url.addEventListener("input",()=>urlError.innerText="")
-userName.addEventListener("input",()=>userNameError.innerText="")
-taskName.addEventListener("input",()=>taskNameError.innerText="")
-email.addEventListener("input",()=>emailError.innerText="")
-priority.addEventListener("change",()=>{selectError.innerText=""})
-dueDate.addEventListener("change",()=>{dateError.innerText=""})
-dueTime.addEventListener("change",()=>{timeError.innerText=""})
-hours.addEventListener("input",()=>{
-    durError.innerText=""
-    if(hours.value==="") return
-    if(hours.value < 0) hours.value = 0
-    if(hours.value > 100){
-        hours.value =100
-        durError.innerHTML=`<i class="fa-solid fa-circle-exclamation"></i><p>Maximum hours reached</p>`
-        setTimeout(()=>durError.innerText="",1000)
+url.addEventListener("input", () => urlError.innerText = "")
+userName.addEventListener("input", () => userNameError.innerText = "")
+taskName.addEventListener("input", () => taskNameError.innerText = "")
+email.addEventListener("input", () => emailError.innerText = "")
+priority.addEventListener("change", () => { selectError.innerText = "" })
+dueDate.addEventListener("change", () => { dateError.innerText = "" })
+dueTime.addEventListener("change", () => { timeError.innerText = "" })
+hours.addEventListener("input", () => {
+    durError.innerText = ""
+    if (hours.value === "") return
+    if (hours.value < 0) hours.value = 0
+    if (hours.value > 100) {
+        hours.value = 100
+        durError.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i><p>Maximum hours reached</p>`
+        setTimeout(() => durError.innerText = "", 1000)
     }
 })
 hours.addEventListener("keydown", (e) => {
     if (["e", "E", "+", "-", "."].includes(e.key)) {
         e.preventDefault();
-    }})
-taskDescription.addEventListener("input",()=>{desError.innerText=""})
-document.querySelectorAll('.check').forEach(e=>{e.addEventListener("change",()=>typeError.innerText="")})
-document.querySelectorAll('.radio').forEach(e=>{e.addEventListener("change",()=>statusError.innerText="")})
+    }
+})
+taskDescription.addEventListener("input", () => { desError.innerText = "" })
+document.querySelectorAll('.check').forEach(e => { e.addEventListener("change", () => typeError.innerText = "") })
+document.querySelectorAll('.radio').forEach(e => { e.addEventListener("change", () => statusError.innerText = "") })
 
-function resetError(){
+function resetError() {
     const err = document.querySelectorAll(".error")
-    err.forEach(e => e.innerText="")
+    err.forEach(e => e.innerText = "")
 }
 
 // Local Storage
@@ -286,6 +307,79 @@ function createTask(value) {
         </div>`
     taskcardContainer.appendChild(taskcard)
 }
+
+
+function taskcardView(id) {
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i)
+        const value = JSON.parse(localStorage.getItem(key))
+        if (id == value.id) {
+            document.querySelector(".modal-taskName").innerText = value.name
+            document.querySelector(".modal-description").innerText = value.description
+            document.querySelector(".modal-progress").value = value.percent
+            document.querySelector(".modal-percent").innerText = `${value.percent}%`
+            document.querySelector(".modal-userEmail").innerHTML = `<p >${value.user}<br><span>${value.email}</span></p>`
+            document.querySelector(".modal-date").innerText = `📆 ${value.date}`
+            document.querySelector(".modal-hours").innerText = `${value.duration} hours`
+            document.querySelector(".modal-url").href = value.url
+            document.querySelector(".modal-time").innerText = toAmPm(value.time)
+            function toAmPm(time24) {
+                if (!time24) return "";
+
+                let [h, m] = time24.split(":");
+                h = Number(h);
+
+                const ampm = h >= 12 ? "PM" : "AM";
+                h = h % 12 || 12;
+
+                return `${h}:${m} ${ampm}`;
+            }
+            let dot = `<span>&#9679;</span> `
+            const badge = document.querySelector(".modal-status")
+            const modalLevel = document.querySelector(".modal-level")
+            // reset all status colors first
+            badge.classList.remove("orange", "green", "blue")
+            modalLevel.classList.remove("red", "green", "orange")
+            // Status
+            if (value.status == "Pending") {
+                badge.classList.add("orange")
+                badge.innerHTML = `${dot} Pending`
+            }
+            if (value.status == "In Progress") {
+                badge.classList.add("blue")
+                badge.innerHTML = `${dot} In Progress`
+            }
+            if (value.status == "Completed") {
+                badge.classList.add("green")
+                badge.innerHTML = `${dot} Completed`
+            }
+            // Priority level
+            if (value.priority == "High") {
+                modalLevel.classList.add("red")
+                modalLevel.innerHTML = `${dot} High`
+            }
+            if (value.priority == "Medium") {
+                modalLevel.classList.add("orange")
+                modalLevel.innerHTML = `${dot} Medium`
+            }
+            if (value.priority == "Low") {
+                modalLevel.classList.add("green")
+                modalLevel.innerHTML = `${dot} Low`
+            }
+
+
+            const types = value.type
+            const modalTaskTypes = document.querySelector(".modal-taskTypes")
+            modalTaskTypes.innerHTML = ""
+            if (types.bugFix) { modalTaskTypes.innerHTML += `<p><i class="fa-solid fa-circle-check"></i> Bug fix</p>` }
+            if (types.feature) { modalTaskTypes.innerHTML += `<p><i class="fa-solid fa-circle-check"></i> Feature</p>` }
+            if (types.enhancement) { modalTaskTypes.innerHTML += `<p><i class="fa-solid fa-circle-check"></i> Enhancement</p>` }
+        }
+    }
+
+}
+
+
 //Update Task Card UI
 function updateTaskCard(id) {
     const taskCard = document.querySelector(`.task-card[data-id="${id}"]`);
@@ -311,20 +405,21 @@ function updateTaskCard(id) {
     `;
 }
 
-document.querySelector(".close-btn").addEventListener("click",()=>{
-    document.querySelector(".task-modal").style.display="none"
-    document.querySelector(".task-overlay").style.display="none"
+document.querySelector(".close-btn").addEventListener("click", () => {
+    document.querySelector(".task-modal").style.display = "none"
+    document.querySelector(".task-overlay").style.display = "none"
 })
-document.addEventListener("click",(event)=>{
-    const taskCard = event.target.closest(".task-card");
+document.addEventListener("click", (event) => {
     if (event.target.closest(".fa-edit, .fa-trash-alt")) {
-    return;
+        return
     }
-    if (!taskCard) return;
-    const id = taskCard.dataset.id;
-    document.querySelector(".task-modal").style.display="block"
-    document.querySelector(".task-overlay").style.display="block"
-    })
+    const taskCard = event.target.closest(".task-card")
+    if (!taskCard) return
+    const id = taskCard.dataset.id
+    taskcardView(id)
+    document.querySelector(".task-modal").style.display = "block"
+    document.querySelector(".task-overlay").style.display = "block"
+})
 
 
 
@@ -365,14 +460,15 @@ document.querySelector(".cancel-btn").addEventListener("click", closePopup)
 function closePopup() {
     const popupBox = document.querySelector(".popup-box")
     popupBox.style.visibility = "hidden"
-    document.querySelector(".task-overlay").style.display="none"
+    document.querySelector(".task-overlay").style.display = "none"
+    resetError()
 }
 function openPopup() {
     const popupBox = document.querySelector(".popup-box")
     popupBox.style.visibility = "visible"
-    document.querySelector(".task-overlay").style.display="block"
+    document.querySelector(".task-overlay").style.display = "block"
 }
-// Popup Box Inputs 
+// Edit Box Inputs 
 const editUser = document.querySelector("#edit-userName")
 const editName = document.querySelector("#edit-taskName")
 const editEmail = document.querySelector("#edit-email")
@@ -383,8 +479,16 @@ const editHour = document.querySelector("#edit-estimatedHours")
 const editUrl = document.querySelector("#edit-url")
 const editDescription = document.querySelector("#edit-description")
 const editStatus = document.querySelectorAll(".edit-radio")
+// Edit Box Errors
+const editUserError = document.querySelector(".editUser-error")
 const editTaskError = document.querySelector(".editTask-error")
-
+const editEmailError = document.querySelector(".editEmail-error")
+const editDateError = document.querySelector(".editDate-error")
+const editTimeError = document.querySelector(".editTime-error")
+const editHourError = document.querySelector(".editHour-error")
+const editUrlError = document.querySelector(".editURL-error")
+const editDesError = document.querySelector(".editDesc-error")
+const editTypeError = document.querySelector(".editType-error")
 
 function updateItem(taskKey) {
     const TextDate = new Date(editDate.value).toLocaleDateString("en-US", {
@@ -416,31 +520,115 @@ function updateItem(taskKey) {
     }
     localStorage.setItem(`${taskKey}`, JSON.stringify(task))
 }
-function editValidate(currentId){
+// Edit Box Validation
+function editValidate(currentId) {
     let isValid = true
     let focusError = null
+    if (!editUser.value.trim()) {
+        editUserError.innerHTML = `${logo}<p>User name is required</p>`
+        focusError ??= editUser
+        isValid = false
+    } else if (!/^[A-Za-z0-9\s.]+$/.test(editUser.value.trim())) {
+        editUserError.innerHTML = `${logo}<p>Name should not contain special characters</p>`
+        focusError ??= editUser
+        isValid = false
+    }
+
+    else if (/\d/.test(editUser.value.trim())) {
+        editUserError.innerHTML = `${logo}<p>Characters a-z only</p>`
+        focusError ??= editUser
+        isValid = false
+    }
+    else if (!userPattern.test(editUser.value)) {
+        editUserError.innerHTML = `${logo}<p>Invalid user name</p>`
+        focusError ??= editUser
+        isValid = false
+    }
     if (!editName.value.trim()) {
         editTaskError.innerHTML = `${logo}<p>Task name is required</p>`
         focusError ??= editName
         isValid = false
     }
-    else if(editName.value.trim()){
+    else if (editName.value.trim()) {
         let name = editName.value.trim()
-        for(let i=0;i<localStorage.length;i++){
+        for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i)
             const value = JSON.parse(localStorage.getItem(key))
-            if(name==value.name && value.id !== currentId){
-            editTaskError.innerHTML =`${logo}<p>Name already exists</p>`
-            focusError ??= editName
-            isValid = false    
+            if (name == value.name && value.id !== currentId) {
+                editTaskError.innerHTML = `${logo}<p>Name already exists</p>`
+                focusError ??= editName
+                isValid = false
             }
         }
     }
+    if (!editEmail.value.trim()) {
+        editEmailError.innerHTML = `${logo}<p>Assignee email is required</p>`
+        focusError ??= editEmail
+        isValid = false
+    }
+    else if (!emailPattern.test(editEmail.value.trim())) {
+        editEmailError.innerHTML = `${logo}<p>Invalid email</p>`
+        focusError ??= editEmail
+        isValid = false
+    }
+    if (!editDate.value) {
+        editDateError.innerHTML = `${logo}<p>Due date is required</p>`
+        focusError ??= editDate
+        isValid = false
+    } else {
+        let today = new Date()
+        let date = new Date(editDate.value)
+        if (date < today) {
+            editDateError.innerHTML = `${logo}<p>Due date cannot be in the past</p>`;
+            focusError ??= editDate;
+            isValid = false;
+        }
+    }
+    if (!editTime.value) {
+        editTimeError.innerHTML = `${logo}<p>Due time is required</p>`
+        focusError ??= editTime
+        isValid = false
+    }
+    if (!editHour.value) {
+        editHourError.innerHTML = `${logo}<p>Estimated hour is required</p>`
+        focusError ??= editHour
+        isValid = false
+    }
+    else if (editHour.value == 0) {
+        editHourError.innerHTML = `${logo}<p>Estimated hour must be greater than 0</p>`
+        focusError ??= editHour
+        isValid = false
+    }
+    if (!editUrl.value.trim()) {
+        editUrlError.innerHTML = `${logo}<p>Project URL is required</p>`
+        focusError ??= editUrl
+        isValid = false
+    } else if (!URLPattern.test(editUrl.value.trim())) {
+        editUrlError.innerHTML = `${logo}<p>Invalid URL</p>`
+        focusError ??= editUrl
+        isValid = false
+    }
+    if (!editDescription.value.trim()) {
+        editDesError.innerHTML = `${logo}<p>Task description is required</p>`
+        focusError ??= editDescription
+        isValid = false
+    }
+    const checkbox = document.querySelectorAll(".edit-check:checked").length
+    if (checkbox === 0) {
+        editTypeError.innerHTML = `${logo}<p>Select at least one task type</p>`
+        focusError ??= document.querySelector(".edit-check")
+        isValid = false
+    }
+
     if (focusError) {
         focusError.focus();
         focusError.scrollIntoView({ behavior: "smooth", block: "center" });
     }
+    clearError(editUser)
     clearError(editName)
+    clearError(editEmail)
+    clearError(editDescription)
+    clearError(editUrl)
     return isValid
 }
 
@@ -464,21 +652,40 @@ function EditItem(id) {
             editStatus.forEach(el => el.checked = el.value === value.status)
             check(value.type)
             saveBtn.onclick = () => {
-                if(editValidate(value.id)){
-                let msg = `<i class="fa-solid fa-circle-check"></i>
+                if (editValidate(value.id)) {
+                    let msg = `<i class="fa-solid fa-circle-check"></i>
                 <p>Your changes have been saved</p>`
-                updateItem(value.id)
-                updateTaskCard(value.id)
-                closePopup()
-                Notify(msg)}
+                    updateItem(value.id)
+                    updateTaskCard(value.id)
+                    closePopup()
+                    Notify(msg)
+                }
             }
         }
     }
 }
-function clearError(e){
+function clearError(e) {
     const error = e.nextElementSibling
-    e.addEventListener("input",()=>{error.innerText=""})
+    e.addEventListener("input", () => { error.innerText = "" })
 }
+editDate.addEventListener("change", () => { editDateError.innerText = "" })
+editTime.addEventListener("change", () => { editTimeError.innerText = "" })
+editHour.addEventListener("input", () => {
+    editHourError.innerText = ""
+    if (editHour.value === "") return
+    if (editHour.value < 0) editHour.value = 0
+    if (editHour.value > 100) {
+        editHour.value = 100
+        editHourError.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i><p>Maximum hours reached</p>`
+        setTimeout(() => editHourError.innerText = "", 1000)
+    }
+})
+editHour.addEventListener("keydown", (e) => {
+    if (["e", "E", "+", "-", "."].includes(e.key)) {
+        e.preventDefault();
+    }
+})
+document.querySelectorAll('.edit-check').forEach(e => { e.addEventListener("change", () => editTypeError.innerText = "") })
 function check(obj) {
     document.getElementById("edit-check1").checked = obj.bugFix
     document.getElementById("edit-check2").checked = obj.feature
