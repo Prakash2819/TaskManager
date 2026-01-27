@@ -4,23 +4,33 @@ const editForm = document.querySelector(".edit-form")
 const notify = document.querySelector(".notify-box")
 
 
-const viewMoreBtn = document.querySelector('.viewMore-btn');
-console.log(taskcardContainer.scrollHeight)
-const height = document.querySelector(".sub-section2")
-console.log(height.scrollHeight)
-
+const viewMoreBtn = document.querySelector('.viewmore-btn')
+const subsection2 = document.querySelector(".sub-section2")
+const subsection1 = document.querySelector(".sub-section1")
+const main = document.querySelector(".main-section")
+const closeView = document.querySelector(".close-view")
 function checkOverflow() {
-  if (taskcardContainer.scrollHeight > height.scrollHeight) {
-    viewMoreBtn.style.display = 'block'; // show button if overflow
-  } else {
-    viewMoreBtn.style.display = 'none';  // hide button if no overflow
-  }
+    const contentHeight = taskcardContainer.scrollHeight;
+    const visibleHeight = subsection2.clientHeight - 60;
+    if (contentHeight >= visibleHeight) {
+        viewMoreBtn.style.display = 'block';
+    } else {
+         viewMoreBtn.style.display = 'none';
+    }
 }
-
-// On page load
-window.addEventListener('load', checkOverflow);
-setInterval(()=>{checkOverflow(); console.log("Checking Overflow")},1000)
-// On window resize (responsive)
+viewMoreBtn.addEventListener("click",()=>{
+    main.classList.add("full-width")
+    subsection2.classList.add("expand")
+    closeView.innerHTML =`<span>&times;</span>`
+    viewMoreBtn.style.display = 'none';
+})
+closeView.addEventListener("click",()=>{
+    main.classList.remove("full-width")
+    subsection2.classList.remove("expand")
+    closeView.innerHTML =""
+    checkOverflow()
+})
+// On window resize
 window.addEventListener('resize', checkOverflow);
 
 const editRange = document.querySelector("#edit-range");
@@ -38,6 +48,7 @@ function Slider(rangeEl, textEl) {
 document.addEventListener("DOMContentLoaded", () => {
     showItem()
     count()
+    checkOverflow()
 })
 editForm.addEventListener("submit", (e) => { e.preventDefault() })
 form.addEventListener("submit", (event) => {
@@ -46,6 +57,7 @@ form.addEventListener("submit", (event) => {
     if (validate()) {
         setItem()
         count()
+        checkOverflow()
         Notify(msg)
         form.reset()
     }
@@ -405,9 +417,13 @@ function updateTaskCard(id) {
     `;
 }
 
+const taskModal = document.querySelector(".task-modal")
+const overlay  = document.querySelector(".task-overlay")
+
+
 document.querySelector(".close-btn").addEventListener("click", () => {
-    document.querySelector(".task-modal").style.display = "none"
-    document.querySelector(".task-overlay").style.display = "none"
+    taskModal.style.display = "none"
+    overlay.style.display = "none"
 })
 document.addEventListener("click", (event) => {
     if (event.target.closest(".fa-edit, .fa-trash-alt")) {
@@ -417,8 +433,12 @@ document.addEventListener("click", (event) => {
     if (!taskCard) return
     const id = taskCard.dataset.id
     taskcardView(id)
-    document.querySelector(".task-modal").style.display = "block"
-    document.querySelector(".task-overlay").style.display = "block"
+    taskModal.style.display = "block"
+    overlay.style.display = "block"
+    overlay.addEventListener("click",()=>{
+    taskModal.style.display = "none"
+    overlay.style.display = "none"
+})
 })
 
 
@@ -433,6 +453,7 @@ document.addEventListener("click", (event) => {
         removeItem(id)
         taskCard.remove()
         count()
+        checkOverflow()
         Notify(msg)
     }
 })
@@ -460,13 +481,19 @@ document.querySelector(".cancel-btn").addEventListener("click", closePopup)
 function closePopup() {
     const popupBox = document.querySelector(".popup-box")
     popupBox.style.visibility = "hidden"
-    document.querySelector(".task-overlay").style.display = "none"
+    overlay.style.display = "none"
     resetError()
 }
 function openPopup() {
     const popupBox = document.querySelector(".popup-box")
     popupBox.style.visibility = "visible"
-    document.querySelector(".task-overlay").style.display = "block"
+    popupBox.style.animation ="fadeIn 0.5s"
+    overlay.style.display = "block"
+    overlay.addEventListener("click",()=>{
+    popupBox.style.animation ="none"
+    popupBox.style.visibility = "hidden"
+    overlay.style.display = "none"
+})
 }
 // Edit Box Inputs 
 const editUser = document.querySelector("#edit-userName")

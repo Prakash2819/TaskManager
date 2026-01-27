@@ -335,6 +335,7 @@
             </div>
             <!-- Sub Section 2 -->
             <section class="sub-section2">
+                <div class="close-view"></div>
                 <input type="radio" name="priority" id="All" checked>
                 <input type="radio" name="priority" id="High">
                 <input type="radio" name="priority" id="Medium">
@@ -348,7 +349,18 @@
                         <label for="Low">Low (<span id="low-count">0</span>)</label>
                     </div>
                 </div>
-                <div class="taskcard-container limit">
+                <!-- <div class="empty-state">
+                    <img src="no-task.png" alt="No tasks" />
+
+                    <h2>No Tasks Yet!</h2>
+                    <p>You have no tasks. Add a new task to get started.</p>
+
+                    <button>
+                        + Create Task
+                    </button>
+                </div> -->
+
+                <div class="taskcard-container">
                     <!--Task Card 1-->
                     <div class="task-card High">
                         <h4>Designing Homepage Mockup <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></h4>
@@ -427,6 +439,9 @@
                             <label class="completed"><small>&#9679</small> Completed</label>
                         </div>
                     </div>
+                </div>
+                <div class="viewmore-btn">
+                    <p>View more<span></span></p>
                 </div>
             </section>
         </section>
