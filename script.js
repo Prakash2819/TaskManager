@@ -3,35 +3,86 @@ const form = document.querySelector("#form")
 const editForm = document.querySelector(".edit-form")
 const notify = document.querySelector(".notify-box")
 
-
+const isDesktop = window.matchMedia("(min-width: 1024px)");
 const viewMoreBtn = document.querySelector('.viewmore-btn')
 const subsection2 = document.querySelector(".sub-section2")
 const subsection1 = document.querySelector(".sub-section1")
 const main = document.querySelector(".main-section")
 const closeView = document.querySelector(".close-view")
-function checkOverflow() {
-    const contentHeight = taskcardContainer.scrollHeight;
-    const visibleHeight = subsection2.clientHeight - 60;
-    if (contentHeight >= visibleHeight) {
-        viewMoreBtn.style.display = 'block';
-    } else {
-         viewMoreBtn.style.display = 'none';
-    }
+const filter = document.querySelector(".task-filters")
+
+function checkScreen() {
+    if (isDesktop.matches) enableViewMore()
+    else disableViewMore()
 }
-viewMoreBtn.addEventListener("click",()=>{
-    main.classList.add("full-width")
-    subsection2.classList.add("expand")
-    closeView.innerHTML =`<span>&times;</span>`
+
+function enableViewMore() {
+    viewMoreBtn.addEventListener("click", viewmoreClick)
+    closeView.addEventListener("click", closeClick)
+    filter.addEventListener("click", filterClick)
+    window.addEventListener("resize", resize)
+    requestAnimationFrame(() => {
+        syncHeights();
+        checkOverflow();
+    });
+}
+function disableViewMore() {
+    viewMoreBtn.removeEventListener("click", viewmoreClick)
+    closeView.removeEventListener("click", closeClick)
+    window.removeEventListener("resize", resize)
+    filter.removeEventListener("click", filterClick)
+    main.classList.remove("full-width")
+    subsection2.style.height = ""
+    subsection2.classList.remove("expand")
+    closeView.innerHTML = ""
     viewMoreBtn.style.display = 'none';
-})
-closeView.addEventListener("click",()=>{
+}
+
+function viewmoreClick() {
+    filter.removeEventListener("click", filterClick)
+    main.classList.add("full-width")
+    subsection2.style.height = "fit-content"
+    subsection2.classList.add("expand")
+    closeView.innerHTML = `<span>&times;</span>`
+    viewMoreBtn.style.display = 'none';
+}
+function closeClick() {
+    filter.addEventListener("click", filterClick)
     main.classList.remove("full-width")
     subsection2.classList.remove("expand")
-    closeView.innerHTML =""
-    checkOverflow()
-})
-// On window resize
-window.addEventListener('resize', checkOverflow);
+    subsection2.style.height = ""
+    closeView.innerHTML = ""
+    requestAnimationFrame(() => {
+        syncHeights();
+        checkOverflow();
+    });
+}
+function checkOverflow() {
+    const contentHeight = taskcardContainer.clientHeight;
+    const visibleHeight = subsection1.clientHeight - 100;
+    if (contentHeight > visibleHeight) {
+        viewMoreBtn.style.display = 'block';
+    } else {
+        viewMoreBtn.style.display = 'none';
+    }
+}
+function resize() {
+    requestAnimationFrame(() => {
+        syncHeights();
+        checkOverflow();
+    });
+}
+function syncHeights() {
+    const height = subsection1.getBoundingClientRect().height;
+    subsection2.style.height = `${height}px`;
+}
+function filterClick() {
+    requestAnimationFrame(checkOverflow)
+}
+
+
+
+
 
 const editRange = document.querySelector("#edit-range");
 const slider = document.querySelector(".color-range");
@@ -44,12 +95,14 @@ editRange.addEventListener("input", () => Slider(editRange, editPercent));
 function Slider(rangeEl, textEl) {
     textEl.textContent = rangeEl.value + "%";
 }
-
 document.addEventListener("DOMContentLoaded", () => {
+    checkScreen()
     showItem()
     count()
-    checkOverflow()
+    EmptyTaskPage()
 })
+isDesktop.addEventListener("change", checkScreen);
+window.addEventListener("resize", checkScreen)
 editForm.addEventListener("submit", (e) => { e.preventDefault() })
 form.addEventListener("submit", (event) => {
     let msg = `<i class="fa-solid fa-circle-check"></i><p>Task added successfully</p>`
@@ -60,6 +113,7 @@ form.addEventListener("submit", (event) => {
         checkOverflow()
         Notify(msg)
         form.reset()
+        EmptyTaskPage()
     }
 })
 form.addEventListener("reset", () => {
@@ -75,8 +129,6 @@ function Notify(msg) {
     setTimeout(() => toast.remove(), 2000)
 }
 
-
-
 function count() {
     const highCount = document.querySelectorAll(".High").length
     const mediumCount = document.querySelectorAll(".Medium").length
@@ -86,6 +138,40 @@ function count() {
     document.querySelector("#low-count").textContent = lowCount
     document.querySelector("#all-count").textContent = highCount + mediumCount + lowCount
 }
+const emptyButton = document.querySelector(".empty-button")
+emptyButton.addEventListener("click",()=>{
+    userName.focus()
+})
+function EmptyTaskPage() {
+    const taskcards = document.querySelectorAll(".task-card")
+    const emptyState = document.querySelector(".empty-state")
+    const activetask = document.querySelector('input[name="priority"]:checked').id
+    emptyState.style.display = "none"
+    emptyButton.classList.add("hide")
+    if (taskcards.length == 0 && activetask == "All") {
+        emptyState.style.display = "flex"
+        emptyButton.classList.remove("hide")
+        document.querySelector(".empty-img").src = "no-task.png"
+        document.querySelector(".empty-text1").innerText = "No Tasks Yet!"
+        document.querySelector(".empty-text2").innerText = "You have no tasks. Add a new task to get started."
+    }
+    if (activetask !== "All") {
+        const count = document.querySelectorAll(`.task-card.${activetask}`).length
+        console.log(activetask)
+        console.log(count)
+        if (count == 0) {
+            emptyState.style.display = "flex"
+            document.querySelector(".empty-img").src = "no-task-match.png"
+            document.querySelector(".empty-text1").innerText = "No Matching Tasks"
+            document.querySelector(".empty-text2").innerText = "we couldn't find any tasks for your selected filter."
+        }
+    }
+}
+document.querySelectorAll('input[name="priority"]').forEach(radio => {
+    radio.addEventListener("change", () => {
+        EmptyTaskPage()
+    });
+});
 
 //    
 const userName = document.querySelector(".user-name")
@@ -418,7 +504,7 @@ function updateTaskCard(id) {
 }
 
 const taskModal = document.querySelector(".task-modal")
-const overlay  = document.querySelector(".task-overlay")
+const overlay = document.querySelector(".task-overlay")
 
 
 document.querySelector(".close-btn").addEventListener("click", () => {
@@ -435,10 +521,10 @@ document.addEventListener("click", (event) => {
     taskcardView(id)
     taskModal.style.display = "block"
     overlay.style.display = "block"
-    overlay.addEventListener("click",()=>{
-    taskModal.style.display = "none"
-    overlay.style.display = "none"
-})
+    overlay.addEventListener("click", () => {
+        taskModal.style.display = "none"
+        overlay.style.display = "none"
+    })
 })
 
 
@@ -455,6 +541,7 @@ document.addEventListener("click", (event) => {
         count()
         checkOverflow()
         Notify(msg)
+        EmptyTaskPage()
     }
 })
 
@@ -487,13 +574,13 @@ function closePopup() {
 function openPopup() {
     const popupBox = document.querySelector(".popup-box")
     popupBox.style.visibility = "visible"
-    popupBox.style.animation ="fadeIn 0.5s"
+    popupBox.style.animation = "fadeIn 0.5s"
     overlay.style.display = "block"
-    overlay.addEventListener("click",()=>{
-    popupBox.style.animation ="none"
-    popupBox.style.visibility = "hidden"
-    overlay.style.display = "none"
-})
+    overlay.addEventListener("click", () => {
+        popupBox.style.animation = "none"
+        popupBox.style.visibility = "hidden"
+        overlay.style.display = "none"
+    })
 }
 // Edit Box Inputs 
 const editUser = document.querySelector("#edit-userName")
