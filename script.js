@@ -771,6 +771,8 @@ function EditItem(id) {
                 <p>Your changes have been saved</p>`
                     updateItem(value.id)
                     updateTaskCard(value.id)
+                    count()
+                    EmptyTaskPage()
                     closePopup()
                     Notify(msg)
                 }
