@@ -5,8 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
     <title>Task Manager</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
@@ -29,6 +27,7 @@
             </ul>
         </nav>
     </header>
+    <!-- Notification Box -->
     <div class="notify-box">
     </div>
     <main class="main">
@@ -105,12 +104,6 @@
                             <input type="range" name="range" min="0" max="100" value="0" class="color-range"><br>
                             <h5 class="percentage">0%</h5>
                         </div>
-                        <!--Task color bar-->
-                        <!-- <div class="task-color">
-                            <label for="color">Task Color</label> <br>
-                            <input type="color" name="color" class="color-pick">
-                        </div> -->
-                        <!--Task type-->
                         <div class="task-type">
                             <label for="" class="task-type-label">Task Type *</label> <br>
                             <div class="checks">
@@ -142,15 +135,6 @@
                             <span class="error status-error">
                             </span>
                         </div>
-                        <!--Upload section-->
-                        <!-- <div class="upload-attachments">
-                            <input type="file" id="attachments" name="attachments" multiple
-                                accept=".pdf,.doc,.docx,.jpg,.jpeg,.png">
-                            <label for="attachments" class="upload-label">
-                                <p><i class="fa-solid fa-paperclip"></i> Click to upload attachments</p>
-                                <small>Supported: PDF, DOC, Images</small>
-                            </label>
-                        </div> -->
                         <!--Buttons-->
                         <div class="Buttons">
                             <button type="submit"><span>&#10003</span> Create Task</button>
@@ -167,6 +151,7 @@
                         <h4>Edit Task</h4>
                         <span class="close">&times;</span>
                     </div>
+                    <!-- Edit Form -->
                     <form class="edit-form">
                         <label for="edit-userName">User Name</label>
                         <input type="text" id="edit-userName">
@@ -261,8 +246,7 @@
             </div>
             <!-- Overlay -->
             <div class="task-overlay"></div>
-            <!-- Task Detail Modal -->
-
+            <!-- Task Detail View -->
             <div id="taskModal" class="task-modal">
                 <div class="modal-header">
                     <h4 class="modal-taskName">Designing Homepage Mockup</h4>
@@ -349,6 +333,7 @@
                         <label for="Low">Low (<span id="low-count">0</span>)</label>
                     </div>
                 </div>
+                <!-- Empty Task Page View -->
                 <div class="empty-state">
                     <img class="empty-img" src="no-task.png" alt="No tasks" />
 
@@ -359,87 +344,10 @@
                         + Create Task
                     </button>
                 </div>
-
+                <!-- Task card Container -->
                 <div class="taskcard-container">
-                    <!--Task Card 1-->
-                    <!-- <div class="task-card High">
-                        <h4>Designing Homepage Mockup <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></h4>
-                        <br>
-                        <p>Create wireframes and high-fidelity mockups for the new homepage redesign project with modern
-                            Ul elements.</p>
-                        <p></p>
-                        <p><img class="calender-img" src="calender.png"> Due: Oct 20, 2025</p>
-                        <p><img class="contact-img" src="contact.jpg"> Sarah Johnson</p><br>
-                        <div class="level-container">
-                            <label class="high"><span>&#9679</span>High</label>
-                            <label class="progress"><small>&#9679</small> In Progress</label>
-                        </div>
-                    </div> -->
-                    <!--Task Card 2-->
-                    <!-- <div class="task-card High">
-                        <h4>Fix Login Authentication Bug <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i>
-                        </h4><br>
-                        <p>Resolve the issue where users are logged out unexpectedly after 5 minutes of inactivity.</p>
-                        <p></p>
-                        <p><img class="calender-img" src="calender.png"> Due: Oct 15, 2025</p>
-                        <p><img class="contact-img" src="contact.jpg"> Michael Chen</p><br>
-                        <div class="level-container">
-                            <label class="high"><span>&#9679</span>High</label>
-                            <label class="pending"><small>&#9679</small> Pending</label>
-                        </div> -->
-                        <!--Task Card 3-->
-                    <!-- </div>
-                    <div class="task-card Medium">
-                        <h4>Update Documentation <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></h4><br>
-                        <p>Review and update the API documentation with the latest endpoint changes and examples.</p>
-                        <p></p>
-                        <p><img class="calender-img" src="calender.png"> Due: Oct 25, 2025</p>
-                        <p><img class="contact-img" src="contact.jpg"> Emily Rodriguez</p><br>
-                        <div class="level-container">
-                            <label class="medium"><span>&#9679</span> Medium</label>
-                            <label class="progress"><small>&#9679</small> In Progress</label>
-                        </div>
-                    </div> -->
-                    <!--Task Card 4-->
-                    <!-- <div class="task-card Medium">
-                        <h4>Database Performance Optimization <i class='far fa-trash-alt'></i> <i
-                                class='far fa-edit'></i>
-                        </h4><br>
-                        <p>Analyze and optimize slow-running queries to improve overall database performance by 30%.</p>
-                        <p></p>
-                        <p><img class="calender-img" src="calender.png"> Due: Oct 30, 2025</p>
-                        <p><img class="contact-img" src="contact.jpg"> David Kim</p><br>
-                        <div class="level-container">
-                            <label class="medium"><span>&#9679</span> Medium</label>
-                            <label class="pending"><small>&#9679</small> Pending</label>
-                        </div>
-                    </div> -->
-                    <!--Task Card 5-->
-                    <!-- <div class="task-card Low">
-                        <h4>Implement Dark Mode <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></h4><br>
-                        <p>Add dark mode theme support across the application with user preference persistence</p>
-                        <p></p>
-                        <p><img class="calender-img" src="calender.png"> Due: Oct 05, 2025</p>
-                        <p><img class="contact-img" src="contact.jpg"> Alex Thompson</p><br>
-                        <div class="level-container">
-                            <label class="low"><span>&#9679</span> Low</label>
-                            <label class="pending"><small>&#9679</small> Pending</label>
-                        </div>
-                    </div> -->
-                    <!--Task Card 6-->
-                    <!-- <div class="task-card High">
-                        <h4>User Testing Session <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></h4><br>
-                        <p>Conduct user testing sessions with 10 participants to gather feedback on the new interface.
-                        </p>
-                        <p></p>
-                        <p><img class="calender-img" src="calender.png"> Due: Oct 28, 2025</p>
-                        <p><img class="contact-img" src="contact.jpg"> Lisa Anderson</p><br>
-                        <div class="level-container">
-                            <label class="high"><span>&#9679</span>High</label>
-                            <label class="completed"><small>&#9679</small> Completed</label>
-                        </div>
-                    </div> -->
                 </div>
+
                 <div class="viewmore-btn">
                     <p>View more<span></span></p>
                 </div>

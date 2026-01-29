@@ -2,7 +2,7 @@ const taskcardContainer = document.querySelector(".taskcard-container")
 const form = document.querySelector("#form")
 const editForm = document.querySelector(".edit-form")
 const notify = document.querySelector(".notify-box")
-
+// Is Desktop ?
 const isDesktop = window.matchMedia("(min-width: 1024px)");
 const viewMoreBtn = document.querySelector('.viewmore-btn')
 const subsection2 = document.querySelector(".sub-section2")
@@ -11,6 +11,7 @@ const main = document.querySelector(".main-section")
 const closeView = document.querySelector(".close-view")
 const filter = document.querySelector(".task-filters")
 
+// Check Screen 
 function checkScreen() {
     if (isDesktop.matches) enableViewMore()
     else disableViewMore()
@@ -37,7 +38,7 @@ function disableViewMore() {
     closeView.innerHTML = ""
     viewMoreBtn.style.display = 'none';
 }
-
+// View more click
 function viewmoreClick() {
     filter.removeEventListener("click", filterClick)
     main.classList.add("full-width")
@@ -46,6 +47,7 @@ function viewmoreClick() {
     closeView.innerHTML = `<span>&times;</span>`
     viewMoreBtn.style.display = 'none';
 }
+// close click
 function closeClick() {
     filter.addEventListener("click", filterClick)
     main.classList.remove("full-width")
@@ -57,15 +59,18 @@ function closeClick() {
         checkOverflow();
     });
 }
+// Check TaskCard OverFlow
 function checkOverflow() {
     const contentHeight = taskcardContainer.clientHeight;
-    const visibleHeight = subsection1.clientHeight - 100;
+    const visibleHeight = subsection1.clientHeight - 90;
+    if (visibleHeight == -100) return;
     if (contentHeight > visibleHeight) {
         viewMoreBtn.style.display = 'block';
     } else {
         viewMoreBtn.style.display = 'none';
     }
 }
+// Window Resize 
 function resize() {
     requestAnimationFrame(() => {
         syncHeights();
@@ -80,10 +85,7 @@ function filterClick() {
     requestAnimationFrame(checkOverflow)
 }
 
-
-
-
-
+// Task Progress Slider & Edit Box Slider
 const editRange = document.querySelector("#edit-range");
 const slider = document.querySelector(".color-range");
 const percent = document.querySelector(".percentage");
@@ -95,6 +97,7 @@ editRange.addEventListener("input", () => Slider(editRange, editPercent));
 function Slider(rangeEl, textEl) {
     textEl.textContent = rangeEl.value + "%";
 }
+// On Window Load 
 document.addEventListener("DOMContentLoaded", () => {
     checkScreen()
     showItem()
@@ -103,6 +106,8 @@ document.addEventListener("DOMContentLoaded", () => {
 })
 isDesktop.addEventListener("change", checkScreen);
 window.addEventListener("resize", checkScreen)
+
+// Form SubMission
 editForm.addEventListener("submit", (e) => { e.preventDefault() })
 form.addEventListener("submit", (event) => {
     let msg = `<i class="fa-solid fa-circle-check"></i><p>Task added successfully</p>`
@@ -116,11 +121,12 @@ form.addEventListener("submit", (event) => {
         EmptyTaskPage()
     }
 })
+// Reset event
 form.addEventListener("reset", () => {
     percent.textContent = "0%"
     resetError()
 })
-
+// Notification
 function Notify(msg) {
     let toast = document.createElement("div")
     toast.classList.add("toast")
@@ -128,7 +134,7 @@ function Notify(msg) {
     notify.appendChild(toast);
     setTimeout(() => toast.remove(), 2000)
 }
-
+// Task card count
 function count() {
     const highCount = document.querySelectorAll(".High").length
     const mediumCount = document.querySelectorAll(".Medium").length
@@ -138,10 +144,12 @@ function count() {
     document.querySelector("#low-count").textContent = lowCount
     document.querySelector("#all-count").textContent = highCount + mediumCount + lowCount
 }
+// Empty Task Button
 const emptyButton = document.querySelector(".empty-button")
 emptyButton.addEventListener("click",()=>{
     userName.focus()
 })
+// Empty Task Page View
 function EmptyTaskPage() {
     const taskcards = document.querySelectorAll(".task-card")
     const emptyState = document.querySelector(".empty-state")
@@ -157,8 +165,6 @@ function EmptyTaskPage() {
     }
     if (activetask !== "All") {
         const count = document.querySelectorAll(`.task-card.${activetask}`).length
-        console.log(activetask)
-        console.log(count)
         if (count == 0) {
             emptyState.style.display = "flex"
             document.querySelector(".empty-img").src = "no-task-match.png"
@@ -173,7 +179,7 @@ document.querySelectorAll('input[name="priority"]').forEach(radio => {
     });
 });
 
-//    
+// Create Task Inputs  
 const userName = document.querySelector(".user-name")
 const taskName = document.querySelector(".task-name")
 var taskDescription = document.querySelector("textarea")
@@ -183,6 +189,7 @@ const email = document.querySelector(".email")
 const priority = document.querySelector("select")
 const hours = document.querySelector(".hour")
 const url = document.querySelector(".url")
+// Task Input Errors
 const userNameError = document.querySelector(".username-error")
 const taskNameError = document.querySelector(".taskname-error")
 const emailError = document.querySelector(".email-error")
@@ -199,6 +206,7 @@ const userPattern = /^(?:[A-Za-z.]{3,}|[A-Za-z](?:[A-Za-z.\s]{3,})*)$/
 const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
 const URLPattern = /^(https?:\/\/)[\w.-]+(\.[\w.-]+)+[/#?]?.*$/
 const hourPattern = /^[0-9]$/
+//Error Logo
 const logo = `<i class="fa-solid fa-circle-exclamation"></i>`
 
 // Validation
@@ -318,6 +326,7 @@ function validate() {
     }
     return isValid;
 }
+// Clearing error on input
 url.addEventListener("input", () => urlError.innerText = "")
 userName.addEventListener("input", () => userNameError.innerText = "")
 taskName.addEventListener("input", () => taskNameError.innerText = "")
@@ -343,7 +352,7 @@ hours.addEventListener("keydown", (e) => {
 taskDescription.addEventListener("input", () => { desError.innerText = "" })
 document.querySelectorAll('.check').forEach(e => { e.addEventListener("change", () => typeError.innerText = "") })
 document.querySelectorAll('.radio').forEach(e => { e.addEventListener("change", () => statusError.innerText = "") })
-
+// Reset Error
 function resetError() {
     const err = document.querySelectorAll(".error")
     err.forEach(e => e.innerText = "")
@@ -381,7 +390,7 @@ function setItem() {
     localStorage.setItem(`${task.id}`, JSON.stringify(task))
     createTask(task);
 }
-
+// Retrieve object from storage 
 function showItem() {
     for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i)
@@ -403,157 +412,10 @@ function createTask(value) {
             <label class="${value.priority.toLowerCase()}"><span>&#9679</span> ${value.priority}</label>
             <label class="${value.status.toLowerCase()}"><small>&#9679</small> ${value.status}</label>
         </div>`
-    taskcardContainer.appendChild(taskcard)
+    taskcardContainer.prepend(taskcard)
 }
 
-
-function taskcardView(id) {
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i)
-        const value = JSON.parse(localStorage.getItem(key))
-        if (id == value.id) {
-            document.querySelector(".modal-taskName").innerText = value.name
-            document.querySelector(".modal-description").innerText = value.description
-            document.querySelector(".modal-progress").value = value.percent
-            document.querySelector(".modal-percent").innerText = `${value.percent}%`
-            document.querySelector(".modal-userEmail").innerHTML = `<p >${value.user}<br><span>${value.email}</span></p>`
-            document.querySelector(".modal-date").innerText = `📆 ${value.date}`
-            document.querySelector(".modal-hours").innerText = `${value.duration} hours`
-            document.querySelector(".modal-url").href = value.url
-            document.querySelector(".modal-time").innerText = toAmPm(value.time)
-            function toAmPm(time24) {
-                if (!time24) return "";
-
-                let [h, m] = time24.split(":");
-                h = Number(h);
-
-                const ampm = h >= 12 ? "PM" : "AM";
-                h = h % 12 || 12;
-
-                return `${h}:${m} ${ampm}`;
-            }
-            let dot = `<span>&#9679;</span> `
-            const badge = document.querySelector(".modal-status")
-            const modalLevel = document.querySelector(".modal-level")
-            // reset all status colors first
-            badge.classList.remove("orange", "green", "blue")
-            modalLevel.classList.remove("red", "green", "orange")
-            // Status
-            if (value.status == "Pending") {
-                badge.classList.add("orange")
-                badge.innerHTML = `${dot} Pending`
-            }
-            if (value.status == "In Progress") {
-                badge.classList.add("blue")
-                badge.innerHTML = `${dot} In Progress`
-            }
-            if (value.status == "Completed") {
-                badge.classList.add("green")
-                badge.innerHTML = `${dot} Completed`
-            }
-            // Priority level
-            if (value.priority == "High") {
-                modalLevel.classList.add("red")
-                modalLevel.innerHTML = `${dot} High`
-            }
-            if (value.priority == "Medium") {
-                modalLevel.classList.add("orange")
-                modalLevel.innerHTML = `${dot} Medium`
-            }
-            if (value.priority == "Low") {
-                modalLevel.classList.add("green")
-                modalLevel.innerHTML = `${dot} Low`
-            }
-
-
-            const types = value.type
-            const modalTaskTypes = document.querySelector(".modal-taskTypes")
-            modalTaskTypes.innerHTML = ""
-            if (types.bugFix) { modalTaskTypes.innerHTML += `<p><i class="fa-solid fa-circle-check"></i> Bug fix</p>` }
-            if (types.feature) { modalTaskTypes.innerHTML += `<p><i class="fa-solid fa-circle-check"></i> Feature</p>` }
-            if (types.enhancement) { modalTaskTypes.innerHTML += `<p><i class="fa-solid fa-circle-check"></i> Enhancement</p>` }
-        }
-    }
-
-}
-
-
-//Update Task Card UI
-function updateTaskCard(id) {
-    const taskCard = document.querySelector(`.task-card[data-id="${id}"]`);
-    const task = JSON.parse(localStorage.getItem(id));
-
-    taskCard.className = `task-card ${task.priority}`;
-    taskCard.innerHTML = `
-        <h4>${task.name} 
-            <i class='far fa-trash-alt'></i> 
-            <i class='far fa-edit'></i>
-        </h4><br>
-        <p>${task.description}</p>
-        <p><img class="calender-img" src="calender.png"> Due: ${task.date}</p>
-        <p><img class="contact-img" src="contact.jpg"> ${task.user}</p><br> 
-        <div class="level-container">
-            <label class="${task.priority.toLowerCase()}">
-                <span>&#9679</span> ${task.priority}
-            </label>
-            <label class="${task.status.toLowerCase()}">
-                <small>&#9679</small> ${task.status}
-            </label>
-        </div>
-    `;
-}
-
-const taskModal = document.querySelector(".task-modal")
-const overlay = document.querySelector(".task-overlay")
-
-
-document.querySelector(".close-btn").addEventListener("click", () => {
-    taskModal.style.display = "none"
-    overlay.style.display = "none"
-})
-document.addEventListener("click", (event) => {
-    if (event.target.closest(".fa-edit, .fa-trash-alt")) {
-        return
-    }
-    const taskCard = event.target.closest(".task-card")
-    if (!taskCard) return
-    const id = taskCard.dataset.id
-    taskcardView(id)
-    taskModal.style.display = "block"
-    overlay.style.display = "block"
-    overlay.addEventListener("click", () => {
-        taskModal.style.display = "none"
-        overlay.style.display = "none"
-    })
-})
-
-
-
-//Delete Option
-document.addEventListener("click", (event) => {
-    let msg = `<i class="fa-solid fa-trash-arrow-up"></i>
-    <p class="trash">Task deleted successfully</p>`
-    if (event.target.classList.contains("fa-trash-alt")) {
-        const taskCard = event.target.closest(".task-card")
-        const id = taskCard.dataset.id
-        removeItem(id)
-        taskCard.remove()
-        count()
-        checkOverflow()
-        Notify(msg)
-        EmptyTaskPage()
-    }
-})
-
-function removeItem(id) {
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i)
-        const value = JSON.parse(localStorage.getItem(key))
-        if (value.id == id) { localStorage.removeItem(key); break }
-    }
-}
-
-// Edit Box
+// Edit Popup Box
 document.addEventListener("click", (event) => {
     if (event.target.classList.contains("fa-edit")) {
         const taskCard = event.target.closest(".task-card")
@@ -565,12 +427,14 @@ document.addEventListener("click", (event) => {
 const close = document.querySelector(".close")
 close.addEventListener("click", closePopup)
 document.querySelector(".cancel-btn").addEventListener("click", closePopup)
+//close
 function closePopup() {
     const popupBox = document.querySelector(".popup-box")
     popupBox.style.visibility = "hidden"
     overlay.style.display = "none"
     resetError()
 }
+//open
 function openPopup() {
     const popupBox = document.querySelector(".popup-box")
     popupBox.style.visibility = "visible"
@@ -582,6 +446,7 @@ function openPopup() {
         overlay.style.display = "none"
     })
 }
+
 // Edit Box Inputs 
 const editUser = document.querySelector("#edit-userName")
 const editName = document.querySelector("#edit-taskName")
@@ -604,36 +469,44 @@ const editUrlError = document.querySelector(".editURL-error")
 const editDesError = document.querySelector(".editDesc-error")
 const editTypeError = document.querySelector(".editType-error")
 
-function updateItem(taskKey) {
-    const TextDate = new Date(editDate.value).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-        year: "numeric"
-    });
-    const estatus = document.querySelector(".edit-radio:checked")?.value
-    const type = {
-        bugFix: document.getElementById("edit-check1").checked,
-        feature: document.getElementById("edit-check2").checked,
-        enhancement: document.getElementById("edit-check3").checked
+// Store input values from storage to edit box
+function EditItem(id) {
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i)
+        const value = JSON.parse(localStorage.getItem(key))
+        const saveBtn = document.querySelector(".save-btn")
+        if (value.id == id) {
+            editUser.value = value.user
+            editName.value = value.name
+            editDate.value = value.dueDate
+            editTime.value = value.time
+            editEmail.value = value.email
+            editLevel.value = value.priority
+            editHour.value = value.duration
+            editUrl.value = value.url
+            editDescription.value = value.description
+            editRange.value = value.percent
+            editPercent.textContent = value.percent + "%"
+            editStatus.forEach(el => el.checked = el.value === value.status)
+            check(value.type)
+            // Save Button
+            saveBtn.onclick = () => {
+                if (editValidate(value.id)) {
+                    let msg = `<i class="fa-solid fa-circle-check"></i>
+                <p>Your changes have been saved</p>`
+                    updateItem(value.id)
+                    updateTaskCard(value.id)
+                    count()
+                    checkOverflow()
+                    EmptyTaskPage()
+                    closePopup()
+                    Notify(msg)
+                }
+            }
+        }
     }
-    const task = {
-        id: taskKey,
-        user: editUser.value.trim(),
-        name: editName.value.trim(),
-        email: editEmail.value,
-        dueDate: editDate.value,
-        date: TextDate,
-        time: editTime.value,
-        priority: editLevel.value,
-        duration: editHour.value,
-        url: editUrl.value,
-        percent: editRange.value,
-        description: editDescription.value.trim(),
-        status: estatus,
-        type: type
-    }
-    localStorage.setItem(`${taskKey}`, JSON.stringify(task))
 }
+
 // Edit Box Validation
 function editValidate(currentId) {
     let isValid = true
@@ -746,40 +619,7 @@ function editValidate(currentId) {
     return isValid
 }
 
-function EditItem(id) {
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i)
-        const value = JSON.parse(localStorage.getItem(key))
-        const saveBtn = document.querySelector(".save-btn")
-        if (value.id == id) {
-            editUser.value = value.user
-            editName.value = value.name
-            editDate.value = value.dueDate
-            editTime.value = value.time
-            editEmail.value = value.email
-            editLevel.value = value.priority
-            editHour.value = value.duration
-            editUrl.value = value.url
-            editDescription.value = value.description
-            editRange.value = value.percent
-            editPercent.textContent = value.percent + "%"
-            editStatus.forEach(el => el.checked = el.value === value.status)
-            check(value.type)
-            saveBtn.onclick = () => {
-                if (editValidate(value.id)) {
-                    let msg = `<i class="fa-solid fa-circle-check"></i>
-                <p>Your changes have been saved</p>`
-                    updateItem(value.id)
-                    updateTaskCard(value.id)
-                    count()
-                    EmptyTaskPage()
-                    closePopup()
-                    Notify(msg)
-                }
-            }
-        }
-    }
-}
+// Edit Box Error Clearing
 function clearError(e) {
     const error = e.nextElementSibling
     e.addEventListener("input", () => { error.innerText = "" })
@@ -796,14 +636,190 @@ editHour.addEventListener("input", () => {
         setTimeout(() => editHourError.innerText = "", 1000)
     }
 })
-editHour.addEventListener("keydown", (e) => {
-    if (["e", "E", "+", "-", "."].includes(e.key)) {
-        e.preventDefault();
-    }
-})
 document.querySelectorAll('.edit-check').forEach(e => { e.addEventListener("change", () => editTypeError.innerText = "") })
 function check(obj) {
     document.getElementById("edit-check1").checked = obj.bugFix
     document.getElementById("edit-check2").checked = obj.feature
     document.getElementById("edit-check3").checked = obj.enhancement
 }
+
+// Storing New Edited Value 
+function updateItem(taskKey) {
+    const TextDate = new Date(editDate.value).toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+        year: "numeric"
+    });
+    const estatus = document.querySelector(".edit-radio:checked")?.value
+    const type = {
+        bugFix: document.getElementById("edit-check1").checked,
+        feature: document.getElementById("edit-check2").checked,
+        enhancement: document.getElementById("edit-check3").checked
+    }
+    const task = {
+        id: taskKey,
+        user: editUser.value.trim(),
+        name: editName.value.trim(),
+        email: editEmail.value,
+        dueDate: editDate.value,
+        date: TextDate,
+        time: editTime.value,
+        priority: editLevel.value,
+        duration: editHour.value,
+        url: editUrl.value,
+        percent: editRange.value,
+        description: editDescription.value.trim(),
+        status: estatus,
+        type: type
+    }
+    localStorage.setItem(`${taskKey}`, JSON.stringify(task))
+}
+
+//Update Task Card UI
+function updateTaskCard(id) {
+    const taskCard = document.querySelector(`.task-card[data-id="${id}"]`);
+    const task = JSON.parse(localStorage.getItem(id));
+
+    taskCard.className = `task-card ${task.priority}`;
+    taskCard.innerHTML = `
+        <h4>${task.name} 
+            <i class='far fa-trash-alt'></i> 
+            <i class='far fa-edit'></i>
+        </h4><br>
+        <p>${task.description}</p>
+        <p><img class="calender-img" src="calender.png"> Due: ${task.date}</p>
+        <p><img class="contact-img" src="contact.jpg"> ${task.user}</p><br> 
+        <div class="level-container">
+            <label class="${task.priority.toLowerCase()}">
+                <span>&#9679</span> ${task.priority}
+            </label>
+            <label class="${task.status.toLowerCase()}">
+                <small>&#9679</small> ${task.status}
+            </label>
+        </div>
+    `;
+}
+
+// Task Card Info View 
+function taskcardView(id) {
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i)
+        const value = JSON.parse(localStorage.getItem(key))
+        if (id == value.id) {
+            document.querySelector(".modal-taskName").innerText = value.name
+            document.querySelector(".modal-description").innerText = value.description
+            document.querySelector(".modal-progress").value = value.percent
+            document.querySelector(".modal-percent").innerText = `${value.percent}%`
+            document.querySelector(".modal-userEmail").innerHTML = `<p >${value.user}<br><span>${value.email}</span></p>`
+            document.querySelector(".modal-date").innerText = `📆 ${value.date}`
+            document.querySelector(".modal-hours").innerText = `${value.duration} hours`
+            document.querySelector(".modal-url").href = value.url
+            document.querySelector(".modal-time").innerText = toAmPm(value.time)
+            function toAmPm(time24) {
+                if (!time24) return "";
+
+                let [h, m] = time24.split(":");
+                h = Number(h);
+
+                const ampm = h >= 12 ? "PM" : "AM";
+                h = h % 12 || 12;
+
+                return `${h}:${m} ${ampm}`;
+            }
+            let dot = `<span>&#9679;</span> `
+            const badge = document.querySelector(".modal-status")
+            const modalLevel = document.querySelector(".modal-level")
+            // reset all status colors first
+            badge.classList.remove("orange", "green", "blue")
+            modalLevel.classList.remove("red", "green", "orange")
+            // Status
+            if (value.status == "Pending") {
+                badge.classList.add("orange")
+                badge.innerHTML = `${dot} Pending`
+            }
+            if (value.status == "In Progress") {
+                badge.classList.add("blue")
+                badge.innerHTML = `${dot} In Progress`
+            }
+            if (value.status == "Completed") {
+                badge.classList.add("green")
+                badge.innerHTML = `${dot} Completed`
+            }
+            // Priority level
+            if (value.priority == "High") {
+                modalLevel.classList.add("red")
+                modalLevel.innerHTML = `${dot} High`
+            }
+            if (value.priority == "Medium") {
+                modalLevel.classList.add("orange")
+                modalLevel.innerHTML = `${dot} Medium`
+            }
+            if (value.priority == "Low") {
+                modalLevel.classList.add("green")
+                modalLevel.innerHTML = `${dot} Low`
+            }
+            // Task Types 
+            const types = value.type
+            const modalTaskTypes = document.querySelector(".modal-taskTypes")
+            modalTaskTypes.innerHTML = ""
+            if (types.bugFix) { modalTaskTypes.innerHTML += `<p><i class="fa-solid fa-circle-check"></i> Bug fix</p>` }
+            if (types.feature) { modalTaskTypes.innerHTML += `<p><i class="fa-solid fa-circle-check"></i> Feature</p>` }
+            if (types.enhancement) { modalTaskTypes.innerHTML += `<p><i class="fa-solid fa-circle-check"></i> Enhancement</p>` }
+        }
+    }
+}
+// Task Info Box
+const taskModal = document.querySelector(".task-modal")
+const overlay = document.querySelector(".task-overlay")
+//close
+document.querySelector(".close-btn").addEventListener("click", () => {
+    taskModal.style.display = "none"
+    overlay.style.display = "none"
+})
+//open
+document.addEventListener("click", (event) => {
+    if (event.target.closest(".fa-edit, .fa-trash-alt")) {
+        return
+    }
+    const taskCard = event.target.closest(".task-card")
+    if (!taskCard) return
+    const id = taskCard.dataset.id
+    taskcardView(id)
+    taskModal.style.display = "block"
+    overlay.style.display = "block"
+    overlay.addEventListener("click", () => {
+        taskModal.style.display = "none"
+        overlay.style.display = "none"
+    })
+})
+
+// Delete Option
+document.addEventListener("click", (event) => {
+    let msg = `<i class="fa-solid fa-trash-arrow-up"></i>
+    <p class="trash">Task deleted successfully</p>`
+    if (event.target.classList.contains("fa-trash-alt")) {
+        const taskCard = event.target.closest(".task-card")
+        const id = taskCard.dataset.id
+        removeItem(id)
+        taskCard.remove()
+        count()
+        checkOverflow()
+        Notify(msg)
+        EmptyTaskPage()
+    }
+})
+// Remove object on storage
+function removeItem(id) {
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i)
+        const value = JSON.parse(localStorage.getItem(key))
+        if (value.id == id) { localStorage.removeItem(key); break }
+    }
+}
+
+// Estimated Hours prevent key actions
+editHour.addEventListener("keydown", (e) => {
+    if (["e", "E", "+", "-", "."].includes(e.key)) {
+        e.preventDefault();
+    }
+})
