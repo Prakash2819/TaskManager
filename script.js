@@ -7,6 +7,7 @@ const viewMoreBtn = document.querySelector('.viewmore-btn')
 const subsection2 = document.querySelector(".sub-section2")
 const subsection1 = document.querySelector(".sub-section1")
 const subNav = document.querySelector(".sub-section2-navbar")
+const profile = document.querySelector(".main")
 const main = document.querySelector(".main-section")
 const closeView = document.querySelector(".close-view")
 const filter = document.querySelector(".task-filters")
@@ -64,7 +65,7 @@ function handleNavigation() {
         subsection2.classList.add("expand")
         filter.removeEventListener("click", filterClick)
         viewMoreBtn.style.display = "none"
-        document.querySelector(".title-name").innerText = `Tasks`
+        document.querySelector(".title-name").innerText = "Tasks"
         document.querySelector(".sub-section2-title").style.display = "none"
         document.querySelector(".search-bar").style.display = "block"
         subNav.classList.add("expand")
@@ -80,7 +81,7 @@ function handleNavigation() {
         subsection2.classList.remove("expand")
         subNav.classList.remove("expand")
         taskcardContainer.classList.remove("expand")
-        document.querySelector(".title-name").innerText = `Task Dashboard`
+        document.querySelector(".title-name").innerText = "Task Dashboard"
         viewMoreBtn.addEventListener("click", () => {
             window.location.hash = "tasks"
         })
@@ -90,6 +91,8 @@ function handleNavigation() {
             checkOverflow();
         });
     }
+    if (section == "profile") return
+
     // update active link
     document.querySelectorAll(".links a").forEach(a => a.classList.remove("active"));
     document.querySelector(`.links a[href="#${section}"]`)?.classList.add("active");
@@ -111,6 +114,16 @@ form.addEventListener("submit", (event) => {
         EmptyTaskPage()
     }
 })
+// Mobile Menu
+const menuToggle = document.getElementById("menu-toggle");
+const navLinks = document.querySelectorAll(".links a");
+navLinks.forEach(link => {
+    link.addEventListener("click", () => {
+        menuToggle.checked = false
+    })
+})
+
+
 // Reset event
 form.addEventListener("reset", () => {
     resetError()
@@ -135,7 +148,7 @@ function count() {
 }
 // Empty Task Button
 const emptyButton = document.querySelector(".empty-button")
-emptyButton.addEventListener("click",()=>{
+emptyButton.addEventListener("click", () => {
     userName.focus()
 })
 // Empty Task Page View
@@ -193,8 +206,9 @@ const typeError = document.querySelector(".type-error")
 
 const userPattern = /^(?:[A-Za-z.]{3,}|[A-Za-z](?:[A-Za-z.\s]{3,})*)$/
 const emailPattern = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
-const URLPattern = /^(https?:\/\/)[\w.-]+(\.[\w.-]+)+[/#?]?.*$/
+const URLPattern = /^https?:\/\/[\w.-]+(\.[\w.-]+)+([/#?].*)?$/i
 const hourPattern = /^[0-9]$/
+const userNameValidator = /^[A-Za-z0-9\s.]+$/
 //Error Logo
 const logo = `<i class="fa-solid fa-circle-exclamation"></i>`
 
@@ -206,16 +220,25 @@ function validate() {
         userNameError.innerHTML = `${logo}<p>User name is required</p>`
         focusError ??= userName
         isValid = false
-    } else if (!/^[A-Za-z0-9\s.]+$/.test(userName.value.trim())) {
-        userNameError.innerHTML = `${logo}<p>Name should not contain special characters</p>`
+    } else if (!userNameValidator.test(userName.value.trim())) {
+        userNameError.innerHTML = `${logo}<p>User name should not contain special characters</p>`
         focusError ??= userName
         isValid = false
     }
-
+    else if (userName.value.trim().startsWith(".") || userName.value.trim().endsWith(".")) {
+    userNameError.innerHTML =`${logo}<p>User name should not start or end with a dot</p>`;
+    focusError ??= userName;
+    isValid = false;
+}
     else if (/\d/.test(userName.value.trim())) {
         userNameError.innerHTML = `${logo}<p>Characters a-z only</p>`
         focusError ??= userName
         isValid = false
+    }
+    else if (userName.value.trim().length < 3) {
+        userNameError.innerHTML = `${logo}<p>User name must be at least 3 characters long</p>`
+        focusError ??= userName;
+        isValid = false;
     }
     else if (!userPattern.test(userName.value)) {
         userNameError.innerHTML = `${logo}<p>Invalid user name</p>`
@@ -233,11 +256,10 @@ function validate() {
             const key = localStorage.key(i)
             const value = JSON.parse(localStorage.getItem(key))
             if (name == value.name) {
-                taskNameError.innerHTML = `${logo}<p>Name already exists</p>`
+                taskNameError.innerHTML = `${logo}<p>Task name already exists</p>`
                 focusError ??= taskName
                 isValid = false
             }
-            break
         }
     }
     if (!email.value.trim()) {
@@ -245,8 +267,14 @@ function validate() {
         focusError ??= email
         isValid = false
     }
+    else if (!email.value.trim().includes("@")) {
+        emailError.innerHTML = `${logo}<p>Email address must include '@' and a domain</p>`
+        focusError ??= email
+        isValid = false
+    }
+
     else if (!emailPattern.test(email.value.trim())) {
-        emailError.innerHTML = `${logo}<p>Invalid email</p>`
+        emailError.innerHTML = `${logo}<p>Enter a valid email (example: name@email.com)</p>`
         focusError ??= email
         isValid = false
     }
@@ -258,7 +286,7 @@ function validate() {
         let today = new Date()
         let date = new Date(dueDate.value)
         if (date < today) {
-            dateError.innerHTML = `${logo}<p>Due date cannot be in the past</p>`;
+            dateError.innerHTML = `${logo}<p>Please select a future due date</p>`
             focusError ??= dueDate;
             isValid = false;
         }
@@ -272,7 +300,13 @@ function validate() {
         urlError.innerHTML = `${logo}<p>Project URL is required</p>`
         focusError ??= url
         isValid = false
-    } else if (!URLPattern.test(url.value.trim())) {
+    }
+    else if (!/^https?:\/\//i.test(url.value.trim())) {
+        urlError.innerHTML =`${logo}<p>Please include http:// or https:// in the URL</p>`;
+        focusError ??= url;
+        isValid = false;
+    }
+    else if (!URLPattern.test(url.value.trim())) {
         urlError.innerHTML = `${logo}<p>Invalid URL</p>`
         focusError ??= url
         isValid = false
@@ -283,35 +317,35 @@ function validate() {
         isValid = false
     }
     if (!hours.value) {
-        durError.innerHTML = `${logo}<p>Estimated hour is required</p>`
+        durError.innerHTML = `${logo}<p>Please enter the estimated hours</p>`
         focusError ??= hours
         isValid = false
     }
     else if (hours.value == 0) {
-        durError.innerHTML = `${logo}<p>Estimated hour must be greater than 0</p>`
+        durError.innerHTML = `${logo}<p>Hours must be more than 0</p>`
         focusError ??= hours
         isValid = false
     }
     if (!taskDescription.value.trim()) {
-        desError.innerHTML = `${logo}<p>Task description is required</p>`
+        desError.innerHTML = `${logo}<p>Please add a task description</p>`
         focusError ??= taskDescription
         isValid = false
     }
     const radio = document.querySelector(".radio:checked")
     if (!radio) {
-        statusError.innerHTML = `${logo}<p>Please select task status</p>`
+        statusError.innerHTML = `${logo}<p>Please choose a task status</p>`
         focusError ??= document.querySelector(".radio")
         isValid = false
     }
     const checkbox = document.querySelectorAll(".check:checked").length
     if (checkbox === 0) {
-        typeError.innerHTML = `${logo}<p>Select at least one task type</p>`
+        typeError.innerHTML = `${logo}<p>Please select at least one task type</p>`
         focusError ??= document.querySelector(".check")
         isValid = false
     }
     if (focusError) {
-        focusError.focus();
-        focusError.scrollIntoView({ behavior: "smooth", block: "center" });
+        focusError.focus()
+        focusError.scrollIntoView({ behavior: "smooth", block: "center" })
     }
     return isValid;
 }
@@ -501,20 +535,28 @@ function EditItem(id) {
 function editValidate(currentId) {
     let isValid = true
     let focusError = null
-    let userNameValidator = /^[A-Za-z0-9\s.]+$/
-    
+
     if (!editUser.value.trim()) {
         editUserError.innerHTML = `${logo}<p>User name is required</p>`
         focusError ??= editUser
         isValid = false
     } else if (!userNameValidator.test(editUser.value.trim())) {
-        editUserError.innerHTML = `${logo}<p>Name should not contain special characters</p>`
+        editUserError.innerHTML = `${logo}<p>User name should not contain special characters</p>`
         focusError ??= editUser
         isValid = false
     }
-
+    else if (editUser.value.trim().startsWith(".") || editUser.value.trim().endsWith(".")) {
+    editUserError.innerHTML =`${logo}<p>User name should not start or end with a dot</p>`;
+    focusError ??= editUser;
+    isValid = false;
+}
     else if (/\d/.test(editUser.value.trim())) {
         editUserError.innerHTML = `${logo}<p>Characters a-z only</p>`
+        focusError ??= editUser
+        isValid = false
+    }
+    else if (editUser.value.trim().length < 3) {
+        editUserError.innerHTML = `${logo}<p>User name must be at least 3 characters long</p>`
         focusError ??= editUser
         isValid = false
     }
@@ -534,7 +576,7 @@ function editValidate(currentId) {
             const key = localStorage.key(i)
             const value = JSON.parse(localStorage.getItem(key))
             if (name == value.name && value.id !== currentId) {
-                editTaskError.innerHTML = `${logo}<p>Name already exists</p>`
+                editTaskError.innerHTML = `${logo}<p>Task name already exists</p>`
                 focusError ??= editName
                 isValid = false
             }
@@ -545,8 +587,13 @@ function editValidate(currentId) {
         focusError ??= editEmail
         isValid = false
     }
+    else if (!editEmail.value.trim().includes("@")) {
+        editEmailError.innerHTML = `${logo}<p>Email address must include '@' and a domain</p>`
+        focusError ??= editEmail
+        isValid = false
+    }
     else if (!emailPattern.test(editEmail.value.trim())) {
-        editEmailError.innerHTML = `${logo}<p>Invalid email</p>`
+        editEmailError.innerHTML = `${logo}<p>Enter a valid email (example: name@email.com)</p>`
         focusError ??= editEmail
         isValid = false
     }
@@ -558,7 +605,7 @@ function editValidate(currentId) {
         let today = new Date()
         let date = new Date(editDate.value)
         if (date < today) {
-            editDateError.innerHTML = `${logo}<p>Due date cannot be in the past</p>`;
+            editDateError.innerHTML =`${logo}<p>Please select a future due date</p>`
             focusError ??= editDate;
             isValid = false;
         }
@@ -569,12 +616,12 @@ function editValidate(currentId) {
         isValid = false
     }
     if (!editHour.value) {
-        editHourError.innerHTML = `${logo}<p>Estimated hour is required</p>`
+        editHourError.innerHTML = `${logo}<p>Please enter the estimated hours</p>`
         focusError ??= editHour
         isValid = false
     }
     else if (editHour.value == 0) {
-        editHourError.innerHTML = `${logo}<p>Estimated hour must be greater than 0</p>`
+        editHourError.innerHTML = `${logo}<p>Hours must be more than 0</p>`
         focusError ??= editHour
         isValid = false
     }
@@ -582,7 +629,13 @@ function editValidate(currentId) {
         editUrlError.innerHTML = `${logo}<p>Project URL is required</p>`
         focusError ??= editUrl
         isValid = false
-    } else if (!URLPattern.test(editUrl.value.trim())) {
+    }
+    else if (!/^https?:\/\//i.test(editUrl.value.trim())) {
+        editUrlError.innerHTML =`${logo}<p>Please include http:// or https:// in the URL</p>`;
+        focusError ??= editUrl;
+        isValid = false;
+    }
+    else if (!URLPattern.test(editUrl.value.trim())) {
         editUrlError.innerHTML = `${logo}<p>Invalid URL</p>`
         focusError ??= editUrl
         isValid = false
@@ -848,7 +901,7 @@ editHour.addEventListener("keydown", (e) => {
 
 // footer
 const footer = document.querySelector("footer")
-footer.addEventListener("click",(e)=>{
+footer.addEventListener("click", (e) => {
     e.preventDefault()
 })
 
