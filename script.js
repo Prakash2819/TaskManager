@@ -846,5 +846,11 @@ editHour.addEventListener("keydown", (e) => {
     }
 })
 
+// footer
+const footer = document.querySelector("footer")
+footer.addEventListener("click",(e)=>{
+    e.preventDefault()
+})
+
 // Copyright Year
 document.querySelector(".copyright-year").innerText = new Date().getFullYear()
