@@ -2,63 +2,15 @@ const taskcardContainer = document.querySelector(".taskcard-container")
 const form = document.querySelector("#form")
 const editForm = document.querySelector(".edit-form")
 const notify = document.querySelector(".notify-box")
-// Is Desktop ?
-const isDesktop = window.matchMedia("(min-width: 1024px)");
+
 const viewMoreBtn = document.querySelector('.viewmore-btn')
 const subsection2 = document.querySelector(".sub-section2")
 const subsection1 = document.querySelector(".sub-section1")
+const subNav = document.querySelector(".sub-section2-navbar")
 const main = document.querySelector(".main-section")
 const closeView = document.querySelector(".close-view")
 const filter = document.querySelector(".task-filters")
 
-// Check Screen 
-function checkScreen() {
-    if (isDesktop.matches) enableViewMore()
-    else disableViewMore()
-}
-
-function enableViewMore() {
-    viewMoreBtn.addEventListener("click", viewmoreClick)
-    closeView.addEventListener("click", closeClick)
-    filter.addEventListener("click", filterClick)
-    window.addEventListener("resize", resize)
-    requestAnimationFrame(() => {
-        syncHeights();
-        checkOverflow();
-    });
-}
-function disableViewMore() {
-    viewMoreBtn.removeEventListener("click", viewmoreClick)
-    closeView.removeEventListener("click", closeClick)
-    window.removeEventListener("resize", resize)
-    filter.removeEventListener("click", filterClick)
-    main.classList.remove("full-width")
-    subsection2.style.height = ""
-    subsection2.classList.remove("expand")
-    closeView.innerHTML = ""
-    viewMoreBtn.style.display = 'none';
-}
-// View more click
-function viewmoreClick() {
-    filter.removeEventListener("click", filterClick)
-    main.classList.add("full-width")
-    subsection2.style.height = "fit-content"
-    subsection2.classList.add("expand")
-    closeView.innerHTML = `<span>&times;</span>`
-    viewMoreBtn.style.display = 'none';
-}
-// close click
-function closeClick() {
-    filter.addEventListener("click", filterClick)
-    main.classList.remove("full-width")
-    subsection2.classList.remove("expand")
-    subsection2.style.height = ""
-    closeView.innerHTML = ""
-    requestAnimationFrame(() => {
-        syncHeights();
-        checkOverflow();
-    });
-}
 // Check TaskCard OverFlow
 function checkOverflow() {
     const contentHeight = taskcardContainer.clientHeight;
@@ -99,13 +51,54 @@ function Slider(rangeEl, textEl) {
 }
 // On Window Load 
 document.addEventListener("DOMContentLoaded", () => {
-    checkScreen()
     showItem()
     count()
     EmptyTaskPage()
+    handleNavigation()
 })
-isDesktop.addEventListener("change", checkScreen);
-window.addEventListener("resize", checkScreen)
+
+window.addEventListener("resize", syncHeights)
+
+function handleNavigation() {
+    const section = location.hash.replace("#", "") || "dashboard";
+    console.log(section)
+    if (section == "tasks") {
+        window.removeEventListener("resize", syncHeights)
+        main.classList.add("full-width")
+        subsection2.style.height = "fit-content"
+        subsection2.classList.add("expand")
+        filter.removeEventListener("click", filterClick)
+        viewMoreBtn.style.display = "none"
+        document.querySelector(".title-name").innerText = `Tasks`
+        document.querySelector(".sub-section2-title").style.display = "none"
+        document.querySelector(".search-bar").style.display = "block"
+        subNav.classList.add("expand")
+
+    }
+    if (section == "dashboard") {
+        window.addEventListener("resize", syncHeights)
+        main.classList.remove("full-width")
+        document.querySelector(".sub-section2-title").style.display = "block"
+        document.querySelector(".search-bar").style.display = "none"
+        subsection2.style.height = ""
+        subsection2.classList.remove("expand")
+        subNav.classList.remove("expand")
+        document.querySelector(".title-name").innerText = `Task Dashboard`
+        viewMoreBtn.addEventListener("click", () => {
+            window.location.hash = "tasks"
+        })
+        filter.addEventListener("click", filterClick)
+        requestAnimationFrame(() => {
+            syncHeights();
+            checkOverflow();
+        });
+    }
+    // update active link
+    document.querySelectorAll(".links a").forEach(a => a.classList.remove("active"));
+    document.querySelector(`.links a[href="#${section}"]`)?.classList.add("active");
+}
+window.addEventListener("hashchange", handleNavigation);
+
 
 // Form SubMission
 editForm.addEventListener("submit", (e) => { e.preventDefault() })
