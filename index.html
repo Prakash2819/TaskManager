@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
     <title>Task Manager</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
 </head>
 
 <body>
@@ -21,9 +20,9 @@
             <input type="checkbox" id="menu-toggle" class="menu-toggle">
             <label for="menu-toggle" class="menu-icon">☰</label>
             <ul class="links">
-                <li><a href="#" class="active">Dashboard</a></li>
-                <li><a href="#">Tasks</a></li>
-                <li><a href="#">Profile</a></li>
+                <li><a href="#dashboard" class="active">Dashboard</a></li>
+                <li><a href="#tasks">Tasks</a></li>
+                <li><a href="#profile">Profile</a></li>
             </ul>
         </nav>
     </header>
@@ -286,6 +285,12 @@
                         </section>
                         <section class="right">
                             <div>
+                                <label>Project URL</label>
+                                <div class="project-link"><a class="modal-url" href="" target="_blank"><i
+                                            class="fa-solid fa-link"></i> View Project</a>
+                                </div>
+                            </div>
+                            <div>
                                 <label>Task Progress</label>
                                 <div class="progress-bar">
                                     <progress class="modal-progress" value="100" max="100"></progress>
@@ -302,12 +307,6 @@
                                     <p class="modal-hours"></p>
                                 </div>
                             </div>
-                            <div>
-                                <label>Project URL</label>
-                                <div class="project-link"><a class="modal-url" href="" target="_blank"><i
-                                            class="fa-solid fa-link"></i> View Project</a>
-                                </div>
-                            </div>
                         </section>
                     </div>
                     <div>
@@ -317,6 +316,17 @@
                     </div>
                 </div>
             </div>
+            <div class="confirm-box">
+                <h4>Delete Task</h4>
+                <p>
+                    This task <strong id="delete-task-name"></strong> will be permanently removed.
+                </p>
+
+                <div class="confirm-actions">
+                    <button class="cancel">Cancel</button>
+                    <button class="confirm">Delete</button>
+                </div>
+            </div>
             <!-- Sub Section 2 -->
             <section class="sub-section2">
                 <div class="close-view"></div>
@@ -324,14 +334,22 @@
                 <input type="radio" name="priority" id="High">
                 <input type="radio" name="priority" id="Medium">
                 <input type="radio" name="priority" id="Low">
-                <div class="sub-section2-navbar">
-                    <h3>&#9989 Active Tasks</h3>
+                <div class="sub-section2-navbar expand">
+                    <input class="search-bar" type="search" placeholder="Search tasks...">
+                    <h3 class="sub-section2-title">&#9989 Active Tasks</h3>
                     <div class="task-filters">
                         <label for="All">All (<span id="all-count">0</span>)</label>
                         <label for="High">High (<span id="high-count">0</span>)</label>
                         <label for="Medium">Medium (<span id="medium-count">0</span>)</label>
                         <label for="Low">Low (<span id="low-count">0</span>)</label>
                     </div>
+                </div>
+                <div class="level-filters">
+                    <button data-status="progress"><span style="color: rgb(59, 170, 238);">&#9679</span> In
+                        Progress</button>
+                    <button data-status="pending"><span style="color:orange">&#9679</span> Pending</button>
+                    <button data-status="completed"><span style="color:rgb(9, 168, 120)">&#9679</span>
+                        Completed</button>
                 </div>
                 <!-- Empty Task Page View -->
                 <div class="empty-state">
@@ -345,7 +363,7 @@
                     </button>
                 </div>
                 <!-- Task card Container -->
-                <div class="taskcard-container">
+                <div class="taskcard-container expand">
                 </div>
 
                 <div class="viewmore-btn">
@@ -390,7 +408,8 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 TaskManager. All rights reserved. Built with ❤️ for productivity.</p>
+            <p>© <span class="copyright-year">2025</span> TaskManager. All rights reserved. Built with ❤️ for
+                productivity.</p>
         </div>
     </footer>
 

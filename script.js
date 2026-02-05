@@ -63,7 +63,7 @@ function closeClick() {
 function checkOverflow() {
     const contentHeight = taskcardContainer.clientHeight;
     const visibleHeight = subsection1.clientHeight - 90;
-    if (visibleHeight == -100) return;
+    if (visibleHeight == -90) return;
     if (contentHeight > visibleHeight) {
         viewMoreBtn.style.display = 'block';
     } else {
@@ -403,8 +403,8 @@ function createTask(value) {
     const taskcard = document.createElement("div")
     taskcard.classList.add("task-card", value.priority)
     taskcard.dataset.id = value.id
-    taskcard.innerHTML = `<h4>${value.name} <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></h4><br>
-        <p>${value.description}</p>
+    taskcard.innerHTML = `<div class="taskcard-header"><h4>${value.name} </h4><div><i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></div></div><br>
+        <p class="task-desc">${value.description}</p>
         <p></p>
         <p><img class="calender-img" src="calender.png"> Due: ${value.date}</p>
         <p><img class="contact-img" src="contact.jpg"> ${value.user}</p><br> 
@@ -414,6 +414,7 @@ function createTask(value) {
         </div>`
     taskcardContainer.prepend(taskcard)
 }
+
 
 // Edit Popup Box
 document.addEventListener("click", (event) => {
@@ -511,11 +512,13 @@ function EditItem(id) {
 function editValidate(currentId) {
     let isValid = true
     let focusError = null
+    let userNameValidator = /^[A-Za-z0-9\s.]+$/
+    
     if (!editUser.value.trim()) {
         editUserError.innerHTML = `${logo}<p>User name is required</p>`
         focusError ??= editUser
         isValid = false
-    } else if (!/^[A-Za-z0-9\s.]+$/.test(editUser.value.trim())) {
+    } else if (!userNameValidator.test(editUser.value.trim())) {
         editUserError.innerHTML = `${logo}<p>Name should not contain special characters</p>`
         focusError ??= editUser
         isValid = false
@@ -682,11 +685,11 @@ function updateTaskCard(id) {
 
     taskCard.className = `task-card ${task.priority}`;
     taskCard.innerHTML = `
-        <h4>${task.name} 
-            <i class='far fa-trash-alt'></i> 
-            <i class='far fa-edit'></i>
-        </h4><br>
-        <p>${task.description}</p>
+        <div class="taskcard-header"><h4>${task.name} </h4><div>
+        <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></div>
+        </div><br>
+        <p class="task-desc">${task.description}</p>
+        <p></p>
         <p><img class="calender-img" src="calender.png"> Due: ${task.date}</p>
         <p><img class="contact-img" src="contact.jpg"> ${task.user}</p><br> 
         <div class="level-container">
@@ -699,6 +702,7 @@ function updateTaskCard(id) {
         </div>
     `;
 }
+
 
 // Task Card Info View 
 function taskcardView(id) {
@@ -794,20 +798,49 @@ document.addEventListener("click", (event) => {
 })
 
 // Delete Option
+
+let taskCard = null
+let id = null
+let taskname = null
+
 document.addEventListener("click", (event) => {
-    let msg = `<i class="fa-solid fa-trash-arrow-up"></i>
-    <p class="trash">Task deleted successfully</p>`
     if (event.target.classList.contains("fa-trash-alt")) {
-        const taskCard = event.target.closest(".task-card")
-        const id = taskCard.dataset.id
-        removeItem(id)
-        taskCard.remove()
-        count()
-        checkOverflow()
-        Notify(msg)
-        EmptyTaskPage()
+        taskCard = event.target.closest(".task-card")
+        taskname = taskCard.querySelector(".taskcard-header").innerText
+        document.querySelector("#delete-task-name").innerText = taskname
+        id = taskCard.dataset.id
+
+        document.querySelector(".confirm-box").style.display = "flex";
+        overlay.style.display = "block";
+        overlay.addEventListener("click", () => {
+            id = null
+            taskCard = null
+            document.querySelector(".confirm-box").style.display = "none";
+            overlay.style.display = "none";
+        })
     }
 })
+document.querySelector(".confirm").addEventListener("click", () => {
+    let msg = `<i class="fa-solid fa-trash-arrow-up"></i>
+    <p class="trash">Task deleted successfully</p>`
+    removeItem(id)
+    taskCard.remove()
+    count()
+    checkOverflow()
+    Notify(msg)
+    EmptyTaskPage()
+    id = null
+    taskCard = null
+    document.querySelector(".confirm-box").style.display = "none";
+    overlay.style.display = "none";
+})
+document.querySelector(".cancel").addEventListener("click", () => {
+    id = null
+    taskCard = null
+    document.querySelector(".confirm-box").style.display = "none";
+    overlay.style.display = "none";
+})
+
 // Remove object on storage
 function removeItem(id) {
     for (let i = 0; i < localStorage.length; i++) {
