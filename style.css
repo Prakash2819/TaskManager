@@ -331,25 +331,6 @@ select:focus {
   padding: 2em 0em;
 }
 
-/* color-range */
-.sub-section1 .color-range,
-.task-progress,
-.task-color {
-  border: 0px;
-  padding: 0;
-  font-size: 15px;
-  margin-top: 10px;
-  accent-color: #5768eb;
-}
-
-.color-range {
-  cursor: pointer;
-}
-
-.sub-section1 .task-progress h5 {
-  color: #5768eb;
-  text-align: center;
-}
 
 /* Checkbox */
 .sub-section1 .check {
@@ -639,6 +620,9 @@ textarea {
   }
 
   /* Task card View responsive */
+  .task-modal{
+    height: 70%;
+  }
   .modal-body p {
     font-size: clamp(13px, 1vh, 15px);
   }
@@ -1100,11 +1084,11 @@ textarea {
 }
 .task-desc{
     display: -webkit-box;
-    line-clamp: 3;
-    -webkit-line-clamp: 3; 
+    line-clamp: 2;
+    -webkit-line-clamp: 2; 
     -webkit-box-orient: vertical;
     overflow: hidden;
-    height:60px;
+    height:40px;
 }
 
 .task-card .calender-img,
@@ -1468,6 +1452,10 @@ textarea {
 
   .Buttons button {
     width: 100%;
+  }
+  /* task Modal */
+  .task-modal{
+    height: 60%;
   }
 
   /* Task Filters */

@@ -37,15 +37,10 @@ function filterClick() {
     requestAnimationFrame(checkOverflow)
 }
 
-// Task Progress Slider & Edit Box Slider
+// Edit Box Slider
 const editRange = document.querySelector("#edit-range");
-const slider = document.querySelector(".color-range");
-const percent = document.querySelector(".percentage");
 const editPercent = document.querySelector(".edit-percent");
-
-slider.addEventListener("input", () => Slider(slider, percent));
 editRange.addEventListener("input", () => Slider(editRange, editPercent));
-
 function Slider(rangeEl, textEl) {
     textEl.textContent = rangeEl.value + "%";
 }
@@ -73,6 +68,7 @@ function handleNavigation() {
         document.querySelector(".sub-section2-title").style.display = "none"
         document.querySelector(".search-bar").style.display = "block"
         subNav.classList.add("expand")
+        taskcardContainer.classList.add("expand")
 
     }
     if (section == "dashboard") {
@@ -83,6 +79,7 @@ function handleNavigation() {
         subsection2.style.height = ""
         subsection2.classList.remove("expand")
         subNav.classList.remove("expand")
+        taskcardContainer.classList.remove("expand")
         document.querySelector(".title-name").innerText = `Task Dashboard`
         viewMoreBtn.addEventListener("click", () => {
             window.location.hash = "tasks"
@@ -116,7 +113,6 @@ form.addEventListener("submit", (event) => {
 })
 // Reset event
 form.addEventListener("reset", () => {
-    percent.textContent = "0%"
     resetError()
 })
 // Notification
@@ -375,7 +371,7 @@ function setItem() {
         priority: priority.value,
         duration: hours.value,
         url: url.value,
-        percent: slider.value,
+        percent: 0,
         description: taskDescription.value.trim(),
         status: status,
         type: type
