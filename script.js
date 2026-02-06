@@ -11,6 +11,7 @@ const profile = document.querySelector(".main")
 const main = document.querySelector(".main-section")
 const closeView = document.querySelector(".close-view")
 const filter = document.querySelector(".task-filters")
+const emptyState = document.querySelector(".empty-state")
 
 // Check TaskCard OverFlow
 function checkOverflow() {
@@ -70,6 +71,7 @@ function handleNavigation() {
         document.querySelector(".search-bar").style.display = "block"
         subNav.classList.add("expand")
         taskcardContainer.classList.add("expand")
+        emptyState.classList.add("expand")
 
     }
     if (section == "dashboard") {
@@ -80,6 +82,7 @@ function handleNavigation() {
         subsection2.style.height = ""
         subsection2.classList.remove("expand")
         subNav.classList.remove("expand")
+        emptyState.classList.remove("expand")
         taskcardContainer.classList.remove("expand")
         document.querySelector(".title-name").innerText = "Task Dashboard"
         viewMoreBtn.addEventListener("click", () => {
@@ -217,31 +220,31 @@ function validate() {
     let isValid = true;
     let focusError = null
     if (!userName.value.trim()) {
-        userNameError.innerHTML = `${logo}<p>User name is required</p>`
+        userNameError.innerHTML = `${logo}<p>Assignee name is required</p>`
         focusError ??= userName
         isValid = false
     } else if (!userNameValidator.test(userName.value.trim())) {
-        userNameError.innerHTML = `${logo}<p>User name should not contain special characters</p>`
+        userNameError.innerHTML = `${logo}<p>Assignee name should not contain special characters</p>`
         focusError ??= userName
         isValid = false
     }
     else if (userName.value.trim().startsWith(".") || userName.value.trim().endsWith(".")) {
-    userNameError.innerHTML =`${logo}<p>User name should not start or end with a dot</p>`;
-    focusError ??= userName;
-    isValid = false;
-}
+        userNameError.innerHTML = `${logo}<p>Assignee name should not start or end with a dot</p>`;
+        focusError ??= userName;
+        isValid = false;
+    }
     else if (/\d/.test(userName.value.trim())) {
         userNameError.innerHTML = `${logo}<p>Characters a-z only</p>`
         focusError ??= userName
         isValid = false
     }
     else if (userName.value.trim().length < 3) {
-        userNameError.innerHTML = `${logo}<p>User name must be at least 3 characters long</p>`
+        userNameError.innerHTML = `${logo}<p>Assignee name must be at least 3 characters long</p>`
         focusError ??= userName;
         isValid = false;
     }
     else if (!userPattern.test(userName.value)) {
-        userNameError.innerHTML = `${logo}<p>Invalid user name</p>`
+        userNameError.innerHTML = `${logo}<p>Invalid Assignee name</p>`
         focusError ??= userName
         isValid = false
     }
@@ -282,19 +285,19 @@ function validate() {
         dateError.innerHTML = `${logo}<p>Due date is required</p>`
         focusError ??= dueDate
         isValid = false
-    } else {
-        let today = new Date()
-        let date = new Date(dueDate.value)
-        if (date < today) {
-            dateError.innerHTML = `${logo}<p>Please select a future due date</p>`
-            focusError ??= dueDate;
-            isValid = false;
-        }
     }
     if (!dueTime.value) {
         timeError.innerHTML = `${logo}<p>Due time is required</p>`
         focusError ??= dueTime
         isValid = false
+    }
+    else if (dueDate.value === getToday()) {
+        const time = getCurrentTime()
+        if (dueTime.value < time) {
+            timeError.innerHTML = `${logo}<p>You cannot select a past time</p>`
+            focusError ??= dueTime
+            isValid = false
+        }
     }
     if (!url.value.trim()) {
         urlError.innerHTML = `${logo}<p>Project URL is required</p>`
@@ -302,7 +305,7 @@ function validate() {
         isValid = false
     }
     else if (!/^https?:\/\//i.test(url.value.trim())) {
-        urlError.innerHTML =`${logo}<p>Please include http:// or https:// in the URL</p>`;
+        urlError.innerHTML = `${logo}<p>Please include http:// or https:// in the URL</p>`;
         focusError ??= url;
         isValid = false;
     }
@@ -546,10 +549,10 @@ function editValidate(currentId) {
         isValid = false
     }
     else if (editUser.value.trim().startsWith(".") || editUser.value.trim().endsWith(".")) {
-    editUserError.innerHTML =`${logo}<p>User name should not start or end with a dot</p>`;
-    focusError ??= editUser;
-    isValid = false;
-}
+        editUserError.innerHTML = `${logo}<p>User name should not start or end with a dot</p>`;
+        focusError ??= editUser;
+        isValid = false;
+    }
     else if (/\d/.test(editUser.value.trim())) {
         editUserError.innerHTML = `${logo}<p>Characters a-z only</p>`
         focusError ??= editUser
@@ -601,20 +604,20 @@ function editValidate(currentId) {
         editDateError.innerHTML = `${logo}<p>Due date is required</p>`
         focusError ??= editDate
         isValid = false
-    } else {
-        let today = new Date()
-        let date = new Date(editDate.value)
-        if (date < today) {
-            editDateError.innerHTML =`${logo}<p>Please select a future due date</p>`
-            focusError ??= editDate;
-            isValid = false;
-        }
     }
     if (!editTime.value) {
         editTimeError.innerHTML = `${logo}<p>Due time is required</p>`
         focusError ??= editTime
         isValid = false
     }
+    // else if (editDate.value === getToday()) {
+    //     const time = getCurrentTime()
+    //     if (editTime.value < time) {
+    //         editTimeError.innerHTML = `${logo}<p>You cannot select a past time</p>`
+    //         focusError ??= editTime
+    //         isValid = false
+    //     }
+    // }
     if (!editHour.value) {
         editHourError.innerHTML = `${logo}<p>Please enter the estimated hours</p>`
         focusError ??= editHour
@@ -631,7 +634,7 @@ function editValidate(currentId) {
         isValid = false
     }
     else if (!/^https?:\/\//i.test(editUrl.value.trim())) {
-        editUrlError.innerHTML =`${logo}<p>Please include http:// or https:// in the URL</p>`;
+        editUrlError.innerHTML = `${logo}<p>Please include http:// or https:// in the URL</p>`;
         focusError ??= editUrl;
         isValid = false;
     }
@@ -898,6 +901,26 @@ editHour.addEventListener("keydown", (e) => {
         e.preventDefault();
     }
 })
+// Disable Past Date and Time 
+function getToday() {
+    return new Date().toISOString().split("T")[0]
+}
+function getCurrentTime() {
+    const now = new Date()
+    const h = String(now.getHours()).padStart(2, "0")
+    const m = String(now.getMinutes()).padStart(2, "0")
+    return `${h}:${m}`
+}
+
+function dateTime(date) {
+    date.min = getToday();
+    if (date.value && date.value < date.min) {
+        date.value = "";
+        time.value = "";
+    }
+}
+dateTime(dueDate)
+dateTime(editDate)
 
 // footer
 const footer = document.querySelector("footer")
