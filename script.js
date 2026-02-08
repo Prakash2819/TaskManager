@@ -67,7 +67,7 @@ function handleNavigation() {
         filter.removeEventListener("click", filterClick)
         viewMoreBtn.style.display = "none"
         document.querySelector(".title-name").innerText = "Tasks"
-        document.querySelector(".sub-section2-title").style.display = "none"
+        // document.querySelector(".sub-section2-title").style.display = "none"
         document.querySelector(".search-bar").style.display = "block"
         subNav.classList.add("expand")
         taskcardContainer.classList.add("expand")
@@ -77,7 +77,7 @@ function handleNavigation() {
     if (section == "dashboard") {
         window.addEventListener("resize", syncHeights)
         main.classList.remove("full-width")
-        document.querySelector(".sub-section2-title").style.display = "block"
+        // document.querySelector(".sub-section2-title").style.display = "block"
         document.querySelector(".search-bar").style.display = "none"
         subsection2.style.height = ""
         subsection2.classList.remove("expand")
@@ -159,18 +159,21 @@ function EmptyTaskPage() {
     const taskcards = document.querySelectorAll(".task-card")
     const emptyState = document.querySelector(".empty-state")
     const activetask = document.querySelector('input[name="priority"]:checked').id
+    const visibleCards = Array.from(taskcards).filter(
+        card => card.style.display !== "none" )
+    console.log(visibleCards.length)
     emptyState.style.display = "none"
     emptyButton.classList.add("hide")
-    if (taskcards.length == 0 && activetask == "All") {
+    if (taskcards.length == 0 && activetask == "All" && activeStatus=="All") {
         emptyState.style.display = "flex"
         emptyButton.classList.remove("hide")
         document.querySelector(".empty-img").src = "no-task.png"
         document.querySelector(".empty-text1").innerText = "No Tasks Yet!"
         document.querySelector(".empty-text2").innerText = "You have no tasks. Add a new task to get started."
     }
-    if (activetask !== "All") {
+    if (visibleCards.length == 0 && activeStatus != "All" || activetask !== "All") {
         const count = document.querySelectorAll(`.task-card.${activetask}`).length
-        if (count == 0) {
+        if (count == 0 || visibleCards.length==0) {
             emptyState.style.display = "flex"
             document.querySelector(".empty-img").src = "no-task-match.png"
             document.querySelector(".empty-text1").innerText = "No Matching Tasks"
@@ -427,7 +430,11 @@ function showItem() {
 // Task Card Create
 function createTask(value) {
     const taskcard = document.createElement("div")
-    taskcard.classList.add("task-card", value.priority)
+    let status;
+    if(value.status == "In Progress") { 
+        status = value.status.split(" ")[1]}
+    else{status = value.status}
+    taskcard.classList.add("task-card", value.priority, status)
     taskcard.dataset.id = value.id
     taskcard.innerHTML = `<div class="taskcard-header"><h4>${value.name} </h4><div><i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></div></div><br>
         <p class="task-desc">${value.description}</p>
@@ -524,6 +531,7 @@ function EditItem(id) {
                     updateItem(value.id)
                     updateTaskCard(value.id)
                     count()
+                    applyFilters()
                     checkOverflow()
                     EmptyTaskPage()
                     closePopup()
@@ -727,8 +735,11 @@ function updateItem(taskKey) {
 function updateTaskCard(id) {
     const taskCard = document.querySelector(`.task-card[data-id="${id}"]`);
     const task = JSON.parse(localStorage.getItem(id));
-
-    taskCard.className = `task-card ${task.priority}`;
+    let status;
+    if(task.status == "In Progress") { 
+        status = task.status.split(" ")[1]}
+    else{status = task.status}
+    taskCard.className = `task-card ${task.priority} ${status}`;
     taskCard.innerHTML = `
         <div class="taskcard-header"><h4>${task.name} </h4><div>
         <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></div>
@@ -930,3 +941,66 @@ footer.addEventListener("click", (e) => {
 
 // Copyright Year
 document.querySelector(".copyright-year").innerText = new Date().getFullYear()
+
+//
+const optionMenu = document.querySelector(".sub-section2-title");
+const selectBtn = optionMenu.querySelector(".select-btn");
+const options = optionMenu.querySelectorAll(".option");
+const sBtn_text = optionMenu.querySelector(".sbtn-text");
+
+selectBtn.addEventListener("click", () => optionMenu.classList.toggle("active"));
+
+options.forEach(option => {
+    option.addEventListener("click", () => {
+        let selectedOption = option.querySelector(".option-text").innerText;
+        if (selectedOption == "Pending Tasks") {
+        sBtn_text.innerHTML = `<i class="fa-regular fa-clock clock1"></i> ${selectedOption}`;}
+            else if (selectedOption == "Progress Tasks") {
+             sBtn_text.innerHTML = `<i class="fa-solid fa-list-check"></i> ${selectedOption}`;   
+            }else if(selectedOption == "All Tasks"){
+                sBtn_text.innerHTML = `&#9989 ${selectedOption}`; 
+            }
+            else{
+                sBtn_text.innerHTML = `&#9989 ${selectedOption}`;
+            }
+        optionMenu.classList.remove("active");
+    });
+});
+
+
+let activePriority = "All";
+let activeStatus = "All";
+
+function applyFilters() {
+    document.querySelectorAll(".task-card").forEach(card => {
+        const matchPriority =
+            activePriority === "All" ||
+            card.classList.contains(activePriority);
+
+        const matchStatus =
+            activeStatus === "All" ||
+            card.classList.contains(activeStatus);
+
+        card.style.display =
+            matchPriority && matchStatus ? "flex" : "none";
+    });
+
+    EmptyTaskPage();
+    checkOverflow();
+}
+
+// Priority
+document.querySelectorAll('input[name="priority"]').forEach(radio => {
+    radio.addEventListener("change", e => {
+        activePriority = e.target.id;
+        applyFilters();
+    });
+});
+
+// Status
+document.addEventListener("change", e => {
+    if (!e.target.matches('input[name="status-filter"]')) return;
+    activeStatus = e.target.value;
+    applyFilters();
+});
+
