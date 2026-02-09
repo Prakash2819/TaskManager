@@ -111,6 +111,7 @@ form.addEventListener("submit", (event) => {
     if (validate()) {
         setItem()
         count()
+        applyFilters()
         checkOverflow()
         Notify(msg)
         form.reset()
@@ -952,7 +953,7 @@ selectBtn.addEventListener("click", () => optionMenu.classList.toggle("active"))
 
 options.forEach(option => {
     option.addEventListener("click", () => {
-        let selectedOption = option.querySelector(".option-text").innerText;
+        let selectedOption = option.querySelector(".option-text").innerText
         if (selectedOption == "Pending Tasks") {
         sBtn_text.innerHTML = `<i class="fa-regular fa-clock clock1"></i> ${selectedOption}`;}
             else if (selectedOption == "Progress Tasks") {
@@ -1004,3 +1005,20 @@ document.addEventListener("change", e => {
     applyFilters();
 });
 
+const searchInput = document.querySelector(".search-bar")
+
+searchInput.addEventListener("input", () => {
+  const query = searchInput.value.toLowerCase().trim();
+  const taskCards = document.querySelectorAll(".task-card");
+    if(query=="") applyFilters()
+  taskCards.forEach(card => {
+    const cardText = card.innerText.toLowerCase();
+    if (card.style.display == "none") return;
+
+    if (cardText.includes(query)) {
+      card.style.display = "flex"; 
+    } else {
+      card.style.display = "none";
+    }
+  });
+});

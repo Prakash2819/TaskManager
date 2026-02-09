@@ -9,16 +9,14 @@ body {
   background-color: #f7f9fa;
 }
 
-.sub-section2-title{
-  width:180px;
-}
 .select-btn{
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  /* padding: 10px; */
+  gap:0.3rem;
+  width: 170px;
+  white-space: nowrap;
+  /* justify-content: space-between; */
   cursor: pointer;
-  /* background: #1185f2; */
 }
 .select-btn .bx-chevron-down{
     font-size: 20px;
@@ -27,19 +25,24 @@ body {
 }
 .sub-section2-title .options{
     display: none;
-    width: 180px;
     margin-top: 10px;
-    /* padding: 10px; */
     border-radius: 5px;
-    z-index: 100;
+    z-index: 98;
     position:absolute;
+    list-style: none;
     background:#fff;
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 .options .option{
+  display:flex;
+  align-items: center;
+}
+.options .option-text{
+    width: 170px;
+    white-space: nowrap;
+    height: 40px;
     display: flex;
-    height:55px;
-    list-style: none;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
 }
@@ -169,7 +172,6 @@ body {
     align-items: center;
     background: rgba(255, 255, 255, 0.4);
     backdrop-filter: blur(10px);
-    /* -webkit-backdrop-filter: blur(10px); */
     box-shadow: 0 2px 10px rgba(17, 24, 39, 0.1);
     border-radius: 8px;
     overflow: hidden;
@@ -259,7 +261,7 @@ body {
   display:flex;
   justify-content: space-between;
   margin:0px 50px;
-  margin-top: 50px;
+  margin-top: 40px;
 }
 .title-inner{
   display: flex;
@@ -268,7 +270,7 @@ body {
 .search-bar{
   float: right;
   width:200%;
-  padding:10px;
+  padding:5px;
   border-radius: 10px;
   border:1px solid rgb(214, 210, 210);
   outline: none;
@@ -279,7 +281,7 @@ body {
   height: clamp(1.7rem, 2vw, 2.5rem);
   width: clamp(0.063rem, 2vw, 0.25rem);
   background-color: #7661ed;
-  margin-right: 0.750rem;
+  margin-right: 0.5rem;
   border-radius: clamp(0.300rem, 2vw, 0.625rem);
 }
 
@@ -320,7 +322,7 @@ body {
 
 /* Subsections */
 .sub-section1 {
-  margin: 50px 6px 10px 50px;
+  margin: 40px 6px 10px 50px;
   background-color: white;
   padding: 20px;
   border-radius: 10px;
@@ -331,7 +333,7 @@ body {
 .sub-section2 {
   position: relative;
   background-color: white;
-  margin: 50px 50px 10px 6px;
+  margin: 40px 50px 10px 6px;
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgb(0, 0, 0, 0.1);
@@ -695,9 +697,9 @@ textarea {
   }
 
   /* Task card View responsive */
-  .task-modal{
-    height: 70%;
-  }
+  /* .task-modal{
+    height: 60%;
+  } */
   .modal-body p {
     font-size: clamp(13px, 1vh, 15px);
   }
@@ -1108,12 +1110,6 @@ textarea {
   background: #fff;
 }
 
-/* Hide remaining Cards
-#High:checked~.taskcard-container .task-card,
-#Medium:checked~.taskcard-container .task-card,
-#Low:checked~.taskcard-container .task-card {
-  display: none;
-}
 
 /* Show Checked Filter Cards  */
 /* #All:checked~.taskcard-container .task-card,
@@ -1132,7 +1128,7 @@ textarea {
   font-size: 16px;
   height:40px;  
   overflow-wrap: anywhere;
-  width:clamp(82%,2vh,85%);
+  width:clamp(81%,2vh,85%);
 }
 .taskcard-header{
   display: flex;
@@ -1312,7 +1308,8 @@ textarea {
 
   /* title */
   .title {
-    left: 23px;
+    margin: 0px 2rem;
+    margin-top: 40px;
   }
 
   .links {
@@ -1348,7 +1345,7 @@ textarea {
   /* Header and Nav */
   .topbar_inner {
     padding: 10px 15px;
-  }
+  } 
 
   .logo {
     margin-left: 15px;
@@ -1428,6 +1425,11 @@ textarea {
 }
 
 @media (max-width:640px) {
+    /* title */
+  .title {
+    margin: 0px 1rem;
+    margin-top: 40px;
+  }
 
   /* Task Filters */
   .task-filters {
@@ -1460,10 +1462,6 @@ textarea {
     margin-bottom: -0.5rem;
   }
 
-  /* title */
-  .title {
-    left: 7px;
-  }
 
   /* Main Section */
   .main-section {
@@ -1527,9 +1525,9 @@ textarea {
     width: 100%;
   }
   /* task Modal */
-  .task-modal{
+  /* .task-modal{
     height: 60%;
-  }
+  } */
 .empty-state h2 {
     font-size: clamp(18px,2vh,20px);
 }
@@ -1609,7 +1607,16 @@ textarea {
   }
 
 }
-
+@media (max-width:460px) {
+.title {
+  flex-direction: column;
+  }
+  .search-bar{
+    margin-top:2rem;
+    width: 100%;
+    padding:8px;
+  }
+}
 @media (max-width:420px) {
   .taskcard-container {
     width: 100%;
