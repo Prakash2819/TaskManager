@@ -526,7 +526,7 @@ function EditItem(id) {
             check(value.type)
             // Save Button
             saveBtn.onclick = () => {
-                if (editValidate(value.id)) {
+                if (editValidate(value.id,value.time)) {
                     let msg = `<i class="fa-solid fa-circle-check"></i>
                 <p>Your changes have been saved</p>`
                     updateItem(value.id)
@@ -544,9 +544,10 @@ function EditItem(id) {
 }
 
 // Edit Box Validation
-function editValidate(currentId) {
+function editValidate(currentId,time) {
     let isValid = true
     let focusError = null
+    let isTimeChanged = editTime.value !== time
 
     if (!editUser.value.trim()) {
         editUserError.innerHTML = `${logo}<p>User name is required</p>`
@@ -614,19 +615,20 @@ function editValidate(currentId) {
         focusError ??= editDate
         isValid = false
     }
+    if(isTimeChanged){
     if (!editTime.value) {
         editTimeError.innerHTML = `${logo}<p>Due time is required</p>`
         focusError ??= editTime
         isValid = false
     }
-    // else if (editDate.value === getToday()) {
-    //     const time = getCurrentTime()
-    //     if (editTime.value < time) {
-    //         editTimeError.innerHTML = `${logo}<p>You cannot select a past time</p>`
-    //         focusError ??= editTime
-    //         isValid = false
-    //     }
-    // }
+    else if (editDate.value === getToday()) {
+        const time = getCurrentTime()
+        if (editTime.value < time) {
+            editTimeError.innerHTML = `${logo}<p>You cannot select a past time</p>`
+            focusError ??= editTime
+            isValid = false
+        }
+    }}
     if (!editHour.value) {
         editHourError.innerHTML = `${logo}<p>Please enter the estimated hours</p>`
         focusError ??= editHour

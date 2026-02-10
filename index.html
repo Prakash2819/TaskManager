@@ -33,8 +33,9 @@
     <main class="main">
         <div class="title">
             <div class="title-inner">
-            <div class="title-logo"></div>
-            <h1 class="title-name">Task Dashboard</h1></div>
+                <div class="title-logo"></div>
+                <h1 class="title-name">Task Dashboard</h1>
+            </div>
             <div><input class="search-bar" type="search" placeholder="Search tasks..."></div>
         </div>
         <section class="main-section">
@@ -113,9 +114,11 @@
                                 <input type="checkbox" class="check" id="check3">
                                 <label class="check" for="check3">Enhancement</label>
                             </div>
-                            <span class="error type-error">
-                            </span>
+                            <!-- <span class="error type-error">
+                            </span> -->
                         </div>
+                        <span class="error type-error">
+                        </span>
                         <!--Task status-->
                         <div class="task-status">
                             <label for="" class="task-status-label">Status *</label> <br>
@@ -129,9 +132,11 @@
                                 <!-- <input style="display:none;" type="radio" name="Status" value="Completed" class="radio" id="radio3">
                                 <label style="display: none;" class="radio" for="radio3">Completed</label> -->
                             </div>
-                            <span class="error status-error">
-                            </span>
+                            <!-- <span class="error status-error">
+                            </span> -->
                         </div>
+                        <span class="error status-error">
+                        </span>
                         <!--Buttons-->
                         <div class="Buttons">
                             <button type="submit"><span>&#10003</span> Create Task</button>
@@ -148,97 +153,101 @@
                         <h4>Edit Task</h4>
                         <span class="close">&times;</span>
                     </div>
-                    <!-- Edit Form -->
-                    <form class="edit-form">
-                        <label for="edit-userName">Assignee Name</label>
-                        <input type="text" id="edit-userName">
-                        <span class="error editUser-error">
-                            <!-- <i class="fa-solid fa-circle-exclamation"></i>
+                    <div class="scrollArea">
+                        <!-- Edit Form -->
+                        <form class="edit-form">
+                            <label for="edit-userName">Assignee Name</label>
+                            <input type="text" id="edit-userName">
+                            <span class="error editUser-error">
+                                <!-- <i class="fa-solid fa-circle-exclamation"></i>
                             <p>User name is required</p> -->
-                        </span>
-                        <label for="edit-taskName">Task Name</label>
-                        <input type="text" id="edit-taskName">
-                        <span class="error editTask-error">
-                        </span>
+                            </span>
+                            <label for="edit-taskName">Task Name</label>
+                            <input type="text" id="edit-taskName">
+                            <span class="error editTask-error">
+                            </span>
 
-                        <label for="edit-email">Email</label>
-                        <input type="text" id="edit-email">
-                        <span class="error editEmail-error">
-                        </span>
+                            <label for="edit-email">Email</label>
+                            <input type="text" id="edit-email">
+                            <span class="error editEmail-error">
+                            </span>
 
 
-                        <label for="edit-date">Due Date</label>
-                        <input type="date" id="edit-date">
-                        <span class="error editDate-error">
-                        </span>
+                            <label for="edit-date">Due Date</label>
+                            <input type="date" id="edit-date">
+                            <span class="error editDate-error">
+                            </span>
 
-                        <label for="edit-time">Due Time</label>
-                        <input type="time" id="edit-time">
-                        <span class="error editTime-error">
-                        </span>
+                            <label for="edit-time">Due Time</label>
+                            <input type="time" id="edit-time">
+                            <span class="error editTime-error">
+                            </span>
 
-                        <label>Priority Level</label>
-                        <select class="edit-priority">
-                            <option value="Low">Low Priority</option>
-                            <option value="High">High Priority</option>
-                            <option value="Medium">Medium Priority</option>
-                        </select>
+                            <label>Priority Level</label>
+                            <select class="edit-priority">
+                                <option value="Low">Low Priority</option>
+                                <option value="High">High Priority</option>
+                                <option value="Medium">Medium Priority</option>
+                            </select>
 
-                        <label for="edit-estimatedHours">Estimated Hours</label>
-                        <input type="number" id="edit-estimatedHours" min="0" max="100">
-                        <span class="error editHour-error">
-                        </span>
+                            <label for="edit-estimatedHours">Estimated Hours</label>
+                            <input type="number" id="edit-estimatedHours" min="0" max="100">
+                            <span class="error editHour-error">
+                            </span>
 
-                        <label for="edit-url">Project URL</label>
-                        <input type="text" id="edit-url">
-                        <span class="error editURL-error">
-                        </span>
+                            <label for="edit-url">Project URL</label>
+                            <input type="text" id="edit-url">
+                            <span class="error editURL-error">
+                            </span>
 
-                        <label>Description</label>
-                        <textarea id="edit-description"></textarea>
-                        <span class="error editDesc-error">
-                        </span>
+                            <label>Description</label>
+                            <textarea id="edit-description"></textarea>
+                            <span class="error editDesc-error">
+                            </span>
 
-                        <label for="range">Task Progress</label>
-                        <div class="edit-progress">
-                            <input type="range" name="range" min="0" max="100" value="0" id="edit-range">
-                            <h5 class="edit-percent">0%</h5>
-                        </div>
-
-                        <div class="edit-taskType">
-                            <label>Task Type</label>
-                            <div class="edit-checks">
-                                <input type="checkbox" class="edit-check" id="edit-check1">
-                                <label for="edit-check1">Bug Fix</label>
-
-                                <input type="checkbox" class="edit-check" id="edit-check2">
-                                <label for="edit-check2">Feature</label>
-
-                                <input type="checkbox" class="edit-check" id="edit-check3">
-                                <label for="edit-check3">Enhancement</label>
+                            <label for="range">Task Progress</label>
+                            <div class="edit-progress">
+                                <input type="range" name="range" min="0" max="100" value="0" id="edit-range">
+                                <h5 class="edit-percent">0%</h5>
                             </div>
-                        </div>
-                        <span class="error editType-error">
-                        </span>
-                        <div class="edit-status">
-                            <label>Status</label>
-                            <div class="edit-radios">
-                                <input type="radio" name="estatus" value="Pending" class="edit-radio" id="edit-radio1">
-                                <label for="edit-radio1">Pending</label>
 
-                                <input type="radio" name="estatus" value="In Progress" class="edit-radio"
-                                    id="edit-radio2">
-                                <label for="edit-radio2">In Progress</label> <br>
+                            <div class="edit-taskType">
+                                <label>Task Type</label>
+                                <div class="edit-checks">
+                                    <input type="checkbox" class="edit-check" id="edit-check1">
+                                    <label for="edit-check1">Bug Fix</label>
 
-                                <input type="radio" name="estatus" value="Completed" class="edit-radio" id="edit-radio3">
-                                <label for="edit-radio3">Completed</label>
+                                    <input type="checkbox" class="edit-check" id="edit-check2">
+                                    <label for="edit-check2">Feature</label>
+
+                                    <input type="checkbox" class="edit-check" id="edit-check3">
+                                    <label for="edit-check3">Enhancement</label>
+                                </div>
                             </div>
-                        </div>
-                        <div class="edit-buttons">
-                            <button class="cancel-btn">Cancel</button>
-                            <button class="save-btn">Save Changes</button>
-                        </div>
-                    </form>
+                            <span class="error editType-error">
+                            </span>
+                            <div class="edit-status">
+                                <label>Status</label>
+                                <div class="edit-radios">
+                                    <input type="radio" name="estatus" value="Pending" class="edit-radio"
+                                        id="edit-radio1">
+                                    <label for="edit-radio1">Pending</label>
+
+                                    <input type="radio" name="estatus" value="In Progress" class="edit-radio"
+                                        id="edit-radio2">
+                                    <label for="edit-radio2">In Progress</label> <br>
+
+                                    <input type="radio" name="estatus" value="Completed" class="edit-radio"
+                                        id="edit-radio3">
+                                    <label for="edit-radio3">Completed</label>
+                                </div>
+                            </div>
+                            <div class="edit-buttons">
+                                <button class="cancel-btn">Cancel</button>
+                                <button class="save-btn">Save Changes</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
             <!-- Overlay -->
@@ -249,7 +258,6 @@
                     <h4 class="modal-taskName">Designing Homepage Mockup</h4>
                     <button class="close-btn">&times;</button>
                 </div>
-
                 <div class="modal-body">
                     <div class="row">
                         <div>
@@ -337,7 +345,7 @@
                 <input type="radio" name="status-filter" value="Completed" id="Completed">
                 <div class="sub-section2-navbar">
                     <!-- <h3 class="sub-section2-title">&#9989 Active Tasks</h3> -->
-                     <div class="sub-section2-title">
+                    <div class="sub-section2-title">
                         <div class="select-btn">
                             <span class="sbtn-text">&#9989 All Tasks</span>
                             <i class="bx bx-chevron-down"></i>
@@ -356,7 +364,7 @@
                                 <label for="Completed" class="option-text">Completed Tasks</label>
                             </li>
                         </ul>
-                     </div>
+                    </div>
                     <div class="task-filters">
                         <label for="All">All (<span id="all-count">0</span>)</label>
                         <label for="High">High (<span id="high-count">0</span>)</label>

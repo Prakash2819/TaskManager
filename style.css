@@ -518,7 +518,7 @@ select:focus {
 .popup-box {
   position: fixed;
   display: flex;
-  top: 55%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.95);
   width: 100%;
@@ -532,8 +532,13 @@ select:focus {
   width: 100%;
   background: #fff;
   border-radius: 0.7rem;
-  /* scrollbar-width: none; */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.scrollArea{
   overflow-y: auto;
+  margin-bottom: 10px;
 }
 
 .closebox-title {
@@ -697,9 +702,6 @@ textarea {
   }
 
   /* Task card View responsive */
-  /* .task-modal{
-    height: 60%;
-  } */
   .modal-body p {
     font-size: clamp(13px, 1vh, 15px);
   }
@@ -815,7 +817,7 @@ textarea {
 /* Modal */
 .task-modal {
   position: fixed;
-  top: 55%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.95);
   width: 100%;
@@ -827,9 +829,12 @@ textarea {
   display: none;
   z-index: 100;
   /* scrollbar-width: none; */
+  overflow: hidden;
+}
+.modal-body{
+  max-height: calc(80vh - 60px);
   overflow-y: auto;
 }
-
 /* Header */
 .modal-header {
   display: flex;
@@ -1299,6 +1304,15 @@ textarea {
 .footer-bottom p {
   margin: 0;
 }
+@media (min-width:1024px) and (max-width:1040px) {
+  .sub-section2-navbar{
+    flex-direction: column;
+    gap:10px;
+  }
+  .sub-section2-navbar.expand{
+    flex-direction: row;
+  }
+}
 
 /*  TABLET VIEW */
 @media (min-width:601px) and (max-width: 1024px) {
@@ -1386,17 +1400,14 @@ textarea {
   .radios {
     display: flex;
     align-items: center;
-    margin-left: -45px;
-    gap: 0.3rem;
+    margin-left: -47px;
+    gap: 0.7rem;
   }
 
   .task-status .radio {
     padding-right: clamp(60px, 2vw, 70px);
   }
 
-  .task-type {
-    margin-bottom: -0.5rem;
-  }
 
   /* Task cards  */
   .taskcard-container {
@@ -1524,10 +1535,6 @@ textarea {
   .Buttons button {
     width: 100%;
   }
-  /* task Modal */
-  /* .task-modal{
-    height: 60%;
-  } */
 .empty-state h2 {
     font-size: clamp(18px,2vh,20px);
 }
