@@ -36,9 +36,9 @@
                 <div class="title-logo"></div>
                 <h1 class="title-name">Task Dashboard</h1>
             </div>
-            <div><input class="search-bar" type="search" placeholder="Search tasks..."></div>
+            <div><input class="search-bar" type="text" placeholder="Search tasks..."></div>
         </div>
-        <section class="main-section">
+        <section class="main-section full-width">
             <section class="sub-section1">
                 <h3 class="Heading"> &#128221 Create New Task</h3>
                 <form id="form">
@@ -384,13 +384,39 @@
                     </button>
                 </div>
                 <!-- Task card Container -->
-                <div class="taskcard-container expand">
+                <div class="taskcard-container">
+                    <p class="no-results">
+                        &#128269; No tasks found
+                    </p>
                 </div>
 
                 <div class="viewmore-btn">
                     <p>View more<span></span></p>
                 </div>
             </section>
+        </section>
+        <section class="profile-page">
+            <div class="profile-card">
+                <div class="profile-header">
+                    <img src="contact.jpg">
+                    <h3>Support Admin User</h3>
+                    <p class="role">Administrator</p>
+                </div>
+                <div class="profile-body">
+                    <div>
+                        <span class="label">Email</span>
+                        <span>admin@e2infosystems.com</span>
+                    </div>
+                    <div>
+                        <span class="label">Organization</span>
+                        <span>E2 Infosystems</span>
+                    </div>
+                </div>
+                <div class="profile-footer">
+                    <p><i class="fa-regular fa-circle-user"></i> 56 Users</p>
+                    <p><i class="fa-solid fa-circle-check"></i> 248 Tasks Assigned</p>
+                </div>
+            </div>
         </section>
     </main>
     <!--Footer-->

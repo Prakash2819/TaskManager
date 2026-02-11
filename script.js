@@ -7,7 +7,7 @@ const viewMoreBtn = document.querySelector('.viewmore-btn')
 const subsection2 = document.querySelector(".sub-section2")
 const subsection1 = document.querySelector(".sub-section1")
 const subNav = document.querySelector(".sub-section2-navbar")
-const profile = document.querySelector(".main")
+// const profile = document.querySelector(".main")
 const main = document.querySelector(".main-section")
 const closeView = document.querySelector(".close-view")
 const filter = document.querySelector(".task-filters")
@@ -61,6 +61,8 @@ function handleNavigation() {
     console.log(section)
     if (section == "tasks") {
         window.removeEventListener("resize", syncHeights)
+        // main.style.display = "grid"
+        main.classList.remove("hide")
         main.classList.add("full-width")
         subsection2.style.height = "fit-content"
         subsection2.classList.add("expand")
@@ -69,6 +71,7 @@ function handleNavigation() {
         document.querySelector(".title-name").innerText = "Tasks"
         // document.querySelector(".sub-section2-title").style.display = "none"
         document.querySelector(".search-bar").style.display = "block"
+        document.querySelector(".profile-page").style.display = "none"
         subNav.classList.add("expand")
         taskcardContainer.classList.add("expand")
         emptyState.classList.add("expand")
@@ -76,9 +79,12 @@ function handleNavigation() {
     }
     if (section == "dashboard") {
         window.addEventListener("resize", syncHeights)
+        // main.style.display = "grid"
+        main.classList.remove("hide")
         main.classList.remove("full-width")
         // document.querySelector(".sub-section2-title").style.display = "block"
         document.querySelector(".search-bar").style.display = "none"
+        document.querySelector(".profile-page").style.display = "none"
         subsection2.style.height = ""
         subsection2.classList.remove("expand")
         subNav.classList.remove("expand")
@@ -93,8 +99,18 @@ function handleNavigation() {
             syncHeights();
             checkOverflow();
         });
+        resetSearch()
+        applyFilters()
     }
-    if (section == "profile") return
+    if (section == "profile") {
+        document.querySelector(".title-name").innerText = "Profile"
+        main.classList.remove("full-width")
+        main.classList.add("hide")
+        document.querySelector(".search-bar").style.display = "none"
+        document.querySelector(".profile-page").style.display = "flex"
+        resetSearch()
+        applyFilters()
+    }
 
     // update active link
     document.querySelectorAll(".links a").forEach(a => a.classList.remove("active"));
@@ -161,11 +177,11 @@ function EmptyTaskPage() {
     const emptyState = document.querySelector(".empty-state")
     const activetask = document.querySelector('input[name="priority"]:checked').id
     const visibleCards = Array.from(taskcards).filter(
-        card => card.style.display !== "none" )
+        card => card.style.display !== "none")
     console.log(visibleCards.length)
     emptyState.style.display = "none"
     emptyButton.classList.add("hide")
-    if (taskcards.length == 0 && activetask == "All" && activeStatus=="All") {
+    if (taskcards.length == 0 && activetask == "All" && activeStatus == "All") {
         emptyState.style.display = "flex"
         emptyButton.classList.remove("hide")
         document.querySelector(".empty-img").src = "no-task.png"
@@ -174,7 +190,7 @@ function EmptyTaskPage() {
     }
     if (visibleCards.length == 0 && activeStatus != "All" || activetask !== "All") {
         const count = document.querySelectorAll(`.task-card.${activetask}`).length
-        if (count == 0 || visibleCards.length==0) {
+        if (count == 0 || visibleCards.length == 0) {
             emptyState.style.display = "flex"
             document.querySelector(".empty-img").src = "no-task-match.png"
             document.querySelector(".empty-text1").innerText = "No Matching Tasks"
@@ -432,9 +448,10 @@ function showItem() {
 function createTask(value) {
     const taskcard = document.createElement("div")
     let status;
-    if(value.status == "In Progress") { 
-        status = value.status.split(" ")[1]}
-    else{status = value.status}
+    if (value.status == "In Progress") {
+        status = value.status.split(" ")[1]
+    }
+    else { status = value.status }
     taskcard.classList.add("task-card", value.priority, status)
     taskcard.dataset.id = value.id
     taskcard.innerHTML = `<div class="taskcard-header"><h4>${value.name} </h4><div><i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></div></div><br>
@@ -526,7 +543,7 @@ function EditItem(id) {
             check(value.type)
             // Save Button
             saveBtn.onclick = () => {
-                if (editValidate(value.id,value.time)) {
+                if (editValidate(value.id, value.time)) {
                     let msg = `<i class="fa-solid fa-circle-check"></i>
                 <p>Your changes have been saved</p>`
                     updateItem(value.id)
@@ -544,7 +561,7 @@ function EditItem(id) {
 }
 
 // Edit Box Validation
-function editValidate(currentId,time) {
+function editValidate(currentId, time) {
     let isValid = true
     let focusError = null
     let isTimeChanged = editTime.value !== time
@@ -615,20 +632,21 @@ function editValidate(currentId,time) {
         focusError ??= editDate
         isValid = false
     }
-    if(isTimeChanged){
-    if (!editTime.value) {
-        editTimeError.innerHTML = `${logo}<p>Due time is required</p>`
-        focusError ??= editTime
-        isValid = false
-    }
-    else if (editDate.value === getToday()) {
-        const time = getCurrentTime()
-        if (editTime.value < time) {
-            editTimeError.innerHTML = `${logo}<p>You cannot select a past time</p>`
+    if (isTimeChanged) {
+        if (!editTime.value) {
+            editTimeError.innerHTML = `${logo}<p>Due time is required</p>`
             focusError ??= editTime
             isValid = false
         }
-    }}
+        else if (editDate.value === getToday()) {
+            const time = getCurrentTime()
+            if (editTime.value < time) {
+                editTimeError.innerHTML = `${logo}<p>You cannot select a past time</p>`
+                focusError ??= editTime
+                isValid = false
+            }
+        }
+    }
     if (!editHour.value) {
         editHourError.innerHTML = `${logo}<p>Please enter the estimated hours</p>`
         focusError ??= editHour
@@ -739,9 +757,10 @@ function updateTaskCard(id) {
     const taskCard = document.querySelector(`.task-card[data-id="${id}"]`);
     const task = JSON.parse(localStorage.getItem(id));
     let status;
-    if(task.status == "In Progress") { 
-        status = task.status.split(" ")[1]}
-    else{status = task.status}
+    if (task.status == "In Progress") {
+        status = task.status.split(" ")[1]
+    }
+    else { status = task.status }
     taskCard.className = `task-card ${task.priority} ${status}`;
     taskCard.innerHTML = `
         <div class="taskcard-header"><h4>${task.name} </h4><div>
@@ -957,15 +976,16 @@ options.forEach(option => {
     option.addEventListener("click", () => {
         let selectedOption = option.querySelector(".option-text").innerText
         if (selectedOption == "Pending Tasks") {
-        sBtn_text.innerHTML = `<i class="fa-regular fa-clock clock1"></i> ${selectedOption}`;}
-            else if (selectedOption == "Progress Tasks") {
-             sBtn_text.innerHTML = `<i class="fa-solid fa-list-check"></i> ${selectedOption}`;   
-            }else if(selectedOption == "All Tasks"){
-                sBtn_text.innerHTML = `&#9989 ${selectedOption}`; 
-            }
-            else{
-                sBtn_text.innerHTML = `&#9989 ${selectedOption}`;
-            }
+            sBtn_text.innerHTML = `<i class="fa-regular fa-clock clock1"></i> ${selectedOption}`;
+        }
+        else if (selectedOption == "Progress Tasks") {
+            sBtn_text.innerHTML = `<i class="fa-solid fa-list-check"></i> ${selectedOption}`;
+        } else if (selectedOption == "All Tasks") {
+            sBtn_text.innerHTML = `&#9989 ${selectedOption}`;
+        }
+        else {
+            sBtn_text.innerHTML = `&#9989 ${selectedOption}`;
+        }
         optionMenu.classList.remove("active");
     });
 });
@@ -997,6 +1017,7 @@ document.querySelectorAll('input[name="priority"]').forEach(radio => {
     radio.addEventListener("change", e => {
         activePriority = e.target.id;
         applyFilters();
+        noResults.style.display = "none";
     });
 });
 
@@ -1005,22 +1026,35 @@ document.addEventListener("change", e => {
     if (!e.target.matches('input[name="status-filter"]')) return;
     activeStatus = e.target.value;
     applyFilters();
+    noResults.style.display = "none";
 });
 
 const searchInput = document.querySelector(".search-bar")
+const noResults = document.querySelector(".no-results")
 
 searchInput.addEventListener("input", () => {
-  const query = searchInput.value.toLowerCase().trim();
-  const taskCards = document.querySelectorAll(".task-card");
-    if(query=="") applyFilters()
-  taskCards.forEach(card => {
-    const cardText = card.innerText.toLowerCase();
-    if (card.style.display == "none") return;
-
-    if (cardText.includes(query)) {
-      card.style.display = "flex"; 
-    } else {
-      card.style.display = "none";
+    const query = searchInput.value.toLowerCase().trim();
+    const taskCards = document.querySelectorAll(".task-card");
+    if (query === "") {
+        applyFilters();
+        noResults.style.display = "none";
+        return;
     }
-  });
-});
+    let visibleCount = 0;
+    taskCards.forEach(card => {
+        const cardText = card.innerText.toLowerCase();
+        if (card.style.display == "none") return;
+
+        if (cardText.includes(query)) {
+            card.style.display = "flex";
+            visibleCount++;
+        } else {
+            card.style.display = "none";
+        }
+        noResults.style.display = visibleCount === 0 ? "block" : "none";
+    })
+})
+function resetSearch() {
+    searchInput.value = ""
+    noResults.style.display = "none"
+}
