@@ -114,8 +114,6 @@
                                 <input type="checkbox" class="check" id="check3">
                                 <label class="check" for="check3">Enhancement</label>
                             </div>
-                            <!-- <span class="error type-error">
-                            </span> -->
                         </div>
                         <span class="error type-error">
                         </span>
@@ -132,8 +130,6 @@
                                 <!-- <input style="display:none;" type="radio" name="Status" value="Completed" class="radio" id="radio3">
                                 <label style="display: none;" class="radio" for="radio3">Completed</label> -->
                             </div>
-                            <!-- <span class="error status-error">
-                            </span> -->
                         </div>
                         <span class="error status-error">
                         </span>
@@ -308,8 +304,8 @@
                                     <label>Due Time</label>
                                     <p class="modal-time"></p>
                                 </div>
-                                <div><i class="fa-regular fa-clock clock2"></i>
-                                    <p>Duration</p>
+                                <div>
+                                    <label>Duration</label>
                                     <p class="modal-hours"></p>
                                 </div>
                             </div>
@@ -351,16 +347,16 @@
                             <i class="bx bx-chevron-down"></i>
                         </div>
                         <ul class="options">
-                            <li class="option">
+                            <li class="option" data-icon="">
                                 <label for="AllTasks" class="option-text">All Tasks</label>
                             </li>
-                            <li class="option">
+                            <li class="option" data-icon="fa-solid fa-list-check">
                                 <label for="Progress" class="option-text">Progress Tasks</label>
                             </li>
-                            <li class="option">
+                            <li class="option" data-icon="fa-regular fa-clock clock1">
                                 <label for="Pending" class="option-text">Pending Tasks</label>
                             </li>
-                            <li class="option">
+                            <li class="option" data-icon="">
                                 <label for="Completed" class="option-text">Completed Tasks</label>
                             </li>
                         </ul>
@@ -385,9 +381,6 @@
                 </div>
                 <!-- Task card Container -->
                 <div class="taskcard-container">
-                    <p class="no-results">
-                        &#128269; No tasks found
-                    </p>
                 </div>
 
                 <div class="viewmore-btn">

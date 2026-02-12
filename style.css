@@ -308,19 +308,21 @@ body {
   grid-template-columns: 1fr 2fr;
   gap: 1rem;
 }
-.main-section.hide{
-  display:none;
+
+.main-section.hide {
+  display: none;
 }
 
 /* Expand View */
 .main-section.full-width {
-  grid-template-columns:1fr;
+  grid-template-columns: 1fr;
   transition: 1s ease;
 }
 
 .main-section.full-width .sub-section1 {
   display: none;
 }
+
 /*  */
 .sub-section2.expand {
   margin-left: 50px;
@@ -525,7 +527,7 @@ select:focus {
 }
 
 .empty-state.expand .empty-img {
-  width: 60%;
+  width: 40%;
   margin-top: 30px;
 }
 
@@ -751,10 +753,6 @@ textarea {
     gap: 0px;
   }
 
-  .fa-clock {
-    font-size: small;
-  }
-
   .project-link {
     font-size: small;
   }
@@ -768,7 +766,7 @@ textarea {
   }
 
   .empty-state.expand .empty-img {
-    width: 70%;
+    width: 60%;
   }
 
   .empty-state.expand p {
@@ -851,13 +849,13 @@ textarea {
   padding: 10px 20px;
   display: none;
   z-index: 100;
-  /* scrollbar-width: none; */
   overflow: hidden;
 }
 
 .modal-body {
   max-height: calc(80vh - 60px);
   overflow-y: auto;
+  /* scrollbar-width:none; */
 }
 
 /* Header */
@@ -945,7 +943,7 @@ textarea {
 .clock2 {
   color: #888;
   font-size: large;
-  margin-bottom: 10px;
+  margin-bottom: 9px;
 }
 
 .profile {
@@ -975,12 +973,12 @@ textarea {
 
 .dueTime div {
   display: flex;
-  gap: 1rem;
+  gap: 3rem;
   align-items: center;
 }
 
 .dueTime {
-  margin: 10px 0px;
+  margin: 0px 0px;
 }
 
 .dueTime label {
@@ -1000,7 +998,7 @@ textarea {
 }
 
 .info-grid .right {
-  padding-left: 15px;
+  padding: 0px 20px;
 }
 
 .project-link {
@@ -1011,7 +1009,6 @@ textarea {
 .project-link a {
   text-decoration: none;
 }
-
 
 /* View More Button */
 .viewmore-btn {
@@ -1112,16 +1109,6 @@ textarea {
   background-color: #5768eb;
   color: white;
   border-color: #5768eb;
-}
-
-.no-results {
-  display:none;
-  position: relative;
-  left:100%;
-  text-align: center;
-  padding: 20px;
-  color: #8a8a8a;
-  font-size: 1.1rem;
 }
 
 /* Task Card */
@@ -1281,7 +1268,7 @@ textarea {
 
 /* Profile Page */
 .profile-page {
-  display:none;
+  display: none;
   justify-content: center;
   padding: 20px 10px;
 }
@@ -1308,8 +1295,8 @@ textarea {
 }
 
 .profile-page img {
-  width: 200px;
-  height: 200px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   border: 1px solid white;
   margin-bottom: 5px;
@@ -1506,6 +1493,11 @@ textarea {
     margin-top: 50px;
   }
 
+  .empty-state.expand .empty-img {
+    width: 55%;
+    margin-top: 30px;
+  }
+
   .checks {
     display: flex;
     align-items: center;
@@ -1536,16 +1528,16 @@ textarea {
     grid-template-columns: repeat(2, 1fr);
     gap: 1rem;
   }
-  .task-card h4{
+
+  .task-card h4 {
     font-size: 1rem;
-    width:clamp(80%,2vh,83%);
+    width: clamp(78%, 2vh, 80%);
   }
 
-  .no-results {
-    position: relative;
-    left: 50%;
-    /* background-color: #00ba85; */
+  .profile-card {
+    width: 370px;
   }
+
   .profile-page img {
     width: 150px;
     height: 150px;
@@ -1570,6 +1562,7 @@ textarea {
     gap: 1rem;
   }
 }
+
 @media (min-width:640px) and (max-width:658px) {
   .task-filters {
     width: 100%;
@@ -1581,11 +1574,6 @@ textarea {
 }
 
 @media (max-width:640px) {
-  /* title */
-  .title {
-    margin: 0px 1rem;
-    margin-top: 40px;
-  }
 
   /* Task Filters */
   .task-filters {
@@ -1594,11 +1582,6 @@ textarea {
     align-items: center;
     gap: 0.6em;
     margin-top: 1.5em;
-  }
-
-  .no-results {
-    position: none;
-    left: 0;
   }
 
   .main-section.full-width {
@@ -1619,10 +1602,16 @@ textarea {
 
 /*  MOBILE VIEW  */
 @media (max-width: 600px) {
+
+  /* title */
+  .title {
+    margin: 0px 1rem;
+    margin-top: 40px;
+  }
+
   .main {
     margin-bottom: -0.5rem;
   }
-
 
   /* Main Section */
   .main-section {
@@ -1700,7 +1689,7 @@ textarea {
   }
 
   .empty-state.expand .empty-img {
-    width: 70%;
+    width: 80%;
   }
 
   /* Task Filters */
@@ -1733,11 +1722,6 @@ textarea {
 
   .profile-card {
     width: 320px;
-    background: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgb(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: 0.3s ease;
     padding-bottom: 20px;
   }
 
@@ -1806,13 +1790,26 @@ textarea {
     width: 100%;
     padding: 10px;
   }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .info-grid .left {
+    border-right: none;
+  }
+
+  .info-grid .right {
+    padding: 0px 0px;
+  }
 }
 
 @media (max-width:420px) {
 
   .taskcard-container {
     width: 100%;
-    margin:0;
+    margin: 0;
   }
 
   .task-card {
@@ -1850,6 +1847,6 @@ textarea {
 
   .level-container {
     gap: 1rem;
-    padding-bottom:10px;
+    padding-bottom: 10px;
   }
 }

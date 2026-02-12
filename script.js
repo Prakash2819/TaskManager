@@ -7,7 +7,6 @@ const viewMoreBtn = document.querySelector('.viewmore-btn')
 const subsection2 = document.querySelector(".sub-section2")
 const subsection1 = document.querySelector(".sub-section1")
 const subNav = document.querySelector(".sub-section2-navbar")
-// const profile = document.querySelector(".main")
 const main = document.querySelector(".main-section")
 const closeView = document.querySelector(".close-view")
 const filter = document.querySelector(".task-filters")
@@ -61,7 +60,6 @@ function handleNavigation() {
     console.log(section)
     if (section == "tasks") {
         window.removeEventListener("resize", syncHeights)
-        // main.style.display = "grid"
         main.classList.remove("hide")
         main.classList.add("full-width")
         subsection2.style.height = "fit-content"
@@ -69,7 +67,6 @@ function handleNavigation() {
         filter.removeEventListener("click", filterClick)
         viewMoreBtn.style.display = "none"
         document.querySelector(".title-name").innerText = "Tasks"
-        // document.querySelector(".sub-section2-title").style.display = "none"
         document.querySelector(".search-bar").style.display = "block"
         document.querySelector(".profile-page").style.display = "none"
         subNav.classList.add("expand")
@@ -79,10 +76,8 @@ function handleNavigation() {
     }
     if (section == "dashboard") {
         window.addEventListener("resize", syncHeights)
-        // main.style.display = "grid"
         main.classList.remove("hide")
         main.classList.remove("full-width")
-        // document.querySelector(".sub-section2-title").style.display = "block"
         document.querySelector(".search-bar").style.display = "none"
         document.querySelector(".profile-page").style.display = "none"
         subsection2.style.height = ""
@@ -196,6 +191,12 @@ function EmptyTaskPage() {
             document.querySelector(".empty-text1").innerText = "No Matching Tasks"
             document.querySelector(".empty-text2").innerText = "we couldn't find any tasks for your selected filter."
         }
+    }
+    if (visibleCards.length == 0 && activeStatus == "All" && activetask == "All" && taskcards.length !== 0) {
+        emptyState.style.display = "flex"
+        document.querySelector(".empty-img").src = "no-task-match.png"
+        document.querySelector(".empty-text1").innerText = "No Matching Tasks"
+        document.querySelector(".empty-text2").innerText = "we couldn't find any tasks for your selected filter."
     }
 }
 document.querySelectorAll('input[name="priority"]').forEach(radio => {
@@ -792,7 +793,7 @@ function taskcardView(id) {
             document.querySelector(".modal-description").innerText = value.description
             document.querySelector(".modal-progress").value = value.percent
             document.querySelector(".modal-percent").innerText = `${value.percent}%`
-            document.querySelector(".modal-userEmail").innerHTML = `<p >${value.user}<br><span>${value.email}</span></p>`
+            document.querySelector(".modal-userEmail").innerHTML = `<p>${value.user}<br><span>${value.email}</span></p>`
             document.querySelector(".modal-date").innerText = `📆 ${value.date}`
             document.querySelector(".modal-hours").innerText = `${value.duration} hours`
             document.querySelector(".modal-url").href = value.url
@@ -975,17 +976,11 @@ selectBtn.addEventListener("click", () => optionMenu.classList.toggle("active"))
 options.forEach(option => {
     option.addEventListener("click", () => {
         let selectedOption = option.querySelector(".option-text").innerText
-        if (selectedOption == "Pending Tasks") {
-            sBtn_text.innerHTML = `<i class="fa-regular fa-clock clock1"></i> ${selectedOption}`;
-        }
-        else if (selectedOption == "Progress Tasks") {
-            sBtn_text.innerHTML = `<i class="fa-solid fa-list-check"></i> ${selectedOption}`;
-        } else if (selectedOption == "All Tasks") {
-            sBtn_text.innerHTML = `&#9989 ${selectedOption}`;
-        }
-        else {
-            sBtn_text.innerHTML = `&#9989 ${selectedOption}`;
-        }
+        let icon;
+        const iconClass = option.dataset.icon
+        icon = `<i class="${iconClass}"></i>`
+        if (iconClass == "") icon = `<span>&#9989;</span>`
+        sBtn_text.innerHTML = `${icon} ${selectedOption}`
         optionMenu.classList.remove("active");
     });
 });
@@ -993,6 +988,7 @@ options.forEach(option => {
 
 let activePriority = "All";
 let activeStatus = "All";
+let activeSearch = "";
 
 function applyFilters() {
     document.querySelectorAll(".task-card").forEach(card => {
@@ -1004,10 +1000,14 @@ function applyFilters() {
             activeStatus === "All" ||
             card.classList.contains(activeStatus);
 
-        card.style.display =
-            matchPriority && matchStatus ? "flex" : "none";
-    });
+        const matchSearch =
+            activeSearch === "" ||
+            card.innerText.toLowerCase().includes(activeSearch);
 
+        if (matchPriority && matchStatus && matchSearch) {
+            card.style.display = "flex"
+        } else card.style.display = "none"
+    });
     EmptyTaskPage();
     checkOverflow();
 }
@@ -1017,7 +1017,6 @@ document.querySelectorAll('input[name="priority"]').forEach(radio => {
     radio.addEventListener("change", e => {
         activePriority = e.target.id;
         applyFilters();
-        noResults.style.display = "none";
     });
 });
 
@@ -1026,35 +1025,17 @@ document.addEventListener("change", e => {
     if (!e.target.matches('input[name="status-filter"]')) return;
     activeStatus = e.target.value;
     applyFilters();
-    noResults.style.display = "none";
 });
 
 const searchInput = document.querySelector(".search-bar")
-const noResults = document.querySelector(".no-results")
 
 searchInput.addEventListener("input", () => {
-    const query = searchInput.value.toLowerCase().trim();
-    const taskCards = document.querySelectorAll(".task-card");
-    if (query === "") {
-        applyFilters();
-        noResults.style.display = "none";
-        return;
-    }
-    let visibleCount = 0;
-    taskCards.forEach(card => {
-        const cardText = card.innerText.toLowerCase();
-        if (card.style.display == "none") return;
+    activeSearch = searchInput.value.toLowerCase().trim();
+    applyFilters();
+});
 
-        if (cardText.includes(query)) {
-            card.style.display = "flex";
-            visibleCount++;
-        } else {
-            card.style.display = "none";
-        }
-        noResults.style.display = visibleCount === 0 ? "block" : "none";
-    })
-})
 function resetSearch() {
     searchInput.value = ""
-    noResults.style.display = "none"
+    activeSearch = ""
+    applyFilters()
 }
