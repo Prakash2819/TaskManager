@@ -164,6 +164,10 @@ function count() {
 // Empty Task Button
 const emptyButton = document.querySelector(".empty-button")
 emptyButton.addEventListener("click", () => {
+    if(location.hash == "#tasks") {
+        location.hash = "dashboard"
+        setTimeout(()=>userName.focus(),5)
+    }
     userName.focus()
 })
 // Empty Task Page View
