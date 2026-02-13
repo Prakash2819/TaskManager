@@ -101,6 +101,7 @@ function handleNavigation() {
         document.querySelector(".title-name").innerText = "Profile"
         main.classList.remove("full-width")
         main.classList.add("hide")
+        document.querySelector("#user-count").innerText = userCount()
         document.querySelector(".search-bar").style.display = "none"
         document.querySelector(".profile-page").style.display = "flex"
         resetSearch()
@@ -153,20 +154,33 @@ function Notify(msg) {
 }
 // Task card count
 function count() {
+    const activePriority = document.querySelector('input[name="priority"]:checked')?.id
+    const allCards = document.querySelectorAll(".task-card");
     const highCount = document.querySelectorAll(".High").length
     const mediumCount = document.querySelectorAll(".Medium").length
     const lowCount = document.querySelectorAll(".Low").length
-    document.querySelector("#high-count").textContent = highCount
-    document.querySelector("#medium-count").textContent = mediumCount
-    document.querySelector("#low-count").textContent = lowCount
-    document.querySelector("#all-count").textContent = highCount + mediumCount + lowCount
+    const total = highCount + mediumCount + lowCount
+    let visibleHigh = 0, visibleMedium = 0, visibleLow = 0, visibleAll = 0;
+    allCards.forEach(card => {
+        if (card.style.display !== "none") {
+            if (card.classList.contains("High")) visibleHigh++
+            if (card.classList.contains("Medium")) visibleMedium++
+            if (card.classList.contains("Low")) visibleLow++
+            visibleAll++
+        }
+    })
+    document.querySelector("#high-count").textContent =activePriority=="High"?visibleHigh:highCount
+    document.querySelector("#medium-count").textContent =activePriority=="Medium"?visibleMedium:mediumCount
+    document.querySelector("#low-count").textContent = activePriority=="Low"?visibleLow:lowCount
+    document.querySelector("#all-count").textContent = activePriority=="All"?visibleAll:total
+    document.querySelector("#task-count").textContent = total
 }
 // Empty Task Button
 const emptyButton = document.querySelector(".empty-button")
 emptyButton.addEventListener("click", () => {
-    if(location.hash == "#tasks") {
+    if (location.hash == "#tasks") {
         location.hash = "dashboard"
-        setTimeout(()=>userName.focus(),5)
+        setTimeout(() => userName.focus(), 5)
     }
     userName.focus()
 })
@@ -389,8 +403,8 @@ hours.addEventListener("input", () => {
     durError.innerText = ""
     if (hours.value === "") return
     if (hours.value < 0) hours.value = 0
-    if (hours.value > 100) {
-        hours.value = 100
+    if (hours.value > 150) {
+        hours.value = 150
         durError.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i><p>Maximum hours reached</p>`
         setTimeout(() => durError.innerText = "", 1000)
     }
@@ -712,8 +726,8 @@ editHour.addEventListener("input", () => {
     editHourError.innerText = ""
     if (editHour.value === "") return
     if (editHour.value < 0) editHour.value = 0
-    if (editHour.value > 100) {
-        editHour.value = 100
+    if (editHour.value > 150) {
+        editHour.value = 150
         editHourError.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i><p>Maximum hours reached</p>`
         setTimeout(() => editHourError.innerText = "", 1000)
     }
@@ -1011,7 +1025,8 @@ function applyFilters() {
         if (matchPriority && matchStatus && matchSearch) {
             card.style.display = "flex"
         } else card.style.display = "none"
-    });
+    })
+    count()
     EmptyTaskPage();
     checkOverflow();
 }
@@ -1042,4 +1057,13 @@ function resetSearch() {
     searchInput.value = ""
     activeSearch = ""
     applyFilters()
+}
+function userCount() {
+    const unique = new Set()
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i)
+        const value = JSON.parse(localStorage.getItem(key))
+        unique.add(value.user.trim().toLowerCase())
+    }
+    return unique.size
 }

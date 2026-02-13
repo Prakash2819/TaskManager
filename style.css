@@ -743,11 +743,6 @@ textarea {
     font-size: clamp(13px, 2vh, 15px);
     gap: 0px;
   }
-
-  .info-grid .left {
-    padding-right: 5px;
-  }
-
   .dueTime div {
     font-size: small;
     gap: 0px;
@@ -846,7 +841,7 @@ textarea {
   max-width: 700px;
   background: #fff;
   border-radius: 14px;
-  padding: 10px 20px;
+  padding: 10px 0px;
   display: none;
   z-index: 100;
   overflow: hidden;
@@ -865,6 +860,7 @@ textarea {
   align-items: center;
   gap: 0.5rem;
   overflow-wrap: anywhere;
+  padding: 0px 20px;
 }
 
 .close-btn {
@@ -919,6 +915,7 @@ textarea {
   flex-direction: row;
   align-items: center;
   border-bottom: 1px solid rgb(226, 221, 221);
+  padding: 0px 15px;
 }
 
 .row span {
@@ -928,7 +925,6 @@ textarea {
 .Assigner {
   display: flex;
   flex-direction: column;
-  /* margin:15px 0px; */
 }
 
 .fa-circle-user {
@@ -989,16 +985,15 @@ textarea {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   border-bottom: 1px solid rgb(226, 221, 221);
-  padding: 10px 0px;
+  padding: 10px 20px;
   margin-bottom: 10px;
 }
 
 .info-grid .left {
   border-right: 1px solid rgb(226, 221, 221);
 }
-
-.info-grid .right {
-  padding: 0px 20px;
+.info-grid .right{
+  padding-left: 20px;
 }
 
 .project-link {
@@ -1009,7 +1004,9 @@ textarea {
 .project-link a {
   text-decoration: none;
 }
-
+.taskmodal-description{
+  padding:0px 20px;
+}
 /* View More Button */
 .viewmore-btn {
   position: absolute;
@@ -1330,7 +1327,7 @@ textarea {
 .profile-footer p {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.25rem;
   background: #ffffff;
   padding: 10px;
   border-radius: 10px;
@@ -1795,13 +1792,12 @@ textarea {
     display: grid;
     grid-template-columns: 1fr;
   }
-
   .info-grid .left {
     border-right: none;
   }
 
   .info-grid .right {
-    padding: 0px 0px;
+    padding-left: 0px;
   }
 }
 

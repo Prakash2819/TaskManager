@@ -187,7 +187,7 @@
                             </select>
 
                             <label for="edit-estimatedHours">Estimated Hours</label>
-                            <input type="number" id="edit-estimatedHours" min="0" max="100">
+                            <input type="number" id="edit-estimatedHours">
                             <span class="error editHour-error">
                             </span>
 
@@ -311,7 +311,7 @@
                             </div>
                         </section>
                     </div>
-                    <div>
+                    <div class="taskmodal-description">
                         <label>Description</label>
                         <p class="modal-description">
                         </p>
@@ -406,8 +406,8 @@
                     </div>
                 </div>
                 <div class="profile-footer">
-                    <p><i class="fa-regular fa-circle-user"></i> 56 Users</p>
-                    <p><i class="fa-solid fa-circle-check"></i> 248 Tasks Assigned</p>
+                    <p><i class="fa-regular fa-circle-user"></i><span id="user-count"></span>Users</p>
+                    <p><i class="fa-solid fa-circle-check"></i><span id="task-count"></span>Tasks Assigned</p>
                 </div>
             </div>
         </section>
