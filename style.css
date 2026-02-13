@@ -9,76 +9,6 @@ body {
   background-color: #f7f9fa;
 }
 
-.select-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.3rem;
-  width: 170px;
-  white-space: nowrap;
-  /* justify-content: space-between; */
-  cursor: pointer;
-}
-
-.select-btn .bx-chevron-down {
-  font-size: 20px;
-  color: #333;
-  transition: 0.3s ease;
-}
-
-.sub-section2-title .options {
-  display: none;
-  margin-top: 10px;
-  border-radius: 5px;
-  z-index: 98;
-  position: absolute;
-  list-style: none;
-  background: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.options .option {
-  display: flex;
-  align-items: center;
-}
-
-.options .option-text {
-  width: 170px;
-  white-space: nowrap;
-  height: 40px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
-
-.option:hover {
-  background: rgb(231, 231, 243);
-}
-
-.sub-section2-title.active .select-btn .bx-chevron-down {
-  transform: rotate(-180deg);
-}
-
-.sub-section2-title.active .options {
-  display: block;
-}
-
-.clock1 {
-  color: white;
-  border-radius: 5px;
-  padding: 2px;
-  margin-right: 2px;
-  background: orange;
-  font-size: 15px;
-}
-
-.fa-list-check {
-  color: white;
-  border-radius: 5px;
-  padding: 2px;
-  margin-right: 2px;
-  background: rgb(143, 143, 224);
-}
 
 /* Logo */
 .topbar {
@@ -1084,6 +1014,77 @@ textarea {
   border-top-right-radius: 10px;
   border-bottom: 1px solid rgb(222, 217, 217);
 }
+/* Status Filter */
+.select-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  width: 170px;
+  white-space: nowrap;
+  /* justify-content: space-between; */
+  cursor: pointer;
+}
+
+.select-btn .bx-chevron-down {
+  font-size: 20px;
+  color: #333;
+  transition: 0.3s ease;
+}
+
+.sub-section2-title .options {
+  display: none;
+  margin-top: 10px;
+  border-radius: 5px;
+  z-index: 98;
+  position: absolute;
+  list-style: none;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.options .option {
+  display: flex;
+  align-items: center;
+}
+
+.options .option-text {
+  width: 170px;
+  white-space: nowrap;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+
+.option:hover {
+  background: rgb(231, 231, 243);
+}
+
+.sub-section2-title.active .select-btn .bx-chevron-down {
+  transform: rotate(-180deg);
+}
+
+.sub-section2-title.active .options {
+  display: block;
+}
+
+.clock1 {
+  color: white;
+  border-radius: 5px;
+  padding: 2px;
+  margin-right: 2px;
+  background: orange;
+  font-size: 15px;
+}
+
+.fa-list-check {
+  color: white;
+  border-radius: 5px;
+  padding: 2px;
+  margin-right: 2px;
+  background: rgb(143, 143, 224);
+}
 
 .task-filters label {
   flex: 1;
@@ -1132,21 +1133,11 @@ textarea {
   border: 2px solid rgb(232, 234, 237);
   border-radius: 0.7rem;
   cursor: pointer;
-  padding: 1.5em;
+  padding: 1.3em;
   padding-bottom: 0.1em;
   transition: transform 0.2s;
   background: #fff;
 }
-
-
-/* Show Checked Filter Cards  */
-/* #All:checked~.taskcard-container .task-card,
-#High:checked~.taskcard-container .High,
-#Medium:checked~.taskcard-container .Medium,
-#Low:checked~.taskcard-container .Low {
-  display: flex;
-} */
-
 .task-card h4 {
   display: -webkit-box;
   line-clamp: 2;
@@ -1157,6 +1148,7 @@ textarea {
   height: 40px;
   overflow-wrap: anywhere;
   width: clamp(81%, 2vh, 85%);
+  margin-bottom:10px;
 }
 
 .taskcard-header {

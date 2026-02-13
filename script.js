@@ -52,68 +52,69 @@ document.addEventListener("DOMContentLoaded", () => {
     EmptyTaskPage()
     handleNavigation()
 })
-
 window.addEventListener("resize", syncHeights)
 
+// Navigation
 function handleNavigation() {
     const section = location.hash.replace("#", "") || "dashboard";
-    console.log(section)
-    if (section == "tasks") {
-        window.removeEventListener("resize", syncHeights)
-        main.classList.remove("hide")
-        main.classList.add("full-width")
-        subsection2.style.height = "fit-content"
-        subsection2.classList.add("expand")
-        filter.removeEventListener("click", filterClick)
-        viewMoreBtn.style.display = "none"
-        document.querySelector(".title-name").innerText = "Tasks"
-        document.querySelector(".search-bar").style.display = "block"
-        document.querySelector(".profile-page").style.display = "none"
-        subNav.classList.add("expand")
-        taskcardContainer.classList.add("expand")
-        emptyState.classList.add("expand")
+    if (section == "tasks") tasks()
+    if (section == "dashboard") dashboard()
+    if (section == "profile") profile()
 
-    }
-    if (section == "dashboard") {
-        window.addEventListener("resize", syncHeights)
-        main.classList.remove("hide")
-        main.classList.remove("full-width")
-        document.querySelector(".search-bar").style.display = "none"
-        document.querySelector(".profile-page").style.display = "none"
-        subsection2.style.height = ""
-        subsection2.classList.remove("expand")
-        subNav.classList.remove("expand")
-        emptyState.classList.remove("expand")
-        taskcardContainer.classList.remove("expand")
-        document.querySelector(".title-name").innerText = "Task Dashboard"
-        viewMoreBtn.addEventListener("click", () => {
-            window.location.hash = "tasks"
-        })
-        filter.addEventListener("click", filterClick)
-        requestAnimationFrame(() => {
-            syncHeights();
-            checkOverflow();
-        });
-        resetSearch()
-        applyFilters()
-    }
-    if (section == "profile") {
-        document.querySelector(".title-name").innerText = "Profile"
-        main.classList.remove("full-width")
-        main.classList.add("hide")
-        document.querySelector("#user-count").innerText = userCount()
-        document.querySelector(".search-bar").style.display = "none"
-        document.querySelector(".profile-page").style.display = "flex"
-        resetSearch()
-        applyFilters()
-    }
-
-    // update active link
     document.querySelectorAll(".links a").forEach(a => a.classList.remove("active"));
     document.querySelector(`.links a[href="#${section}"]`)?.classList.add("active");
 }
 window.addEventListener("hashchange", handleNavigation);
 
+//Pages
+function dashboard() {
+    window.addEventListener("resize", syncHeights)
+    main.classList.remove("hide")
+    main.classList.remove("full-width")
+    document.querySelector(".search-bar").style.display = "none"
+    document.querySelector(".profile-page").style.display = "none"
+    subsection2.style.height = ""
+    subsection2.classList.remove("expand")
+    subNav.classList.remove("expand")
+    emptyState.classList.remove("expand")
+    taskcardContainer.classList.remove("expand")
+    document.querySelector(".title-name").innerText = "Task Dashboard"
+    viewMoreBtn.addEventListener("click", () => {
+        window.location.hash = "tasks"
+    })
+    filter.addEventListener("click", filterClick)
+    requestAnimationFrame(() => {
+        syncHeights();
+        checkOverflow();
+    });
+    resetSearch()
+    applyFilters()
+}
+function tasks() {
+    window.removeEventListener("resize", syncHeights)
+    main.classList.remove("hide")
+    main.classList.add("full-width")
+    subsection2.style.height = "fit-content"
+    subsection2.classList.add("expand")
+    filter.removeEventListener("click", filterClick)
+    viewMoreBtn.style.display = "none"
+    document.querySelector(".title-name").innerText = "Tasks"
+    document.querySelector(".search-bar").style.display = "block"
+    document.querySelector(".profile-page").style.display = "none"
+    subNav.classList.add("expand")
+    taskcardContainer.classList.add("expand")
+    emptyState.classList.add("expand")
+}
+function profile() {
+    document.querySelector(".title-name").innerText = "Profile"
+    main.classList.remove("full-width")
+    main.classList.add("hide")
+    document.querySelector("#user-count").innerText = userCount()
+    document.querySelector(".search-bar").style.display = "none"
+    document.querySelector(".profile-page").style.display = "flex"
+    resetSearch()
+    applyFilters()
+}
 
 // Form SubMission
 editForm.addEventListener("submit", (e) => { e.preventDefault() })
@@ -169,10 +170,10 @@ function count() {
             visibleAll++
         }
     })
-    document.querySelector("#high-count").textContent =activePriority=="High"?visibleHigh:highCount
-    document.querySelector("#medium-count").textContent =activePriority=="Medium"?visibleMedium:mediumCount
-    document.querySelector("#low-count").textContent = activePriority=="Low"?visibleLow:lowCount
-    document.querySelector("#all-count").textContent = activePriority=="All"?visibleAll:total
+    document.querySelector("#high-count").textContent = activePriority == "High" ? visibleHigh : highCount
+    document.querySelector("#medium-count").textContent = activePriority == "Medium" ? visibleMedium : mediumCount
+    document.querySelector("#low-count").textContent = activePriority == "Low" ? visibleLow : lowCount
+    document.querySelector("#all-count").textContent = activePriority == "All" ? visibleAll : total
     document.querySelector("#task-count").textContent = total
 }
 // Empty Task Button
@@ -191,7 +192,6 @@ function EmptyTaskPage() {
     const activetask = document.querySelector('input[name="priority"]:checked').id
     const visibleCards = Array.from(taskcards).filter(
         card => card.style.display !== "none")
-    console.log(visibleCards.length)
     emptyState.style.display = "none"
     emptyButton.classList.add("hide")
     if (taskcards.length == 0 && activetask == "All" && activeStatus == "All") {
@@ -473,7 +473,7 @@ function createTask(value) {
     else { status = value.status }
     taskcard.classList.add("task-card", value.priority, status)
     taskcard.dataset.id = value.id
-    taskcard.innerHTML = `<div class="taskcard-header"><h4>${value.name} </h4><div><i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></div></div><br>
+    taskcard.innerHTML = `<div class="taskcard-header"><h4>${value.name} </h4><div><i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></div></div>
         <p class="task-desc">${value.description}</p>
         <p></p>
         <p><img class="calender-img" src="calender.png"> Due: ${value.date}</p>
@@ -541,12 +541,7 @@ const editDesError = document.querySelector(".editDesc-error")
 const editTypeError = document.querySelector(".editType-error")
 
 // Store input values from storage to edit box
-function EditItem(id) {
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i)
-        const value = JSON.parse(localStorage.getItem(key))
-        const saveBtn = document.querySelector(".save-btn")
-        if (value.id == id) {
+function storeValue(value){
             editUser.value = value.user
             editName.value = value.name
             editDate.value = value.dueDate
@@ -560,6 +555,19 @@ function EditItem(id) {
             editPercent.textContent = value.percent + "%"
             editStatus.forEach(el => el.checked = el.value === value.status)
             check(value.type)
+}
+function check(obj) {
+    document.getElementById("edit-check1").checked = obj.bugFix
+    document.getElementById("edit-check2").checked = obj.feature
+    document.getElementById("edit-check3").checked = obj.enhancement
+}
+function EditItem(id) {
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i)
+        const value = JSON.parse(localStorage.getItem(key))
+        const saveBtn = document.querySelector(".save-btn")
+        if (value.id == id) {
+            storeValue(value)
             // Save Button
             saveBtn.onclick = () => {
                 if (editValidate(value.id, value.time)) {
@@ -733,11 +741,6 @@ editHour.addEventListener("input", () => {
     }
 })
 document.querySelectorAll('.edit-check').forEach(e => { e.addEventListener("change", () => editTypeError.innerText = "") })
-function check(obj) {
-    document.getElementById("edit-check1").checked = obj.bugFix
-    document.getElementById("edit-check2").checked = obj.feature
-    document.getElementById("edit-check3").checked = obj.enhancement
-}
 
 // Storing New Edited Value 
 function updateItem(taskKey) {
@@ -784,7 +787,7 @@ function updateTaskCard(id) {
     taskCard.innerHTML = `
         <div class="taskcard-header"><h4>${task.name} </h4><div>
         <i class='far fa-trash-alt'></i> <i class='far fa-edit'></i></div>
-        </div><br>
+        </div>
         <p class="task-desc">${task.description}</p>
         <p></p>
         <p><img class="calender-img" src="calender.png"> Due: ${task.date}</p>
@@ -983,7 +986,7 @@ footer.addEventListener("click", (e) => {
 // Copyright Year
 document.querySelector(".copyright-year").innerText = new Date().getFullYear()
 
-//
+// Custom filter Function
 const optionMenu = document.querySelector(".sub-section2-title");
 const selectBtn = optionMenu.querySelector(".select-btn");
 const options = optionMenu.querySelectorAll(".option");
@@ -1003,7 +1006,7 @@ options.forEach(option => {
     });
 });
 
-
+// Filtering
 let activePriority = "All";
 let activeStatus = "All";
 let activeSearch = "";
@@ -1045,7 +1048,7 @@ document.addEventListener("change", e => {
     activeStatus = e.target.value;
     applyFilters();
 });
-
+// Search box
 const searchInput = document.querySelector(".search-bar")
 
 searchInput.addEventListener("input", () => {
@@ -1058,6 +1061,7 @@ function resetSearch() {
     activeSearch = ""
     applyFilters()
 }
+// User count
 function userCount() {
     const unique = new Set()
     for (let i = 0; i < localStorage.length; i++) {
